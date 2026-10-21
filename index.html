@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cờ Tỷ Phú Ẩm Thực Việt Nam</title>
+  <meta name="description" content="Trải nghiệm du lịch ẩm thực Việt Nam đặc sắc qua bàn cờ tỷ phú truyền thống với 10 món ăn đường phố nức tiếng.">
+
+  <!-- Google Fonts: Charm (Uốn lượn thư pháp truyền thống), Pattaya, Baloo 2 & Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Baloo+2:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=110">
+  <!-- Three.js cho xúc xắc 3D ngà sứ gốc -->
+  <script src="assets/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Film Grain Texture Overlay (Hạt grain nhẹ truyền thống) -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Vertical Ombre Background: Lightest #3A99BA on top to deepest #072865 at bottom -->
+  <div class="site-ombre-bg"></div>
+
+  <!-- ==============================================================
+       STAGE 1 & 2: INTRO WITH VIETNAMESE FAIRYTALE CLOUDS & ELABORATE WHITE BOARD
+       ============================================================== -->
+  <div class="intro-board-stage" id="introBoardStage">
+
+    <!-- Traditional Center Clouds (Rẽ mây dạt ra 2 bên) -->
+    <div class="fairytale-clouds-container" id="fairytaleCloudsContainer">
+      <div class="cloud-half cloud-left" id="cloudLeft">
+        <img src="assets/cloud_left.png" alt="Mây cổ tích bên trái" class="cloud-img">
+      </div>
+      <div class="cloud-half cloud-right" id="cloudRight">
+        <img src="assets/cloud_right.png" alt="Mây cổ tích bên phải" class="cloud-img">
+      </div>
+    </div>
+    
+    <!-- Elaborate Traditional Vietnamese Decorated White Board -->
+    <div class="pure-white-board hidden" id="pureWhiteBoard" role="button" tabindex="0" aria-label="Bảng thông tin trắng chạm khắc truyền thống, nhấn để tiếp tục">
+      
+      <!-- Top Decorative Crest (Hoa sen & Thắt nút cát tường hoàng kim) -->
+      <div class="board-top-crest">
+        <svg viewBox="0 0 160 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M80 6C74 16 64 22 50 24M80 6C86 16 96 22 110 24" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M30 22C42 22 55 18 80 8C105 18 118 22 130 22" stroke="#C5221F" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="80" cy="12" r="5" fill="#D4AF37"/>
+          <circle cx="68" cy="18" r="3" fill="#D4AF37"/>
+          <circle cx="92" cy="18" r="3" fill="#D4AF37"/>
+          <path d="M12 24C22 24 26 18 36 22M148 24C138 24 134 18 124 22" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- 4 Ornate Bronze Drum & Cloud Golden Corner Filigrees -->
+      <div class="board-corner-art corner-tl">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 60V18C4 10.27 10.27 4 18 4H60" stroke="#D4AF37" stroke-width="3" stroke-linecap="round"/>
+          <path d="M12 60V22C12 16.48 16.48 12 22 12H60" stroke="#C5221F" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="24" cy="24" r="7" stroke="#D4AF37" stroke-width="2" fill="none"/>
+          <circle cx="24" cy="24" r="3" fill="#D4AF37"/>
+          <path d="M24 8C15.16 8 8 15.16 8 24" stroke="#D4AF37" stroke-width="1.5"/>
+          <path d="M32 12C36 12 40 8 44 8" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="board-corner-art corner-tr">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 60V18C60 10.27 53.73 4 46 4H4" stroke="#D4AF37" stroke-width="3" stroke-linecap="round"/>
+          <path d="M52 60V22C52 16.48 47.52 12 42 12H4" stroke="#C5221F" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="40" cy="24" r="7" stroke="#D4AF37" stroke-width="2" fill="none"/>
+          <circle cx="40" cy="24" r="3" fill="#D4AF37"/>
+          <path d="M40 8C48.84 8 56 15.16 56 24" stroke="#D4AF37" stroke-width="1.5"/>
+          <path d="M32 12C28 12 24 8 20 8" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="board-corner-art corner-bl">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 4V46C4 53.73 10.27 60 18 60H60" stroke="#D4AF37" stroke-width="3" stroke-linecap="round"/>
+          <path d="M12 4V42C12 47.52 16.48 52 22 52H60" stroke="#C5221F" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="24" cy="40" r="7" stroke="#D4AF37" stroke-width="2" fill="none"/>
+          <circle cx="24" cy="40" r="3" fill="#D4AF37"/>
+          <path d="M24 56C15.16 56 8 48.84 8 40" stroke="#D4AF37" stroke-width="1.5"/>
+          <path d="M32 52C36 52 40 56 44 56" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="board-corner-art corner-br">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 4V46C60 53.73 53.73 60 46 60H4" stroke="#D4AF37" stroke-width="3" stroke-linecap="round"/>
+          <path d="M52 4V42C52 47.52 47.52 52 42 52H4" stroke="#C5221F" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="40" cy="40" r="7" stroke="#D4AF37" stroke-width="2" fill="none"/>
+          <circle cx="40" cy="40" r="3" fill="#D4AF37"/>
+          <path d="M40 56C48.84 56 56 48.84 56 40" stroke="#D4AF37" stroke-width="1.5"/>
+          <path d="M32 52C28 52 24 56 20 56" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- State A: Tên Game TÒ TE TÍ PHIÊU LƯU KÍ -->
+      <div class="board-blank-content" id="boardBlankContent">
+        <div class="board-game-header">
+          <h1 class="board-game-title">TÒ TE TÍ<br>PHIÊU LƯU KÝ</h1>
+        </div>
+        <p class="board-click-prompt">Được thực hiện bởi nhóm Hi5</p>
+      </div>
+
+      <!-- State B: "BẮT ĐẦU" (Khi người dùng chạm vào bảng) -->
+      <div class="board-start-content hidden" id="boardStartContent">
+        <h1 class="start-big-text">BẮT ĐẦU</h1>
+        <p class="start-small-cue">Nhấn để tiếp tục <span class="start-arrow">➔</span></p>
+      </div>
+
+      <!-- Bottom Decorative Wave -->
+      <div class="board-bottom-crest">
+        <svg viewBox="0 0 140 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 12C25 4 45 4 60 12C75 20 95 20 110 12C120 7 125 10 130 12" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="60" cy="12" r="3" fill="#C5221F"/>
+          <circle cx="85" cy="16" r="2.5" fill="#D4AF37"/>
+          <circle cx="35" cy="8" r="2.5" fill="#D4AF37"/>
+        </svg>
+      </div>
+
+    </div>
+
+    <!-- Guiding Character Stage in Intro -->
+    <div class="hero-character-stage mode-intro-center hidden-initially" id="heroCharacterStage">
+      <div class="char-natural-rig" id="charNaturalRig">
+        <img src="assets/straw_boy_front_v6.png?v=60" alt="Bé Tò Te Tí" class="char-base-img" id="charBaseImg">
+        <div class="char-soft-shadow" id="charSoftShadow"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==============================================================
+       STAGE 3 & 4: AUTHENTIC MONOPOLY BOARD (28 Clean Tiles - 10 Món Tuyển Chọn)
+       ============================================================== -->
+  <div class="monopoly-stage hidden" id="monopolyStage">
+    
+    <!-- Camera Viewport with Real-Time Character Tracking -->
+    <div class="board-camera-viewport" id="boardCameraViewport">
+      <div class="board-perspective-wrapper" id="boardPerspectiveWrapper">
+        <div class="realistic-monopoly-board" id="realisticBoard">
+          
+          <!-- Board Center Artwork -->
+          <div class="board-center-canvas">
+            <img src="assets/clean_monopoly_center.jpg" alt="Chợ Ẩm Thực Đường Phố Việt Nam" class="board-art-img">
+          </div>
+
+          <!-- 28 TILES: 1 BẮT ĐẦU + 3 GIEO QUẲ GÓC + 4 CHỢ + 4 GIEO QUẲ HÀNG + 16 MÓN ĂN -->
+
+          <!-- BOTTOM ROW (Tiles 0-7) - T từ trái sang phải -->
+          <!-- Tile 0: GIEO QUẲ (Góc dưới trái) -->
+          <div class="real-tile gieo-que-tile" data-tile="0" id="tile-0">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 1: Cơm Tấm -->
+          <div class="real-tile food-tile" data-tile="1" data-dish="com_tam" id="tile-1">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Cơm Tấm" class="food-photo-img"></div>
+            <div class="tile-name-text">Cơm Tấm</div>
+          </div>
+
+          <!-- Tile 2: Bánh Xèo -->
+          <div class="real-tile food-tile" data-tile="2" data-dish="banh_xeo" id="tile-2">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_xeo.jpg" alt="Bánh Xèo" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Xèo</div>
+          </div>
+
+          <!-- Tile 3: Bánh Mì -->
+          <div class="real-tile food-tile" data-tile="3" data-dish="banh_mi" id="tile-3">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_mi.jpg" alt="Bánh Mì" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Mì</div>
+          </div>
+
+          <!-- Tile 4: Phá Lấu -->
+          <div class="real-tile food-tile" data-tile="4" data-dish="pha_lau" id="tile-4">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_pha_lau.jpg" alt="Phá Lấu" class="food-photo-img"></div>
+            <div class="tile-name-text">Phá Lấu</div>
+          </div>
+
+          <!-- Tile 5: Hủ Tiếu -->
+          <div class="real-tile food-tile" data-tile="5" data-dish="hu_tieu" id="tile-5">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_hu_tieu.jpg" alt="Hủ Tiếu" class="food-photo-img"></div>
+            <div class="tile-name-text">Hủ Tiếu</div>
+          </div>
+
+          <!-- Tile 6: Xôi -->
+          <div class="real-tile food-tile" data-tile="6" data-dish="xoi" id="tile-6">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_xoi.jpg" alt="Xôi" class="food-photo-img"></div>
+            <div class="tile-name-text">Xôi</div>
+          </div>
+
+          <!-- Tile 7: BẮT ĐẦU (Góc dưới phải) -->
+          <div class="real-tile tile-start-square" data-tile="7" id="tile-7">
+            <div class="start-header-bar">BẮT ĐẦU</div>
+            <div class="start-badge-wrap">
+              <span class="start-arrow-symbol">⬅</span>
+            </div>
+            <div class="start-footer-label">GO</div>
+          </div>
+
+          <!-- RIGHT COLUMN (Tiles 8-13) - T từ dưới lên -->
+          <!-- Tile 8: Bún Thịt Nướng -->
+          <div class="real-tile food-tile" data-tile="8" data-dish="bun_thit_nuong" id="tile-8">
+            <div class="tile-header bar-red"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_bun_thit_nuong.jpg" alt="Bún Thịt Nướng" class="food-photo-img"></div>
+            <div class="tile-name-text">Bún Thịt Nướng</div>
+          </div>
+
+          <!-- Tile 9: Bột Chiên -->
+          <div class="real-tile food-tile" data-tile="9" data-dish="bot_chien" id="tile-9">
+            <div class="tile-header bar-red"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_bot_chien.jpg" alt="Bột Chiên" class="food-photo-img"></div>
+            <div class="tile-name-text">Bột Chiên</div>
+          </div>
+
+          <!-- Tile 10: Bò Bía -->
+          <div class="real-tile food-tile" data-tile="10" data-dish="bo_bia" id="tile-10">
+            <div class="tile-header bar-orange"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_bo_bia.jpg" alt="Bò Bía" class="food-photo-img"></div>
+            <div class="tile-name-text">Bò Bía</div>
+          </div>
+
+          <!-- Tile 11: GIEO QUẲ -->
+          <div class="real-tile gieo-que-tile" data-tile="11" id="tile-11">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 12: Các Món Chè -->
+          <div class="real-tile food-tile" data-tile="12" data-dish="che" id="tile-12">
+            <div class="tile-header bar-orange"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_che.jpg" alt="Các Món Chè" class="food-photo-img"></div>
+            <div class="tile-name-text">Món Chè</div>
+          </div>
+
+          <!-- Tile 13: Chợ Bà Chiểu -->
+          <div class="real-tile market-tile" data-tile="13" id="tile-13">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">BÀ CHIỂU</div>
+          </div>
+
+          <!-- TOP ROW (Tiles 14-21) - T từ phải sang trái -->
+          <!-- Tile 14: GIEO QUẲ (Góc trên phải) -->
+          <div class="real-tile gieo-que-tile" data-tile="14" id="tile-14">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 15: Mì Vịt Tiềm -->
+          <div class="real-tile food-tile" data-tile="15" data-dish="mi_vit_tiem" id="tile-15">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Mì Vịt Tiềm" class="food-photo-img"></div>
+            <div class="tile-name-text">Mì Vịt Tiềm</div>
+          </div>
+
+          <!-- Tile 16: Bánh Canh Cua -->
+          <div class="real-tile food-tile" data-tile="16" data-dish="banh_canh_cua" id="tile-16">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bánh Canh Cua" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Canh Cua</div>
+          </div>
+
+          <!-- Tile 17: Sủi Cảo -->
+          <div class="real-tile food-tile" data-tile="17" data-dish="sui_cao" id="tile-17">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Sủi Cảo" class="food-photo-img"></div>
+            <div class="tile-name-text">Sủi Cảo</div>
+          </div>
+
+          <!-- Tile 18: Bánh Tráng Trộn -->
+          <div class="real-tile food-tile" data-tile="18" data-dish="banh_trang_tron" id="tile-18">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bánh Tráng Trộn" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Tráng Trộn</div>
+          </div>
+
+          <!-- Tile 19: Bún Đậu Mắm Tôm -->
+          <div class="real-tile food-tile" data-tile="19" data-dish="bun_dau_mam_tom" id="tile-19">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bún Đậu Mắm Tôm" class="food-photo-img"></div>
+            <div class="tile-name-text">Bún Đậu Mắm Tôm</div>
+          </div>
+
+          <!-- Tile 20: Ốc -->
+          <div class="real-tile food-tile" data-tile="20" data-dish="oc" id="tile-20">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Ốc" class="food-photo-img"></div>
+            <div class="tile-name-text">Ốc</div>
+          </div>
+
+          <!-- Tile 21: GIEO QUẲ -->
+          <div class="real-tile gieo-que-tile" data-tile="21" id="tile-21">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- LEFT COLUMN (Tiles 22-27) - T từ trên xuống -->
+          <!-- Tile 22: Chợ An Đông -->
+          <div class="real-tile market-tile" data-tile="22" id="tile-22">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">AN ĐÔNG</div>
+          </div>
+
+          <!-- Tile 23: Chợ Bến Thành -->
+          <div class="real-tile market-tile" data-tile="23" id="tile-23">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">BẾN THÀNH</div>
+          </div>
+
+          <!-- Tile 24: Chợ Tân Định -->
+          <div class="real-tile market-tile" data-tile="24" id="tile-24">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">TÂN ĐỊNH</div>
+          </div>
+
+          <!-- Tile 25: GIEO QUẲ -->
+          <div class="real-tile gieo-que-tile" data-tile="25" id="tile-25">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 26: Cơm Tấm (lặp lại) -->
+          <div class="real-tile food-tile" data-tile="26" data-dish="com_tam" id="tile-26">
+            <div class="tile-header bar-blue"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Cơm Tấm" class="food-photo-img"></div>
+            <div class="tile-name-text">Cơm Tấm</div>
+          </div>
+
+          <!-- Tile 27: GIEO QUẲ (Góc trên trái) -->
+          <div class="real-tile gieo-que-tile" data-tile="27" id="tile-27">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Character Walking Player Token on Board -->
+          <div class="board-token-player" id="boardTokenPlayer">
+            <div class="token-character-rig" id="tokenCharacterRig">
+              <img src="assets/straw_boy_front_v6.png?v=60" alt="Quân cờ bé vàng rơm" class="token-character-img" id="tokenImg">
+              <div class="token-foot-shadow"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TRANSLUCENT BLACK VEIL & GUIDANCE PHASE -->
+    <div class="translucent-black-veil hidden" id="blackVeil"></div>
+
+    <!-- GUIDE CHARACTER -->
+    <div class="guide-character-right hidden" id="guideCharRight">
+      <img src="assets/straw_boy_pointing_v6.png?v=60" alt="Bé Tò Te Tí" class="guide-avatar-img" id="guideCharImg">
+    </div>
+
+    <!-- COMPACT CHATBOX AT BOTTOM -->
+    <div class="guidance-chatbox hidden" id="guidanceChatbox">
+      <div class="chatbox-inner">
+        <div class="chatbox-header">
+          <span class="chat-speaker">TÒ TE TÍ</span>
+        </div>
+        <p class="chat-message">
+          <span id="chatMessageText"></span>
+          <span class="chat-cursor" id="chatCursor">|</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- INVISIBLE FULL-SCREEN TAP ADVANCE TARGET -->
+    <div class="tap-anywhere-advance hidden" id="tapAnywhereAdvance" role="button" aria-label="Bấm vào nơi bất kỳ trên màn hình để tiếp tục"></div>
+
+    <!-- ==============================================================
+         3D WHITE PORCELAIN DICE STAGE (XÚC XẮC 3D GỐC)
+         ============================================================== -->
+    <div class="dice-center-stage hidden" id="diceCenterStage">
+      <canvas id="diceCanvas" title="Chạm để tung xúc xắc"></canvas>
+    </div>
+
+    <!-- ARRIVAL CELEBRATION BANNER -->
+    <div class="arrival-celebrate-title hidden" id="arrivalCelebrateTitle">
+      <div class="celebrate-banner-card">
+        <div class="celebrate-badge-tag">ĐIỂM DỪNG CHÂN ĐẶC BIỆT</div>
+        <h2 class="celebrate-hero-heading">CÙNG MÌNH KHÁM PHÁ THUII!</h2>
+        <div class="celebrate-filigree-divider">
+          <span class="divider-diamond">◆</span>
+          <span class="divider-line"></span>
+          <span class="divider-diamond">◆</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAIRYTALE CLOUDS & MIST PARTING TRANSITION SCENE -->
+  <div class="cloud-mist-transition-stage hidden" id="cloudMistTransitionStage">
+    <div class="mist-swirl-layer"></div>
+    <div class="mist-cloud-half mist-left" id="mistPartLeft">
+      <img src="assets/cloud_left.png" alt="Mây rẽ trái" class="mist-cloud-img">
+    </div>
+    <div class="mist-cloud-half mist-right" id="mistPartRight">
+      <img src="assets/cloud_right.png" alt="Mây rẽ phải" class="mist-cloud-img">
+    </div>
+    <div class="mist-golden-sunbeams"></div>
+    <div class="mist-center-title" id="mistCenterTitle">
+      <span class="mist-badge-sub">ĐIỂM DỪNG CHÂN MỸ VỊ</span>
+      <h2 class="mist-heading" id="mistDishHeading">CƠM TẤM SÀI GÒN</h2>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       STAGE 5: INTERACTIVE 2D VIETNAMESE CULINARY SHOWCASE
+       - THEME XANH PASTEL MƠ MỘNG: Hòa quyện cùng sắc trời và mây bồng bềnh
+       - BỐ CỤC: Ảnh món ăn ở GIỮA, lướt TRÁI ra Giới thiệu, lướt PHẢI ra Quán ngon
+       ============================================================== -->
+  <div class="food-detail-stage hidden theme-dreamy-pastel" id="foodDetailStage">
+    
+    <!-- Vietnamese Heritage Ornaments (Rồng bay, phượng múa, trống đồng) -->
+    <div class="heritage-ornaments-layer" aria-hidden="true">
+      <!-- Flying Dragon Top Left -->
+      <div class="heritage-motif motif-dragon-tl" title="Rồng Bay Thăng Long">
+        <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 60C25 45 35 25 55 22C70 20 85 30 105 15C110 10 115 15 110 22C95 42 75 40 58 50C42 58 25 65 10 60Z" fill="url(#pastelGrad1)" opacity="0.85"/>
+          <path d="M55 22C50 15 40 10 30 14M75 25C82 18 92 18 100 24" stroke="#7DD3FC" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="108" cy="18" r="3" fill="#BAE6FD"/>
+          <defs>
+            <linearGradient id="pastelGrad1" x1="0" y1="0" x2="120" y2="70" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#BAE6FD"/>
+              <stop offset="0.5" stop-color="#38BDF8"/>
+              <stop offset="1" stop-color="#0284C7"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Dancing Phoenix Top Right -->
+      <div class="heritage-motif motif-phoenix-tr" title="Phượng Múa Cát Tường">
+        <svg viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M110 60C95 45 85 25 65 22C50 20 35 30 15 15C10 10 5 15 10 22C25 42 45 40 62 50C78 58 95 65 110 60Z" fill="url(#pastelGrad2)" opacity="0.85"/>
+          <path d="M65 22C70 15 80 10 90 14M45 25C38 18 28 18 20 24" stroke="#7DD3FC" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="18" r="3" fill="#BAE6FD"/>
+          <defs>
+            <linearGradient id="pastelGrad2" x1="120" y1="0" x2="0" y2="70" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#BAE6FD"/>
+              <stop offset="0.5" stop-color="#38BDF8"/>
+              <stop offset="1" stop-color="#0284C7"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Dong Son Bronze Drum Center Sunburst Glow -->
+      <div class="dong-son-medallion"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="culinary-top-bar">
+      <button class="btn-top-back" id="btnBackToBoard" aria-label="Quay lại bàn cờ" title="Quay lại bàn cờ và tự động gieo xúc xắc tiếp">
+        <span class="btn-icon">◀</span>
+        <span>Quay lại Bàn Cờ</span>
+      </button>
+
+      <div class="culinary-dish-header-badge">
+        <span class="header-badge-tag">TINH HOA ẨM THỰC ĐƯỜNG PHỐ</span>
+        <h1 class="header-dish-title" id="detailDishTitle">Cơm Tấm Sài Gòn</h1>
+      </div>
+
+      <div class="top-nav-cue">
+        <span class="cue-pill">🇻🇳 Di Sản Dân Gian</span>
+      </div>
+    </header>
+
+    <!-- Interactive Navigation Tabs: Lướt Trái / Ở Giữa / Lướt Phải -->
+    <nav class="slider-nav-tabs dreamy-nav-pills" aria-label="Điều hướng xem món ăn">
+      <button class="slider-tab-btn" id="tabStory" data-panel="left" title="Xem Gốc Tích & Nguyên Liệu">
+        <span class="tab-dot">✦</span>
+        <span class="tab-label">Gốc Tích & Nguyên Liệu</span>
+      </button>
+      <button class="slider-tab-btn active-tab" id="tabDish" data-panel="center" title="Xem Hình Ảnh Món Ăn">
+        <span class="tab-dot">◆</span>
+        <span class="tab-label">Hình Ảnh Món Ăn</span>
+      </button>
+      <button class="slider-tab-btn" id="tabRestaurants" data-panel="right" title="Xem Quán Ngon Gia Truyền">
+        <span class="tab-label">Quán Ngon Gia Truyền</span>
+        <span class="tab-dot">✦</span>
+      </button>
+    </nav>
+
+    <!-- Main Sliding 3-Panel Viewport (Swiping / Sliding Left & Right) -->
+    <main class="culinary-carousel-viewport" id="culinaryCarouselViewport">
+      <div class="culinary-carousel-track view-center" id="culinaryCarouselTrack">
+        
+        <!-- ==============================================================
+             PANEL 1 (LEFT): PHẦN GIỚI THIỆU MÓN ĂN & MÂM NGUYÊN LIỆU
+             ============================================================== -->
+        <article class="carousel-panel panel-intro-left" id="panelIntroLeft">
+          <div class="panel-card-inner lacquer-red-box">
+            
+            <div class="panel-crest-header">
+              <span class="ornament-cloud">☁</span>
+              <span class="crest-tag">GỐC TÍCH & DI SẢN</span>
+              <h2 class="panel-hero-title">Câu Chuyện Món Ăn</h2>
+              <span class="ornament-cloud">☁</span>
+            </div>
+
+            <!-- Evocative Quote -->
+            <blockquote class="dish-quote-callout" id="dishQuoteText">
+              "Hạt tấm đầu rồng dẻo thơm quyện cùng sườn nướng than hoa ngào ngạt khói hè phố."
+            </blockquote>
+
+            <!-- Cultural Story Narrative -->
+            <div class="dish-story-body">
+              <p class="story-paragraph" id="dishStoryText">
+                Hạt gạo tấm gãy vốn là phần đầu mày hạt lúa bị vỡ khi xay xát của người bình dân Nam Bộ xưa, nay trở thành món ăn di sản được cả thế giới mê mẩn.
+              </p>
+            </div>
+
+            <!-- Ingredients Chips Grid -->
+            <div class="dish-ingredients-section">
+              <h3 class="section-gold-heading">
+                <span class="heading-lotus">❖</span>
+                <span>Mâm Nguyên Liệu Tinh Túy</span>
+                <span class="heading-lotus">❖</span>
+              </h3>
+              <div class="ingredients-chips-wrap" id="dishIngredientsChips">
+                <!-- Chips rendered via JS -->
+              </div>
+            </div>
+
+            <!-- Panel Bottom Action: Quay lại Món Ở Giữa -->
+            <button class="btn-panel-action btn-to-center" id="btnBackToCenterFromLeft">
+              <span>Xem Hình Món Ăn Ở Giữa</span>
+              <span class="action-arrow">➔</span>
+            </button>
+
+          </div>
+        </article>
+
+        <!-- ==============================================================
+             PANEL 2 (CENTER): HÌNH ẢNH MÓN ĂN Ở CHÍNH GIỮA (HERO SPOTLIGHT)
+             - Đã bỏ 2 nút hai bên
+             - Đã bỏ chữ quán ăn nổi tiếng thế giới
+             - Đã bỏ hết các dòng chữ dưới tên món ăn
+             ============================================================== -->
+        <article class="carousel-panel panel-hero-center" id="panelHeroCenter">
+          <div class="panel-card-inner lacquer-red-box hero-spotlight-card">
+
+            <!-- Large Centerpiece Dish Portrait Frame -->
+            <div class="dish-portrait-frame" id="dishPortraitFrame">
+              <div class="portrait-glow-halo"></div>
+              
+              <!-- 4 Traditional Bronze Corner Filigrees -->
+              <div class="portrait-corner-art tl"></div>
+              <div class="portrait-corner-art tr"></div>
+              <div class="portrait-corner-art bl"></div>
+              <div class="portrait-corner-art br"></div>
+              
+              <img src="assets/dish_com_tam.jpg" alt="Món ăn đặc sản" class="dish-hero-image" id="dishHeroImg">
+
+              <div class="dish-zoom-prompt">
+                <span>🔍 Chạm để phóng to</span>
+              </div>
+            </div>
+
+            <!-- Dish Name Only (Không còn các dòng rườm rà bên dưới) -->
+            <div class="dish-center-heading-group">
+              <h2 class="dish-center-name" id="dishCenterName">CƠM TẤM SÀI GÒN</h2>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- ==============================================================
+             PANEL 3 (RIGHT): CÁC QUÁN ĂN NỔI TIẾNG CỦA MÓN ĐÓ
+             ============================================================== -->
+        <article class="carousel-panel panel-restaurants-right" id="panelRestaurantsRight">
+          <div class="panel-card-inner lacquer-red-box">
+            
+            <div class="panel-crest-header">
+              <span class="ornament-cloud">☁</span>
+              <span class="crest-tag">ĐỊA CHỈ NỔI TIẾNG</span>
+              <h2 class="panel-hero-title">Quán Ngon Gia Truyền</h2>
+              <span class="ornament-cloud">☁</span>
+            </div>
+
+            <!-- City Filter Tabs: TP.HCM -->
+            <div class="restaurant-city-tabs">
+              <button class="city-tab-btn active" data-city="saigon">TP. Hồ Chí Minh</button>
+            </div>
+
+            <!-- Scrollable Restaurant Cards List -->
+            <div class="restaurants-scroll-container" id="restaurantsListContainer">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Panel Bottom Action: Quay lại Món Ở Giữa -->
+            <button class="btn-panel-action btn-to-center" id="btnBackToCenterFromRight">
+              <span class="action-arrow">◀</span>
+              <span>Xem Hình Món Ăn Ở Giữa</span>
+            </button>
+
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- Foreground Guide Character (Bé Tò Te Tí) -->
+    <div class="detail-foreground-character" id="detailGuideChar">
+      <img src="assets/straw_boy_pointing_v6.png?v=60" alt="Bé Tò Te Tí" class="detail-char-img" id="detailCharImg">
+    </div>
+
+    <!-- Dialogue Chatbox at Bottom: Hướng dẫn lướt trái/phải ngắn gọn -->
+    <div class="detail-guidance-chatbox" id="detailChatbox">
+      <div class="detail-chatbox-inner">
+        <div class="chatbox-header-tag">
+          <span class="chat-star">★</span>
+          <span class="detail-chat-speaker" id="detailChatSpeaker">BÉ TÒ TE TÍ</span>
+        </div>
+        <p class="detail-chat-text" id="detailChatText">
+          Chào bạn! Hãy lướt sang TRÁI để xem câu chuyện & nguyên liệu, hoặc lướt sang PHẢI để tìm các quán ăn nổi tiếng nhé!
+        </p>
+      </div>
+    </div>
+
+    <!-- Dish Image Zoom Modal -->
+    <div class="dish-zoom-modal hidden" id="dishZoomModal" role="dialog" aria-modal="true">
+      <div class="zoom-modal-backdrop" id="zoomModalBackdrop"></div>
+      <div class="zoom-modal-content">
+        <button class="btn-close-zoom" id="btnCloseZoom" aria-label="Đóng phóng to">✕ Đóng</button>
+        <img src="assets/dish_com_tam.jpg" alt="Ảnh phóng to" class="zoom-image-full" id="zoomImageFull">
+        <div class="zoom-caption" id="zoomCaption">Cơm Tấm Sài Gòn</div>
+      </div>
+    </div>
+
+    <!-- Toast Notification for Address Copying -->
+    <div class="copy-toast-notification hidden" id="copyToastNotification">
+      <span class="toast-icon">✓</span>
+      <span class="toast-msg" id="toastMessage">Đã sao chép địa chỉ quán ăn!</span>
+    </div>
+
+  </div>
+
+  <!-- Multi-Scene Fade Overlay -->
+  <div class="scene-fade-overlay hidden" id="sceneFadeOverlay"></div>
+
+  <!-- Culinary Food Database (10 Iconic Dishes) -->
+  <script src="food_data.js"></script>
+
+  <!-- Main Game & Board Controller -->
+  <script src="app.js?v=110"></script>
+</body>
+</html>

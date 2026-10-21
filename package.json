@@ -1,0 +1,11 @@
+{
+  "name": "to-te-ti-phieu-luu-ki",
+  "version": "1.0.0",
+  "description": "Tò Te Tí Phiêu Lưu Kí - Game cờ tỷ phú du lịch khám phá ẩm thực đường phố Việt Nam",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Hi5",
+  "license": "MIT"
+}
