@@ -660,7 +660,7 @@
     const toastMessage = document.getElementById('toastMessage');
 
     let currentStep = 1;
-    let currentTile = 0;
+    let currentTile = 7;
     let typingTimer = null;
     let currentActiveDish = null;
     let toastTimer = null;
@@ -914,6 +914,9 @@
           boardPerspectiveWrapper.classList.add('board-tabletop-horizontal');
           sfx.playWhoosh();
 
+          // Hiển thị nút tổng hợp món ăn
+          document.getElementById('summaryBtn').classList.remove('hidden');
+
           setTimeout(() => {
             guideCharRight.classList.add('hidden');
             boardTokenPlayer.classList.remove('hidden-until-roll');
@@ -1001,13 +1004,213 @@
     }
 
     // ------------------------------------------------------------------------
+    // FOOD SUMMARY FUNCTIONS
+    // ------------------------------------------------------------------------
+    function showFoodSummary() {
+      const modal = document.getElementById('foodSummaryModal');
+      const grid = document.getElementById('summaryGrid');
+      grid.innerHTML = '';
+
+      // Get all dishes from food_data.js
+      const dishKeys = ['com_tam', 'banh_xeo', 'banh_mi', 'pha_lau', 'hu_tieu', 'xoi', 'bun_thit_nuong', 'bot_chien', 'bo_bia', 'che', 'mi_vit_tiem', 'banh_canh_cua', 'sui_cao', 'banh_trang_tron', 'bun_dau_mam_tom', 'oc'];
+
+      dishKeys.forEach(key => {
+        const dish = getDishByKey(key);
+        if (dish) {
+          const item = document.createElement('div');
+          item.className = 'summary-item';
+          item.innerHTML = `
+            <h3>${dish.name}</h3>
+            <p>${dish.origin || dish.ingredients || dish.description || ''}</p>
+          `;
+          item.onclick = () => showDishDetail(dish);
+          grid.appendChild(item);
+        }
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function showDishDetail(dish) {
+      // Close summary modal
+      closeFoodSummary();
+
+      // Show dish detail with full information
+      currentActiveDish = dish;
+
+      // Hide summary and show food detail stage
+      document.getElementById('foodSummaryModal').classList.add('hidden');
+
+      // Populate dish detail
+      renderDishDetailStage(dish);
+      switchPanel('center', false);
+
+      // Show Stage 5
+      foodDetailStage.classList.remove('hidden');
+      foodDetailStage.scrollTop = 0;
+    }
+
+    function closeFoodSummary() {
+      const modal = document.getElementById('foodSummaryModal');
+      modal.classList.add('hidden');
+    }
+
+    // Make functions globally accessible
+    window.showFoodSummary = showFoodSummary;
+    window.closeFoodSummary = closeFoodSummary;
+
+
+    // ------------------------------------------------------------------------
+    // STEP 6.5: GIEO QUẲ - Nội dung ngẫu nhiên
+    // ------------------------------------------------------------------------
+    const gieoQueFacts = [
+      "Có cả một 'thành phố' nằm dưới lòng đất! Đó chính là Địa đạo Củ Chi - có chiều dài khoảng 250 km. Mạng lưới đường hầm từng có nơi ở, phòng họp, kho chứa, trạm cứu chữa và hệ thống thông gió. Đây gần như một hệ thống sinh hoạt dưới lòng đất được tổ chức qua nhiều tầng nhằm phục vụ cho cả 2 cuộc kháng chiến.",
+      "Sài Gòn có một trong những vườn thú lâu đời nhất thế giới. Đó chính là Thảo Cầm Viên Sài Gòn được xây dựng từ năm 1864. Được xây dựng từ 23/3/1864, công trình này đã tồn tại gần 2 thế kỉ, trước khi nhiều công trình hiện đại của thành phố ra đời. Đây không chỉ là nơi tham quan mà còn là một phần ký ức lịch sử của Sài Gòn.",
+      "Sở hữu đường vượt sông duy nhất ở Việt Nam và đầu tiên của Đông Nam Á. Hầm Thủ Thiêm nối khu vực trung tâm với bán đảo Thủ Thiêm. Khi được đưa vào khai thác năm 2011, đây là hầm vượt sông đầu tiên ở Đông Nam Á. Thay vì xây cầu bắc qua sông, công trình đưa phương tiện đi xuyên bên dưới lòng sông — một giải pháp kỹ thuật cực kỳ đáng chú ý.",
+      "Trung tâm Sài Gòn ngày nay từng là vùng rừng rậm và đầm lầy. Những khu vực đô thị sầm uất ngày nay từng có cảnh quan tự nhiên với rừng tràm, rừng dừa và nhiều vùng đất ngập nước. Quá trình khai phá, xây dựng đường sá và quy hoạch đã biến đổi diện mạo khu vực qua nhiều thế kỷ.",
+      "TP.HCM hiện nay không chỉ có khu vực Sài Gòn quen thuộc. Từ ngày 1/7/2025, TP.HCM mới được hình thành sau khi sáp nhập TP.HCM trước đó với tỉnh Bình Dương và tỉnh Bà Rịa – Vũng Tàu.",
+      "Bánh mì Việt Nam có nguồn gốc từ bánh mì kiểu Pháp, nhưng đã trở thành một món hoàn toàn khác. Baguette được du nhập vào Việt Nam từ thời Pháp thuộc. Người Việt biến tấu ổ bánh với phần ruột nhẹ, vỏ giòn, pate, thịt nguội, rau thơm, đồ chua và nước sốt. Đặc biệt, từ 'banh mi' đã được đưa vào Oxford English Dictionary năm 2011."
+    ];
+
+    const gieoQueQuestions = [
+      {
+        question: "Tên gọi 'cơm tấm' bắt nguồn từ điều gì?",
+        options: ["A. Cơm được nấu trong tấm lá chuối", "B. Cơm được làm từ hạt gạo vỡ", "C. Cơm ăn kèm với tấm bánh tráng", "D. Cơm được ép thành từng tấm"],
+        answer: "B",
+        explanation: "'Tấm' là những hạt gạo bị vỡ trong quá trình xay xát."
+      },
+      {
+        question: "Nguyên liệu nào thường có trong một ổ bánh mì Sài Gòn truyền thống?",
+        options: ["A. Pate, thịt nguội, rau thơm và đồ chua", "B. Phô mai xanh và mì Ý", "C. Kim chi và rong biển", "D. Bơ đậu phộng và mứt trái cây"],
+        answer: "A",
+        explanation: "Bánh mì Sài Gòn thường kết hợp pate, thịt, rau thơm, dưa leo và đồ chua."
+      },
+      {
+        question: "Món ăn đường phố nào thường gồm những miếng bột gạo chiên với trứng, ăn kèm đu đủ bào?",
+        options: ["A. Bánh khọt", "B. Bột chiên", "C. Bánh cuốn", "D. Bánh bèo"],
+        answer: "B",
+        explanation: "Bột chiên là món ăn phổ biến, có dấu ấn ẩm thực người Hoa tại Sài Gòn."
+      },
+      {
+        question: "Phá lấu thường được chế biến chủ yếu từ nguyên liệu nào?",
+        options: ["A. Các loại đậu", "B. Hải sản sống", "C. Nội tạng động vật", "D. Trái cây nhiệt đới"],
+        answer: "C",
+        explanation: "Phá lấu thường dùng nội tạng, nấu cùng các loại gia vị thơm."
+      },
+      {
+        question: "Hủ tiếu Nam Vang gắn với thành phố nào ở Campuchia?",
+        options: ["A. Siem Reap", "B. Phnom Penh", "C. Battambang", "D. Sihanoukville"],
+        answer: "B",
+        explanation: "Nam Vang là tên gọi Hán-Việt gắn với Phnom Penh, thủ đô Campuchia."
+      },
+      {
+        question: "Điều gì thể hiện rõ nét sự giao thoa văn hóa trong ẩm thực TP.HCM?",
+        options: ["A. Tất cả món ăn đều có cùng nguồn gốc", "B. Chỉ sử dụng nguyên liệu nhập khẩu", "C. Nhiều món kết hợp ảnh hưởng Việt, Hoa và các nền ẩm thực khác", "D. Ẩm thực chỉ có món ăn truyền thống"],
+        answer: "C",
+        explanation: "Ẩm thực TP.HCM hình thành qua quá trình giao lưu, tiếp nhận và biến tấu giữa nhiều cộng đồng."
+      }
+    ];
+
+    function showGieoQueContent() {
+      // Randomly choose between fact or quiz
+      const isQuiz = Math.random() < 0.5;
+
+      if (isQuiz) {
+        // Show random quiz question in modal
+        const randomQuiz = gieoQueQuestions[Math.floor(Math.random() * gieoQueQuestions.length)];
+        showQuizModal(randomQuiz);
+      } else {
+        // Show random fact in alert
+        const randomFact = gieoQueFacts[Math.floor(Math.random() * gieoQueFacts.length)];
+        alert(randomFact);
+        showBoardOnReturn(true);
+      }
+    }
+
+    function showQuizModal(quizData) {
+      const modal = document.getElementById('quizModal');
+      const questionEl = document.getElementById('quizQuestion');
+      const optionsEl = document.getElementById('quizOptions');
+      const explanationEl = document.getElementById('quizExplanation');
+      const nextBtn = document.getElementById('quizNextBtn');
+
+      questionEl.textContent = quizData.question;
+      optionsEl.innerHTML = '';
+      explanationEl.classList.add('hidden');
+      nextBtn.classList.add('hidden');
+
+      quizData.options.forEach((option, index) => {
+        const optionBtn = document.createElement('div');
+        optionBtn.className = 'quiz-option';
+        optionBtn.textContent = option;
+        optionBtn.onclick = () => checkAnswer(optionBtn, option[0], quizData.answer, quizData.explanation);
+        optionsEl.appendChild(optionBtn);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function checkAnswer(optionBtn, selected, correct, explanation) {
+      const options = document.querySelectorAll('.quiz-option');
+      const explanationEl = document.getElementById('quizExplanation');
+      const nextBtn = document.getElementById('quizNextBtn');
+
+      // Disable all options
+      options.forEach(opt => opt.onclick = null);
+
+      if (selected === correct) {
+        optionBtn.classList.add('correct');
+      } else {
+        optionBtn.classList.add('wrong');
+        // Highlight correct answer
+        options.forEach(opt => {
+          if (opt.textContent[0] === correct) {
+            opt.classList.add('correct');
+          }
+        });
+      }
+
+      // Show explanation
+      explanationEl.textContent = 'Giải thích: ' + explanation;
+      explanationEl.classList.remove('hidden');
+      nextBtn.classList.remove('hidden');
+    }
+
+    function closeQuiz() {
+      document.getElementById('quizModal').classList.add('hidden');
+      showBoardOnReturn(true);
+    }
+
+    function continueAfterQuiz() {
+      closeQuiz();
+    }
+
+    // Make functions globally accessible
+    window.closeQuiz = closeQuiz;
+    window.continueAfterQuiz = continueAfterQuiz;
+
+
+    // ------------------------------------------------------------------------
     // STEP 7: "CÙNG MÌNH KHÁM PHÁ THUII" -> 3-PANEL IMPERIAL RED SHOWCASE
     // ------------------------------------------------------------------------
     function triggerArrivalAndTransitionToFoodStage(tileIndex) {
       const dish = getDishForTile(tileIndex);
       currentActiveDish = dish;
 
-      // Nếu ô không có món ăn (GIEO QUẲ, CHỢ, GÓC, BẮT ĐẦU), chỉ gieo xúc xắc tiếp
+      // Nếu là ô GIEO QUẲ, hiển thị nội dung ngẫu nhiên
+      const tileEl = document.getElementById(`tile-${tileIndex}`);
+      if (tileEl && tileEl.classList.contains('gieo-que-tile')) {
+        showGieoQueContent();
+        return;
+      }
+
+      // Nếu là ô BẮT ĐẦU, chỉ gieo xúc xắc tiếp
+      if (tileEl && tileEl.classList.contains('tile-start-square')) {
+        showBoardOnReturn(true);
+        return;
+      }
+
+      // Nếu ô không có món ăn (CHỢ, GÓC), chỉ gieo xúc xắc tiếp
       if (!dish) {
         showBoardOnReturn(true); // Tự động mở xúc xắc tiếp
         return;

@@ -20,6 +20,12 @@
   <!-- Film Grain Texture Overlay (Hạt grain nhẹ truyền thống) -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
+  <!-- Nút Tổng Hợp Món Ăn -->
+  <button id="summaryBtn" class="summary-button hidden" onclick="showFoodSummary()">
+    <span class="summary-icon">📋</span>
+    <span class="summary-text">Tổng Hợp Món Ăn</span>
+  </button>
+
   <!-- Vertical Ombre Background: Lightest #3A99BA on top to deepest #072865 at bottom -->
   <div class="site-ombre-bg"></div>
 
@@ -146,7 +152,7 @@
             <img src="assets/clean_monopoly_center.jpg" alt="Chợ Ẩm Thực Đường Phố Việt Nam" class="board-art-img">
           </div>
 
-          <!-- 28 TILES: 1 BẮT ĐẦU + 3 GIEO QUẲ GÓC + 4 CHỢ + 4 GIEO QUẲ HÀNG + 16 MÓN ĂN -->
+          <!-- 28 TILES: 4 GIEO QUẲ GÓC + 4 CHỢ CẠNH + 4 GIEO QUẲ HÀNG + 1 BẮT ĐẦU + 19 MÓN ĂN -->
 
           <!-- BOTTOM ROW (Tiles 0-7) - T từ trái sang phải -->
           <!-- Tile 0: GIEO QUẲ (Góc dưới trái) -->
@@ -168,63 +174,58 @@
             <div class="tile-name-text">Bánh Xèo</div>
           </div>
 
-          <!-- Tile 3: Bánh Mì -->
-          <div class="real-tile food-tile" data-tile="3" data-dish="banh_mi" id="tile-3">
+          <!-- Tile 3: Chợ Bà Chiểu -->
+          <div class="real-tile market-tile" data-tile="3" id="tile-3">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">BÀ CHIỂU</div>
+          </div>
+
+          <!-- Tile 4: Bánh Mì -->
+          <div class="real-tile food-tile" data-tile="4" data-dish="banh_mi" id="tile-4">
             <div class="tile-header bar-gold"></div>
             <div class="tile-photo-badge"><img src="assets/dish_banh_mi.jpg" alt="Bánh Mì" class="food-photo-img"></div>
             <div class="tile-name-text">Bánh Mì</div>
           </div>
 
-          <!-- Tile 4: Phá Lấu -->
-          <div class="real-tile food-tile" data-tile="4" data-dish="pha_lau" id="tile-4">
+          <!-- Tile 5: Phá Lấu -->
+          <div class="real-tile food-tile" data-tile="5" data-dish="pha_lau" id="tile-5">
             <div class="tile-header bar-gold"></div>
             <div class="tile-photo-badge"><img src="assets/dish_pha_lau.jpg" alt="Phá Lấu" class="food-photo-img"></div>
             <div class="tile-name-text">Phá Lấu</div>
           </div>
 
-          <!-- Tile 5: Hủ Tiếu -->
-          <div class="real-tile food-tile" data-tile="5" data-dish="hu_tieu" id="tile-5">
+          <!-- Tile 6: Hủ Tiếu -->
+          <div class="real-tile food-tile" data-tile="6" data-dish="hu_tieu" id="tile-6">
             <div class="tile-header bar-gold"></div>
             <div class="tile-photo-badge"><img src="assets/dish_hu_tieu.jpg" alt="Hủ Tiếu" class="food-photo-img"></div>
             <div class="tile-name-text">Hủ Tiếu</div>
           </div>
 
-          <!-- Tile 6: Xôi -->
-          <div class="real-tile food-tile" data-tile="6" data-dish="xoi" id="tile-6">
-            <div class="tile-header bar-gold"></div>
+          <!-- Tile 7: GIEO QUẲ (Góc dưới phải) -->
+          <div class="real-tile gieo-que-tile" data-tile="7" id="tile-7">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- RIGHT COLUMN (Tiles 8-13) - T từ dưới lên -->
+          <!-- Tile 8: Xôi -->
+          <div class="real-tile food-tile" data-tile="8" data-dish="xoi" id="tile-8">
+            <div class="tile-header bar-red"></div>
             <div class="tile-photo-badge"><img src="assets/dish_xoi.jpg" alt="Xôi" class="food-photo-img"></div>
             <div class="tile-name-text">Xôi</div>
           </div>
 
-          <!-- Tile 7: BẮT ĐẦU (Góc dưới phải) -->
-          <div class="real-tile tile-start-square" data-tile="7" id="tile-7">
-            <div class="start-header-bar">BẮT ĐẦU</div>
-            <div class="start-badge-wrap">
-              <span class="start-arrow-symbol">⬅</span>
-            </div>
-            <div class="start-footer-label">GO</div>
-          </div>
-
-          <!-- RIGHT COLUMN (Tiles 8-13) - T từ dưới lên -->
-          <!-- Tile 8: Bún Thịt Nướng -->
-          <div class="real-tile food-tile" data-tile="8" data-dish="bun_thit_nuong" id="tile-8">
+          <!-- Tile 9: Bún Thịt Nướng -->
+          <div class="real-tile food-tile" data-tile="9" data-dish="bun_thit_nuong" id="tile-9">
             <div class="tile-header bar-red"></div>
             <div class="tile-photo-badge"><img src="assets/dish_bun_thit_nuong.jpg" alt="Bún Thịt Nướng" class="food-photo-img"></div>
             <div class="tile-name-text">Bún Thịt Nướng</div>
           </div>
 
-          <!-- Tile 9: Bột Chiên -->
-          <div class="real-tile food-tile" data-tile="9" data-dish="bot_chien" id="tile-9">
-            <div class="tile-header bar-red"></div>
+          <!-- Tile 10: Bột Chiên -->
+          <div class="real-tile food-tile" data-tile="10" data-dish="bot_chien" id="tile-10">
+            <div class="tile-header bar-orange"></div>
             <div class="tile-photo-badge"><img src="assets/dish_bot_chien.jpg" alt="Bột Chiên" class="food-photo-img"></div>
             <div class="tile-name-text">Bột Chiên</div>
-          </div>
-
-          <!-- Tile 10: Bò Bía -->
-          <div class="real-tile food-tile" data-tile="10" data-dish="bo_bia" id="tile-10">
-            <div class="tile-header bar-orange"></div>
-            <div class="tile-photo-badge"><img src="assets/dish_bo_bia.jpg" alt="Bò Bía" class="food-photo-img"></div>
-            <div class="tile-name-text">Bò Bía</div>
           </div>
 
           <!-- Tile 11: GIEO QUẲ -->
@@ -232,17 +233,17 @@
             <div class="gieo-que-label">GIEO QUẲ</div>
           </div>
 
-          <!-- Tile 12: Các Món Chè -->
-          <div class="real-tile food-tile" data-tile="12" data-dish="che" id="tile-12">
+          <!-- Tile 12: Bò Bía -->
+          <div class="real-tile food-tile" data-tile="12" data-dish="bo_bia" id="tile-12">
             <div class="tile-header bar-orange"></div>
-            <div class="tile-photo-badge"><img src="assets/dish_che.jpg" alt="Các Món Chè" class="food-photo-img"></div>
-            <div class="tile-name-text">Món Chè</div>
+            <div class="tile-photo-badge"><img src="assets/dish_bo_bia.jpg" alt="Bò Bía" class="food-photo-img"></div>
+            <div class="tile-name-text">Bò Bía</div>
           </div>
 
-          <!-- Tile 13: Chợ Bà Chiểu -->
+          <!-- Tile 13: Chợ An Đông -->
           <div class="real-tile market-tile" data-tile="13" id="tile-13">
             <div class="market-header">CHỢ</div>
-            <div class="market-name">BÀ CHIỂU</div>
+            <div class="market-name">AN ĐÔNG</div>
           </div>
 
           <!-- TOP ROW (Tiles 14-21) - T từ phải sang trái -->
@@ -265,68 +266,258 @@
             <div class="tile-name-text">Bánh Canh Cua</div>
           </div>
 
-          <!-- Tile 17: Sủi Cảo -->
-          <div class="real-tile food-tile" data-tile="17" data-dish="sui_cao" id="tile-17">
+          <!-- Tile 17: Chợ Bến Thành -->
+          <div class="real-tile market-tile" data-tile="17" id="tile-17">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">BẾN THÀNH</div>
+          </div>
+
+          <!-- Tile 18: Sủi Cảo -->
+          <div class="real-tile food-tile" data-tile="18" data-dish="sui_cao" id="tile-18">
             <div class="tile-header bar-green"></div>
             <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Sủi Cảo" class="food-photo-img"></div>
             <div class="tile-name-text">Sủi Cảo</div>
           </div>
 
-          <!-- Tile 18: Bánh Tráng Trộn -->
-          <div class="real-tile food-tile" data-tile="18" data-dish="banh_trang_tron" id="tile-18">
+          <!-- Tile 19: Bánh Tráng Trộn -->
+          <div class="real-tile food-tile" data-tile="19" data-dish="banh_trang_tron" id="tile-19">
             <div class="tile-header bar-green"></div>
             <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bánh Tráng Trộn" class="food-photo-img"></div>
             <div class="tile-name-text">Bánh Tráng Trộn</div>
           </div>
 
-          <!-- Tile 19: Bún Đậu Mắm Tôm -->
-          <div class="real-tile food-tile" data-tile="19" data-dish="bun_dau_mam_tom" id="tile-19">
+          <!-- Tile 20: Bún Đậu Mắm Tôm -->
+          <div class="real-tile food-tile" data-tile="20" data-dish="bun_dau_mam_tom" id="tile-20">
             <div class="tile-header bar-green"></div>
             <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bún Đậu Mắm Tôm" class="food-photo-img"></div>
             <div class="tile-name-text">Bún Đậu Mắm Tôm</div>
           </div>
 
-          <!-- Tile 20: Ốc -->
-          <div class="real-tile food-tile" data-tile="20" data-dish="oc" id="tile-20">
+          <!-- Tile 21: Ốc -->
+          <div class="real-tile food-tile" data-tile="21" data-dish="oc" id="tile-21">
             <div class="tile-header bar-green"></div>
             <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Ốc" class="food-photo-img"></div>
             <div class="tile-name-text">Ốc</div>
           </div>
 
-          <!-- Tile 21: GIEO QUẲ -->
-          <div class="real-tile gieo-que-tile" data-tile="21" id="tile-21">
-            <div class="gieo-que-label">GIEO QUẲ</div>
-          </div>
-
           <!-- LEFT COLUMN (Tiles 22-27) - T từ trên xuống -->
-          <!-- Tile 22: Chợ An Đông -->
+          <!-- Tile 22: Chợ Tân Định -->
           <div class="real-tile market-tile" data-tile="22" id="tile-22">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">AN ĐÔNG</div>
-          </div>
-
-          <!-- Tile 23: Chợ Bến Thành -->
-          <div class="real-tile market-tile" data-tile="23" id="tile-23">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">BẾN THÀNH</div>
-          </div>
-
-          <!-- Tile 24: Chợ Tân Định -->
-          <div class="real-tile market-tile" data-tile="24" id="tile-24">
             <div class="market-header">CHỢ</div>
             <div class="market-name">TÂN ĐỊNH</div>
           </div>
 
-          <!-- Tile 25: GIEO QUẲ -->
-          <div class="real-tile gieo-que-tile" data-tile="25" id="tile-25">
-            <div class="gieo-que-label">GIEO QUẲ</div>
-          </div>
-
-          <!-- Tile 26: Cơm Tấm (lặp lại) -->
-          <div class="real-tile food-tile" data-tile="26" data-dish="com_tam" id="tile-26">
+          <!-- Tile 23: Cơm Tấm (lặp lại) -->
+          <div class="real-tile food-tile" data-tile="23" data-dish="com_tam" id="tile-23">
             <div class="tile-header bar-blue"></div>
             <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Cơm Tấm" class="food-photo-img"></div>
             <div class="tile-name-text">Cơm Tấm</div>
+          </div>
+
+          <!-- Tile 24: GIEO QUẲ -->
+          <div class="real-tile gieo-que-tile" data-tile="24" id="tile-24">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 25: Bánh Xèo (lặp lại) -->
+          <div class="real-tile food-tile" data-tile="25" data-dish="banh_xeo" id="tile-25">
+            <div class="tile-header bar-blue"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_xeo.jpg" alt="Bánh Xèo" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Xèo</div>
+          </div>
+
+          <!-- Tile 26: Bánh Mì (lặp lại) -->
+          <div class="real-tile food-tile" data-tile="26" data-dish="banh_mi" id="tile-26">
+            <div class="tile-header bar-blue"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_mi.jpg" alt="Bánh Mì" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Mì</div>
+          </div>
+
+          <!-- Tile 27: GIEO QUẲ (Góc trên trái) -->
+          <div class="real-tile gieo-que-tile" data-tile="27" id="tile-27">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+          <!-- BOTTOM ROW (Tiles 0-7) - T từ trái sang phải -->
+          <!-- Tile 0: GIEO QUẲ (Góc dưới trái) -->
+          <div class="real-tile gieo-que-tile" data-tile="0" id="tile-0">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 1: Cơm Tấm -->
+          <div class="real-tile food-tile" data-tile="1" data-dish="com_tam" id="tile-1">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Cơm Tấm" class="food-photo-img"></div>
+            <div class="tile-name-text">Cơm Tấm</div>
+          </div>
+
+          <!-- Tile 2: Bánh Xèo -->
+          <div class="real-tile food-tile" data-tile="2" data-dish="banh_xeo" id="tile-2">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_xeo.jpg" alt="Bánh Xèo" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Xèo</div>
+          </div>
+
+          <!-- Tile 3: Chợ Bà Chiểu -->
+          <div class="real-tile market-tile" data-tile="3" id="tile-3">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">BÀ CHIỂU</div>
+          </div>
+
+          <!-- Tile 4: Bánh Mì -->
+          <div class="real-tile food-tile" data-tile="4" data-dish="banh_mi" id="tile-4">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_mi.jpg" alt="Bánh Mì" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Mì</div>
+          </div>
+
+          <!-- Tile 5: Phá Lấu -->
+          <div class="real-tile food-tile" data-tile="5" data-dish="pha_lau" id="tile-5">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_pha_lau.jpg" alt="Phá Lấu" class="food-photo-img"></div>
+            <div class="tile-name-text">Phá Lấu</div>
+          </div>
+
+          <!-- Tile 6: Hủ Tiếu -->
+          <div class="real-tile food-tile" data-tile="6" data-dish="hu_tieu" id="tile-6">
+            <div class="tile-header bar-gold"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_hu_tieu.jpg" alt="Hủ Tiếu" class="food-photo-img"></div>
+            <div class="tile-name-text">Hủ Tiếu</div>
+          </div>
+
+          <!-- Tile 7: BẮT ĐẦU (Góc dưới phải - nơi nhân vật bắt đầu) -->
+          <div class="real-tile tile-start-square" data-tile="7" id="tile-7">
+            <div class="start-header-bar">BẮT ĐẦU</div>
+            <div class="start-badge-wrap">
+              <span class="start-arrow-symbol">⬅</span>
+            </div>
+            <div class="start-footer-label">GO</div>
+          </div>
+
+          <!-- RIGHT COLUMN (Tiles 8-13) - T từ dưới lên -->
+          <!-- Tile 8: Xôi -->
+          <div class="real-tile food-tile" data-tile="8" data-dish="xoi" id="tile-8">
+            <div class="tile-header bar-red"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_xoi.jpg" alt="Xôi" class="food-photo-img"></div>
+            <div class="tile-name-text">Xôi</div>
+          </div>
+
+          <!-- Tile 9: Bún Thịt Nướng -->
+          <div class="real-tile food-tile" data-tile="9" data-dish="bun_thit_nuong" id="tile-9">
+            <div class="tile-header bar-red"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_bun_thit_nuong.jpg" alt="Bún Thịt Nướng" class="food-photo-img"></div>
+            <div class="tile-name-text">Bún Thịt Nướng</div>
+          </div>
+
+          <!-- Tile 10: Bột Chiên -->
+          <div class="real-tile food-tile" data-tile="10" data-dish="bot_chien" id="tile-10">
+            <div class="tile-header bar-orange"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_bot_chien.jpg" alt="Bột Chiên" class="food-photo-img"></div>
+            <div class="tile-name-text">Bột Chiên</div>
+          </div>
+
+          <!-- Tile 11: GIEO QUẲ -->
+          <div class="real-tile gieo-que-tile" data-tile="11" id="tile-11">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 12: Bò Bía -->
+          <div class="real-tile food-tile" data-tile="12" data-dish="bo_bia" id="tile-12">
+            <div class="tile-header bar-orange"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_bo_bia.jpg" alt="Bò Bía" class="food-photo-img"></div>
+            <div class="tile-name-text">Bò Bía</div>
+          </div>
+
+          <!-- Tile 13: Chợ An Đông -->
+          <div class="real-tile market-tile" data-tile="13" id="tile-13">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">AN ĐÔNG</div>
+          </div>
+
+          <!-- TOP ROW (Tiles 14-21) - T từ phải sang trái -->
+          <!-- Tile 14: GIEO QUẲ (Góc trên phải) -->
+          <div class="real-tile gieo-que-tile" data-tile="14" id="tile-14">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 15: Mì Vịt Tiềm -->
+          <div class="real-tile food-tile" data-tile="15" data-dish="mi_vit_tiem" id="tile-15">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Mì Vịt Tiềm" class="food-photo-img"></div>
+            <div class="tile-name-text">Mì Vịt Tiềm</div>
+          </div>
+
+          <!-- Tile 16: Bánh Canh Cua -->
+          <div class="real-tile food-tile" data-tile="16" data-dish="banh_canh_cua" id="tile-16">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bánh Canh Cua" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Canh Cua</div>
+          </div>
+
+          <!-- Tile 17: Chợ Bến Thành -->
+          <div class="real-tile market-tile" data-tile="17" id="tile-17">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">BẾN THÀNH</div>
+          </div>
+
+          <!-- Tile 18: Sủi Cảo -->
+          <div class="real-tile food-tile" data-tile="18" data-dish="sui_cao" id="tile-18">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Sủi Cảo" class="food-photo-img"></div>
+            <div class="tile-name-text">Sủi Cảo</div>
+          </div>
+
+          <!-- Tile 19: Bánh Tráng Trộn -->
+          <div class="real-tile food-tile" data-tile="19" data-dish="banh_trang_tron" id="tile-19">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bánh Tráng Trộn" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Tráng Trộn</div>
+          </div>
+
+          <!-- Tile 20: Bún Đậu Mắm Tôm -->
+          <div class="real-tile food-tile" data-tile="20" data-dish="bun_dau_mam_tom" id="tile-20">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Bún Đậu Mắm Tôm" class="food-photo-img"></div>
+            <div class="tile-name-text">Bún Đậu Mắm Tôm</div>
+          </div>
+
+          <!-- Tile 21: Ốc -->
+          <div class="real-tile food-tile" data-tile="21" data-dish="oc" id="tile-21">
+            <div class="tile-header bar-green"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Ốc" class="food-photo-img"></div>
+            <div class="tile-name-text">Ốc</div>
+          </div>
+
+          <!-- LEFT COLUMN (Tiles 22-27) - T từ trên xuống -->
+          <!-- Tile 22: Chợ Tân Định -->
+          <div class="real-tile market-tile" data-tile="22" id="tile-22">
+            <div class="market-header">CHỢ</div>
+            <div class="market-name">TÂN ĐỊNH</div>
+          </div>
+
+          <!-- Tile 23: Cơm Tấm (lặp lại) -->
+          <div class="real-tile food-tile" data-tile="23" data-dish="com_tam" id="tile-23">
+            <div class="tile-header bar-blue"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_com_tam.jpg" alt="Cơm Tấm" class="food-photo-img"></div>
+            <div class="tile-name-text">Cơm Tấm</div>
+          </div>
+
+          <!-- Tile 24: GIEO QUẲ -->
+          <div class="real-tile gieo-que-tile" data-tile="24" id="tile-24">
+            <div class="gieo-que-label">GIEO QUẲ</div>
+          </div>
+
+          <!-- Tile 25: Bánh Xèo (lặp lại) -->
+          <div class="real-tile food-tile" data-tile="25" data-dish="banh_xeo" id="tile-25">
+            <div class="tile-header bar-blue"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_xeo.jpg" alt="Bánh Xèo" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Xèo</div>
+          </div>
+
+          <!-- Tile 26: Bánh Mì (lặp lại) -->
+          <div class="real-tile food-tile" data-tile="26" data-dish="banh_mi" id="tile-26">
+            <div class="tile-header bar-blue"></div>
+            <div class="tile-photo-badge"><img src="assets/dish_banh_mi.jpg" alt="Bánh Mì" class="food-photo-img"></div>
+            <div class="tile-name-text">Bánh Mì</div>
           </div>
 
           <!-- Tile 27: GIEO QUẲ (Góc trên trái) -->
@@ -464,6 +655,10 @@
 
     <!-- Main Sliding 3-Panel Viewport (Swiping / Sliding Left & Right) -->
     <main class="culinary-carousel-viewport" id="culinaryCarouselViewport">
+      <!-- Navigation Buttons -->
+      <button class="nav-wing-btn nav-wing-left" id="btnWingLeft" aria-label="Lướt sang trái">◀</button>
+      <button class="nav-wing-btn nav-wing-right" id="btnWingRight" aria-label="Lướt sang phải">▶</button>
+
       <div class="culinary-carousel-track view-center" id="culinaryCarouselTrack">
         
         <!-- ==============================================================
@@ -619,6 +814,35 @@
 
   <!-- Multi-Scene Fade Overlay -->
   <div class="scene-fade-overlay hidden" id="sceneFadeOverlay"></div>
+
+  <!-- Food Summary Modal -->
+  <div class="food-summary-modal hidden" id="foodSummaryModal">
+    <div class="summary-content">
+      <div class="summary-header">
+        <h2>TỔNG HỢP MÓN ĂN</h2>
+        <button class="summary-close-btn" onclick="closeFoodSummary()">✕</button>
+      </div>
+      <div class="summary-grid" id="summaryGrid">
+        <!-- Món ăn sẽ được tạo động bằng JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Modal -->
+  <div class="quiz-modal hidden" id="quizModal">
+    <div class="quiz-content">
+      <div class="quiz-header">
+        <h2>GIEO QUẲ - CÂU HỎI</h2>
+        <button class="quiz-close-btn" onclick="closeQuiz()">✕</button>
+      </div>
+      <div class="quiz-body">
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-explanation hidden" id="quizExplanation"></div>
+        <button class="quiz-next-btn hidden" id="quizNextBtn" onclick="continueAfterQuiz()">Tiếp Tục</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Culinary Food Database (10 Iconic Dishes) -->
   <script src="food_data.js"></script>
