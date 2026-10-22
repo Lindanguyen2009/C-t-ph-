@@ -773,9 +773,9 @@ html, body {
 
 /* Photo Badges */
 .tile-photo-badge {
-  width: min(32px, 4.2vmin);
-  height: min(32px, 4.2vmin);
-  border-radius: 50%;
+  width: min(60px, 8vmin);
+  height: min(60px, 8vmin);
+  border-radius: 8px;
   overflow: hidden;
   border: 1.5px solid rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
@@ -786,7 +786,7 @@ html, body {
 .food-photo-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
