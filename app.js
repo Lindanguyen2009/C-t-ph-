@@ -597,7 +597,7 @@
     const guideCharRight = document.getElementById('guideCharRight');
     const guideCharImg = document.getElementById('guideCharImg');
     const guidanceChatbox = document.getElementById('guidanceChatbox');
-    const chatMessageText = document.getElementById('chatMessageText');
+    const chatMessageContainer = document.getElementById('chatMessageContainer');
     const tapAnywhereAdvance = document.getElementById('tapAnywhereAdvance');
 
     const diceCenterStage = document.getElementById('diceCenterStage');
@@ -686,6 +686,32 @@
           if (onComplete) onComplete();
         }
       }, 18);
+    }
+
+    // Hiển thị text trực tiếp không animation (cho những lần sau)
+    function displayTextDirect(container, text) {
+      if (!container) return;
+      // Xóa các message cũ
+      container.innerHTML = '';
+      // Tách câu theo dấu chấm (.) và dấu chấm hỏi (?) thôi, không tách theo dấu chấm than (!)
+      const sentences = text.split(/(?<=[.?])\s+/);
+      sentences.forEach(sentence => {
+        if (sentence.trim()) {
+          const msgDiv = document.createElement('div');
+          msgDiv.className = 'chat-message-line';
+          msgDiv.textContent = sentence.trim();
+          container.appendChild(msgDiv);
+        }
+      });
+    }
+
+    // Shuffle array để ngẫu nhiên
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
     }
 
     // Show Toast Notification
@@ -799,13 +825,106 @@
 
       guidanceChatbox.classList.remove('hidden');
 
-      const introText = "Này này! Bạn ơi!\n\nĐứng đó làm gì mà ngó?\n\nLại đây, Tò Te Tí dẫn bạn rong ruổi một vòng!\n\nTrong từng ô cờ là một món ăn, một gánh hàng, một câu chuyện và một góc nhỏ của văn hóa Việt đang chờ bạn tìm đến thôi.\n\nNhấn vào bàn cờ để bắt đầu chơi!";
-      
-      typewrite(chatMessageText, introText, () => {
-        // Sau khi typewrite xong, cho phép người dùng nhấn vào bàn cờ để tiếp tục
-        canAdvanceToDice = true;
-        if (tapAnywhereAdvance) tapAnywhereAdvance.classList.remove('hidden');
-      });
+      // Lượt đầu: hiện 2 textbox lần lượt với animation
+      const introText1 = "Này này! Bạn ơi! Đứng đó làm gì mà ngó?  Lại đây, Tò Te Tí dẫn bạn rong ruổi một vòng.";
+      const introText2 = "Trong từng ô cờ là một món ăn, một gánh hàng, một câu chuyện và một góc nhỏ của văn hóa Việt đang chờ bạn tìm đến.";
+      const introText3 = "Nhấn vào bàn cờ để bắt đầu chơi!";
+
+      // Đếm số textbox đã hiện
+      let textBoxCount = 0;
+      const totalTextBoxes = 3;
+      let isTyping = false;
+
+      function showNextTextBox() {
+        if (textBoxCount < totalTextBoxes && !isTyping) {
+          textBoxCount++;
+          isTyping = true;
+
+          if (textBoxCount === 1) {
+            typewriteIntro(chatMessageContainer, introText1, () => {
+              isTyping = false;
+            });
+          } else if (textBoxCount === 2) {
+            typewriteIntro(chatMessageContainer, introText2, () => {
+              isTyping = false;
+            });
+          } else if (textBoxCount === 3) {
+            typewriteIntro(chatMessageContainer, introText3, () => {
+              isTyping = false;
+              // Sau khi hiện hết, cho phép người dùng nhấn vào bàn cờ để tiếp tục
+              canAdvanceToDice = true;
+              if (tapAnywhereAdvance) tapAnywhereAdvance.classList.remove('hidden');
+            });
+          }
+        }
+      }
+
+      // Typewriter effect cho intro với sound
+      function typewriteIntro(container, text, onComplete) {
+        if (!container) return;
+        // Xóa nội dung cũ
+        container.innerHTML = '';
+
+        // Tách câu theo dấu chấm (.) và dấu chấm hỏi (?)
+        const sentences = text.split(/(?<=[.?])\s+/);
+        let currentSentence = 0;
+        let charIndex = 0;
+
+        // Tạo div cho câu hiện tại
+        const currentDiv = document.createElement('div');
+        currentDiv.className = 'chat-message-line';
+        container.appendChild(currentDiv);
+
+        function typeChar() {
+          if (currentSentence < sentences.length) {
+            const sentence = sentences[currentSentence];
+            if (charIndex < sentence.length) {
+              currentDiv.textContent += sentence.charAt(charIndex);
+              sfx.playDialogueChirp();
+              charIndex++;
+              setTimeout(typeChar, 30);
+            } else {
+              // Xong câu hiện tại, chuyển sang câu tiếp theo
+              currentSentence++;
+              charIndex = 0;
+              if (currentSentence < sentences.length) {
+                // Tạo div mới cho câu tiếp theo
+                const newDiv = document.createElement('div');
+                newDiv.className = 'chat-message-line';
+                container.appendChild(newDiv);
+                // Scroll xuống để thấy câu mới
+                newDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                setTimeout(typeChar, 200);
+              } else {
+                // Xong tất cả câu
+                if (onComplete) onComplete();
+              }
+            }
+          }
+        }
+
+        typeChar();
+      }
+
+      // Hiện textbox đầu tiên
+      showNextTextBox();
+
+      // Thêm click handler để chuyển textbox tiếp theo
+      const clickHandler = (e) => {
+        if (isTyping) {
+          // Nếu đang gõ, skip animation và hiện hết text ngay
+          e.stopPropagation();
+          // Skip logic - có thể thêm sau nếu cần
+        } else if (textBoxCount < totalTextBoxes) {
+          e.stopPropagation();
+          showNextTextBox();
+        } else {
+          // Đã hiện hết textbox, xóa handler
+          guidanceChatbox.removeEventListener('click', clickHandler);
+        }
+      };
+
+      guidanceChatbox.addEventListener('click', clickHandler);
     }
 
     // Nút Tiếp tục - chỉ chuyển sang dice stage khi nhấn
@@ -891,18 +1010,30 @@
     // ------------------------------------------------------------------------
     // STEP 5: ADVANCE TO 3D DICE STAGE (CÂU THOẠI THAY ĐỔI MỖI LƯỢT)
     // ------------------------------------------------------------------------
-    const diceDialoguePool = [
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.\n\nXúc xắc đã sẵn trong tay…\n\nTa cùng lên đường thôi!"
+    const diceDialoguePool = ["Cứ gieo!","Xúc xắc đã sẵn!","Ta cùng đi!","Tiếp tục nào!","Đừng ngần ngại!","Tuyệt vời!","Cùng xem!","Tiến lên!","Wow!","Quá tuyệt!","Giỏi thật!","Hãy đi tiếp!","Lên đường!","Đi nào!","Cùng chạy!","Sẵn sàng!","Gieo thôi!","Tới đây!","Hăng hái!","Hay ho!"];
+
+    // Pool câu thoại cho các lượt sau (lần 2 trở đi) - nội dung khác, dài hơn
+    const diceDialoguePoolLater = [
+      "Lượt này sẽ đến đâu nhỉ? Gieo thử xem nào!",
+      "Ta tò mò quá rồi! Xúc xắc sẽ đưa mình đi đâu?",
+      "Cùng tiếp tục hành trình ẩm thực nhé!",
+      "Có điều gì thú vị đang chờ mình đây!",
+      "Món ăn tiếp theo sẽ là gì nhỉ?",
+      "Ta rất mong chờ lượt này!",
+      "Hãy gieo để khám phá món mới!",
+      "Chuyến đi ẩm thực vẫn tiếp tục!",
+      "Cùng xem thử vận may lần này!",
+      "Món ăn truyền thống nào đang chờ mình?",
+      "Bước tiếp theo sẽ đến đâu?",
+      "Ta rất hào hứng với lượt này!",
+      "Cùng khám phá thêm nhiều món ăn!",
+      "Hành trình vẫn chưa kết thúc đâu!",
+      "Gieo nào, xem thử vận may!",
+      "Món ăn ngon đang chờ mình khám phá!",
+      "Ta rất tò mò về món tiếp theo!",
+      "Cùng đi tiếp hành trình nhé!",
+      "Lượt này sẽ rất thú vị!",
+      "Ta rất mong chờ điều gì sẽ xảy ra!"
     ];
 
     // Xóa logic tapAnywhereAdvance để tránh chuyển tự động
@@ -939,10 +1070,20 @@
         }, 120);
       }
 
-      // Chọn câu thoại đa dạng cho từng lượt
-      const diceInstruct = diceDialoguePool[diceTurnCount % diceDialoguePool.length];
+      // Chọn câu thoại ngẫu nhiên cho từng lượt
+      // Lượt đầu (diceTurnCount == 0): dùng pool ngắn
+      // Lượt thứ 2 trở đi (diceTurnCount >= 1): dùng pool dài hơn
+      let dialoguePool;
+      if (diceTurnCount === 0) {
+        dialoguePool = diceDialoguePool;
+      } else {
+        dialoguePool = diceDialoguePoolLater;
+      }
+
+      const randomIndex = Math.floor(Math.random() * dialoguePool.length);
+      const diceInstruct = dialoguePool[randomIndex];
       diceTurnCount++;
-      typewrite(chatMessageText, diceInstruct);
+      displayTextDirect(chatMessageContainer, diceInstruct);
 
       diceCenterStage.classList.remove('hidden');
     }
@@ -1173,12 +1314,111 @@
         const randomQuiz = gieoQueQuestions[Math.floor(Math.random() * gieoQueQuestions.length)];
         showQuizModal(randomQuiz);
       } else {
-        // Show random fact in alert
+        // Show random fact in beautiful card
         const randomFact = gieoQueFacts[Math.floor(Math.random() * gieoQueFacts.length)];
-        alert(randomFact);
-        showBoardOnReturn(true);
+        showFunFactCard(randomFact);
       }
     }
+
+    function showFunFactCard(fact) {
+      const funFactCard = document.getElementById('funFactCard');
+      const funFactText = document.getElementById('funFactText');
+
+      funFactText.textContent = fact;
+      funFactCard.classList.remove('hidden');
+    }
+
+    function closeFunFact() {
+      const funFactCard = document.getElementById('funFactCard');
+      funFactCard.classList.add('hidden');
+      showBoardOnReturn(true);
+    }
+
+    // Make function globally accessible
+    window.closeFunFact = closeFunFact;
+
+    // ==========================================================================
+    // PARALLAX HERO SECTION CONTROLLER
+    // ==========================================================================
+    (function initParallaxHero() {
+      const parallaxHero = document.getElementById('parallaxHero');
+      if (!parallaxHero) return;
+
+      const layers = parallaxHero.querySelectorAll('.parallax-layer');
+      if (layers.length === 0) return;
+
+      let scrollY = 0;
+      let mouseX = 0;
+      let mouseY = 0;
+      let windowWidth = window.innerWidth;
+      let windowHeight = window.innerHeight;
+
+      // Lấy tốc độ parallax từ data attributes
+      const layerConfigs = Array.from(layers).map(layer => ({
+        element: layer,
+        speed: parseFloat(layer.dataset.speed) || 0.1,
+        mouseRange: parseInt(layer.dataset.mouseRange) || 20
+      }));
+
+      // Scroll parallax handler
+      function handleScroll() {
+        scrollY = window.scrollY;
+        updateParallax();
+      }
+
+      // Mouse parallax handler (desktop only)
+      function handleMouseMove(e) {
+        if (windowWidth < 768) return; // Chỉ hoạt động trên desktop
+
+        const rect = parallaxHero.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        mouseX = (e.clientX - centerX) / (windowWidth / 2);
+        mouseY = (e.clientY - centerY) / (windowHeight / 2);
+
+        updateParallax();
+      }
+
+      // Update parallax positions
+      function updateParallax() {
+        layerConfigs.forEach(config => {
+          const { element, speed, mouseRange } = config;
+
+          // Scroll parallax: layer xa di chuyển chậm, layer gần di chuyển nhanh
+          const scrollOffset = scrollY * speed;
+
+          // Mouse parallax: tinh tế, không gây chóng mặt
+          const mouseOffsetX = mouseX * mouseRange;
+          const mouseOffsetY = mouseY * mouseRange;
+
+          // Combine both effects
+          const translateX = mouseOffsetX;
+          const translateY = scrollOffset + mouseOffsetY;
+
+          element.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
+        });
+      }
+
+      // Handle resize
+      function handleResize() {
+        windowWidth = window.innerWidth;
+        windowHeight = window.innerHeight;
+      }
+
+      // Event listeners
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      window.addEventListener('resize', handleResize);
+
+      // Initial update
+      handleResize();
+      updateParallax();
+
+      console.log('Parallax Hero initialized with', layers.length, 'layers');
+      console.log('Layer speeds:', layerConfigs.map(c => c.speed));
+      console.log('File điều khiển: app.js - initParallaxHero() function');
+    })();
 
     function showQuizModal(quizData) {
       const modal = document.getElementById('quizModal');
@@ -1639,15 +1879,21 @@
       const oldSection = currentDetailSection;
       currentDetailSection = sectionNum;
 
-      // Update sections
+      // Update sections with parallax effect
       detailSections.forEach((section, index) => {
         const sectionIndex = index + 1;
         section.classList.remove('active', 'previous');
         
         if (sectionIndex === currentDetailSection) {
           section.classList.add('active');
+          // Add parallax offset based on scroll direction
+          const parallaxOffset = sectionIndex > oldSection ? 20 : -20;
+          section.style.setProperty('--parallax-offset', `${parallaxOffset}px`);
         } else if (sectionIndex === oldSection && sectionIndex < currentDetailSection) {
           section.classList.add('previous');
+          section.style.setProperty('--parallax-offset', '30px');
+        } else {
+          section.style.setProperty('--parallax-offset', '0px');
         }
       });
 

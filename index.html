@@ -34,6 +34,25 @@
        ============================================================== -->
   <div class="intro-board-stage" id="introBoardStage">
 
+    <!-- Parallax Hero Section -->
+    <div class="parallax-hero" id="parallaxHero">
+      <div class="parallax-layer" data-speed="0.03" data-mouse-range="10">
+        <img src="assets/parallax/5.svg" alt="Layer 5" class="parallax-img">
+      </div>
+      <div class="parallax-layer" data-speed="0.08" data-mouse-range="8">
+        <img src="assets/parallax/1.svg" alt="Layer 1" class="parallax-img">
+      </div>
+      <div class="parallax-layer" data-speed="0.15" data-mouse-range="15">
+        <img src="assets/parallax/2.svg" alt="Layer 2" class="parallax-img">
+      </div>
+      <div class="parallax-layer" data-speed="0.25" data-mouse-range="25">
+        <img src="assets/parallax/3.svg" alt="Layer 3" class="parallax-img">
+      </div>
+      <div class="parallax-layer" data-speed="0.40" data-mouse-range="40">
+        <img src="assets/parallax/4.svg" alt="Layer 4" class="parallax-img">
+      </div>
+    </div>
+
     <!-- Traditional Center Clouds (Rẽ mây dạt ra 2 bên) -->
     <div class="fairytale-clouds-container" id="fairytaleCloudsContainer">
       <div class="cloud-half cloud-left" id="cloudLeft">
@@ -338,9 +357,13 @@
             <div class="gieo-que-label">GIEO QUẺ</div>
           </div>
           <!-- BOTTOM ROW (Tiles 0-7) - T từ trái sang phải -->
-          <!-- Tile 0: GIEO QUẺ (Góc dưới trái) -->
-          <div class="real-tile gieo-que-tile" data-tile="0" id="tile-0">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+          <!-- Tile 0: BẮT ĐẦU (Góc dưới trái) -->
+          <div class="real-tile tile-start-square" data-tile="0" id="tile-0">
+            <div class="start-header-bar">BẮT ĐẦU</div>
+            <div class="start-badge-wrap">
+              <span class="start-arrow-symbol">⬅</span>
+            </div>
+            <div class="start-footer-label">GO</div>
           </div>
 
           <!-- Tile 1: Cơm Tấm -->
@@ -544,10 +567,9 @@
         <div class="chatbox-header">
           <span class="chat-speaker">TÒ TE TÍ</span>
         </div>
-        <p class="chat-message">
-          <span id="chatMessageText"></span>
-          <span class="chat-cursor" id="chatCursor">|</span>
-        </p>
+        <div class="chat-message" id="chatMessageContainer">
+          <!-- Messages will be added here dynamically -->
+        </div>
       </div>
     </div>
 
@@ -831,6 +853,16 @@
         <div class="quiz-explanation hidden" id="quizExplanation"></div>
         <button class="quiz-next-btn hidden" id="quizNextBtn" onclick="continueAfterQuiz()">Tiếp Tục</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Fun Fact Card -->
+  <div class="fun-fact-card hidden" id="funFactCard">
+    <div class="fun-fact-content">
+      <div class="fun-fact-icon">💡</div>
+      <div class="fun-fact-label">DID YOU KNOW?</div>
+      <div class="fun-fact-text" id="funFactText"></div>
+      <button class="fun-fact-close-btn" onclick="closeFunFact()">Tiếp tục</button>
     </div>
   </div>
 

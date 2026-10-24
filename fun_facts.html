@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fun Facts - Ẩm Thực Việt Nam</title>
+  <meta name="description" content="Những điều thú vị về ẩm thực Việt Nam">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Baloo+2:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css?v=110">
+  
+  <style>
+    /* Fun Facts Page Styles */
+    body {
+      background: linear-gradient(180deg, #3A99BA 0%, #2B7BA0 30%, #1A5A7A 60%, #072865 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .fun-facts-page {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .fun-facts-header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInDown 1s ease;
+    }
+
+    .fun-facts-title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 800;
+      color: #FFF;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .fun-facts-subtitle {
+      font-family: var(--font-main);
+      font-size: 20px;
+      color: #E0F2FE;
+      font-weight: 500;
+    }
+
+    .fun-facts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      animation: fadeInUp 1s ease 0.3s both;
+    }
+
+    .fun-fact-card {
+      background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 100%);
+      border: 4px solid #D4AF37;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fun-fact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #C5221F, #D4AF37, #C5221F);
+    }
+
+    .fun-fact-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .fun-fact-icon {
+      font-size: 50px;
+      margin-bottom: 20px;
+      animation: bounce 2s infinite;
+    }
+
+    .fun-fact-label {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 800;
+      color: #C5221F;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .fun-fact-text {
+      font-family: var(--font-main);
+      font-size: 16px;
+      line-height: 1.6;
+      color: #1A202C;
+      font-weight: 600;
+      min-height: 80px;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 60px;
+      padding: 15px 40px;
+      background: linear-gradient(135deg, #C5221F 0%, #8B1A1A 100%);
+      color: #FFF;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(197, 34, 31, 0.4);
+      font-family: var(--font-main);
+    }
+
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(197, 34, 31, 0.5);
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-20px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .fun-facts-title {
+        font-size: 32px;
+      }
+
+      .fun-facts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="fun-facts-page">
+    <div class="fun-facts-header">
+      <h1 class="fun-facts-title">💡 FUN FACTS</h1>
+      <p class="fun-facts-subtitle">Những điều thú vị về ẩm thực Việt Nam</p>
+    </div>
+
+    <div class="fun-facts-grid" id="funFactsGrid">
+      <!-- Fun facts sẽ được tạo động bằng JavaScript -->
+    </div>
+
+    <div style="text-align: center;">
+      <button class="back-button" onclick="goBack()">Quay lại Game</button>
+    </div>
+  </div>
+
+  <script>
+    // Fun Facts Data
+    const funFactsData = [
+      {
+        icon: "🥖",
+        label: "BÁNH MÌ",
+        text: "Bánh mì Việt Nam có nguồn gốc từ bánh mì kiểu Pháp, nhưng đã trở thành một món hoàn toàn khác. Baguette được du nhập vào Việt Nam từ thời Pháp thuộc. Người Việt biến tấu ổ bánh với phần ruột nhẹ, vỏ giòn, pate, thịt nguội, rau thơm, đồ chua và nước sốt. Đặc biệt, từ 'banh mi' đã được đưa vào Oxford English Dictionary năm 2011."
+      },
+      {
+        icon: "🍚",
+        label: "CƠM TẤM",
+        text: "Cơm tấm là món ăn biểu tượng của Sài Gòn. Tấm là loại gạo bị vỡ, nhỏ không đều, thường bị bỏ đi. Người Việt đã sáng tạo nấu tấm thành cơm tấm, ăn kèm sườn nướng, chả, bì, trứng, dưa leo, đồ chua. Từ 'cơm tấm' cũng được đưa vào Oxford English Dictionary năm 2022."
+      },
+      {
+        icon: "🍜",
+        label: "HỦ TIẾU",
+        text: "Hủ tiếu Nam Vang gắn với Campuchia nhưng đã trở thành món sáng tạo của người Việt. Có hai loại chính: hủ tiếu nước (nước dùng trong, tươi) và hủ tiếu khô (không nước dùng, ăn kèm nước tương). Người miền Nam thích hủ tiếu nước, người miền Bắc thích hủ tiếu khô."
+      },
+      {
+        icon: "🥞",
+        label: "BÁNH XÈO",
+        text: "Bánh xèo xuất phát từ miền Trung Việt, đặc biệt là Bình Định và Quảng Ngãi. Bánh được làm từ bột gạo, rang trên chảo gang cho đến khi vàng giòn. Cùng ăn với rau sống, tôm, thịt, nước mắm pha chanh ớt. Ngày nay bánh xèo có nhiều biến thể như bánh xèo miền Tây, bánh xèo Huế."
+      },
+      {
+        icon: "🥬",
+        label: "BÚN ĐẬU",
+        text: "Bún đậu mắm tôm là món ăn đường phố nổi tiếng Hà Nội. Mắm tôm được làm từ con tôm tươi, ủ lên men 3-6 tháng. Món ăn gồm bún, đậu rán, thịt lợn, ruốc, mắm tôm, rau thơm. Món này thường ăn kèm dấm tỏi ớt cay nồng."
+      },
+      {
+        icon: "🍲",
+        label: "PHÁ LẦU",
+        text: "Phá lấu là món ăn có nguồn gốc từ người Hoa tại Sài Gòn. Nguyên liệu chính là nội tạng động vật (tim, gan, phèo, lòng) nấu cùng gia vị đường, nước mắm, giấm bỗng, hoa hồi, quế. Phá lấu thường ăn kèm cơm, bánh mì hoặc hủ tiếu."
+      },
+      {
+        icon: "🫔",
+        label: "XÔI",
+        text: "Xôi là món ăn sáng truyền thống của Việt Nam, có hàng ngàn năm lịch sử. Xôi gấc (xôi gà) là loại xôi phổ biến nhất, được làm từ gạo nếp, nhân đậu xanh, thịt gà, nếp cẩm. Xôi mặn, xôi ngọt, xôi trứng, xôi vò... mỗi loại có hương vị riêng."
+      },
+      {
+        icon: "🍳",
+        label: "BỘT CHIÊN",
+        text: "Bột chiên là món ăn đường phố có ảnh hưởng từ ẩm thực người Hoa. Bột được làm từ bột gạo, bột nếp, trứng gà, nước cốt dừa, chiên trên chảo nóng. Bột chiên thường ăn kèm dưa leo cỏ ngọt, nước mắm chua ngọt."
+      },
+      {
+        icon: "🌯",
+        label: "BÒ BÍA",
+        text: "Bò bía là món ăn có nguồn gốc từ Trung Quốc nhưng đã Việt hóa hoàn toàn. Nguyên liệu gồm bì lợn, tai lợn, thịt luộc, trứng cút, rau sống, dưa leo, đồ chua, cuốn trong bánh tráng. Tên 'bò bía' có nghĩa là 'trâu bò' trong tiếng Quảng Đông."
+      },
+      {
+        icon: "🍮",
+        label: "CHÈ",
+        text: "Chè là món tráng miệng truyền thống của Việt Nam, có hàng trăm loại. Chè Thái, chè bột lọc, chè hạt sen long nhãn, chè chuối hột sông, chè khoai tía... Mỗi vùng miền có loại chè đặc sắc. Chè không chỉ ngon mà còn có tác dụng giải nhiệt, dưỡng nhan."
+      }
+    ];
+
+    // Render Fun Facts
+    function renderFunFacts() {
+      const grid = document.getElementById('funFactsGrid');
+      grid.innerHTML = '';
+
+      funFactsData.forEach((fact, index) => {
+        const card = document.createElement('div');
+        card.className = 'fun-fact-card';
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.innerHTML = `
+          <div class="fun-fact-icon">${fact.icon}</div>
+          <div class="fun-fact-label">${fact.label}</div>
+          <div class="fun-fact-text">${fact.text}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Go back to game
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    // Initialize
+    renderFunFacts();
+  </script>
+</body>
+</html>

@@ -127,6 +127,30 @@ html, body {
   overflow: hidden;
 }
 
+/* Parallax Hero Section */
+.parallax-hero {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.parallax-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .intro-board-stage.hidden {
   display: none !important;
   opacity: 0;
@@ -1072,6 +1096,17 @@ html, body {
   min-height: 42px;
 }
 
+.chat-message-line {
+  margin-bottom: 8px;
+  line-height: 1.6;
+  color: #1A202C;
+  font-weight: 600;
+}
+
+.chat-message-line:last-child {
+  margin-bottom: 0;
+}
+
 .chat-cursor {
   display: inline-block;
   color: #C5221F;
@@ -1456,6 +1491,100 @@ html, body {
 
 .quiz-explanation.hidden {
   display: none;
+}
+
+/* Fun Fact Card */
+.fun-fact-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 100%);
+  border: 4px solid #D4AF37;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  padding: 30px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+  z-index: 10002;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fun-fact-card.hidden {
+  display: none;
+}
+
+.fun-fact-card:not(.hidden) {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.fun-fact-content {
+  text-align: center;
+}
+
+.fun-fact-icon {
+  font-size: 60px;
+  margin-bottom: 15px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.fun-fact-label {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  color: #C5221F;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.fun-fact-text {
+  font-family: var(--font-main);
+  font-size: 18px;
+  line-height: 1.6;
+  color: #1A202C;
+  font-weight: 600;
+  margin-bottom: 25px;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fun-fact-close-btn {
+  background: linear-gradient(135deg, #C5221F 0%, #8B1A1A 100%);
+  color: #FFF;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 40px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(197, 34, 31, 0.4);
+}
+
+.fun-fact-close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197, 34, 31, 0.5);
+}
+
+.fun-fact-close-btn:active {
+  transform: translateY(0);
 }
 
 .quiz-next-btn {
@@ -2003,6 +2132,19 @@ html, body {
   background: #E0F2FE;
   cursor: pointer;
   flex-shrink: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  animation: portraitFloat 6s ease-in-out infinite;
+}
+
+@keyframes portraitFloat {
+  0%, 100% { transform: translateY(0) rotateX(0deg); }
+  50% { transform: translateY(-10px) rotateX(2deg); }
+}
+
+.dish-portrait-frame:hover {
+  transform: translateY(-15px) scale(1.02) rotateX(5deg);
+  box-shadow: 0 25px 60px rgba(2, 132, 199, 0.35), 0 0 40px rgba(186, 230, 253, 0.7);
 }
 
 .dish-hero-image {
@@ -2014,7 +2156,7 @@ html, body {
 }
 
 .dish-portrait-frame:hover .dish-hero-image {
-  transform: scale(1.06);
+  transform: scale(1.08);
 }
 
 .portrait-glow-halo {
@@ -2595,24 +2737,118 @@ html, body {
   opacity: 0;
   visibility: hidden;
   transform: translateY(100vh) scale(0.9);
-  transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
   will-change: transform, opacity;
   padding: 20px;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 50%, rgba(15, 52, 96, 0.95) 100%);
+  overflow: hidden;
+  --parallax-offset: 0px;
+}
+
+/* Parallax Background Layers */
+.detail-scroll-section::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
+              url('assets/parallax_bg1.png') center/cover no-repeat;
+  animation: parallaxFloat 20s ease-in-out infinite;
+  z-index: 0;
+  transition: transform 0.8s ease;
+  opacity: 0.6;
+}
+
+.detail-scroll-section::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+              url('assets/parallax_bg2.png') center/cover no-repeat;
+  animation: parallaxPulse 15s ease-in-out infinite;
+  z-index: 0;
+  transition: transform 0.8s ease;
+  opacity: 0.4;
+}
+
+/* Additional parallax layers for section 1 */
+#detailSection1::before {
+  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
+              url('assets/parallax_bg1.png') center/cover no-repeat;
+}
+
+#detailSection1::after {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+              url('assets/parallax_bg2.png') center/cover no-repeat;
+}
+
+/* Section 2 backgrounds */
+#detailSection2::before {
+  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
+              url('assets/parallax_bg3.png') center/cover no-repeat;
+}
+
+#detailSection2::after {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+              url('assets/parallax_bg4.png') center/cover no-repeat;
+}
+
+/* Section 3 backgrounds */
+#detailSection3::before {
+  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
+              url('assets/parallax_bg5.png') center/cover no-repeat;
+}
+
+#detailSection3::after {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+              url('assets/parallax_bg1.png') center/cover no-repeat;
+}
+
+.detail-scroll-section.active::before {
+  transform: translate(calc(var(--parallax-offset, 0px) * 0.5), calc(var(--parallax-offset, 0px) * 0.5));
+}
+
+.detail-scroll-section.active::after {
+  transform: translate(calc(var(--parallax-offset, 0px) * -0.3), calc(var(--parallax-offset, 0px) * -0.3));
+}
+
+@keyframes parallaxFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(30px, -30px) rotate(5deg); }
+  50% { transform: translate(0, -50px) rotate(0deg); }
+  75% { transform: translate(-30px, -30px) rotate(-5deg); }
+}
+
+@keyframes parallaxPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
 }
 
 .detail-scroll-section.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  transform: translateY(var(--parallax-offset, 0px)) scale(1);
   pointer-events: all;
+}
+
+.detail-scroll-section.active::before {
+  animation-play-state: running;
+}
+
+.detail-scroll-section.active::after {
+  animation-play-state: running;
 }
 
 .detail-scroll-section.previous {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-30vh) scale(0.85);
+  transform: translateY(-30vh) scale(0.85) rotate(-5deg);
   pointer-events: none;
+  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Scroll Indicator */
@@ -2627,6 +2863,7 @@ html, body {
   gap: 12px;
   opacity: 0;
   transition: opacity 0.5s ease;
+  z-index: 10;
 }
 
 .detail-scroll-section.active .detail-scroll-indicator {
@@ -2635,8 +2872,8 @@ html, body {
 }
 
 @keyframes detailScrollPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 0.6; transform: translateX(-50%) translateY(-8px); }
 }
 
 .scroll-arrow-down {
