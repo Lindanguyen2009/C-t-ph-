@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GIEO QUẺ - Ẩm Thực Việt Nam</title>
+  <meta name="description" content="Câu hỏi và kiến thức thú vị về ẩm thực Việt Nam">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Baloo+2:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css?v=110">
+  
+  <style>
+    /* GIEO QUẺ Page Styles */
+    body {
+      background: linear-gradient(180deg, #3A99BA 0%, #2B7BA0 30%, #1A5A7A 60%, #072865 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .gieo-que-page {
+      padding: 15px;
+      max-width: 800px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    .gieo-que-header {
+      text-align: center;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease;
+    }
+
+    .gieo-que-title {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: #FFF;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+      margin-bottom: 6px;
+      animation: pulse 2s infinite;
+    }
+
+    .gieo-que-subtitle {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 14px;
+      color: #E0F2FE;
+      font-weight: 600;
+    }
+
+    .content-card {
+      background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 100%);
+      border: 5px solid #D4AF37;
+      border-radius: 25px;
+      padding: 20px 15px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+      width: 100%;
+      max-width: 500px;
+      animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #C5221F, #D4AF37, #C5221F);
+    }
+
+    .content-icon {
+      font-size: 40px;
+      text-align: center;
+      margin-bottom: 10px;
+      animation: bounce 2s infinite;
+    }
+
+    .content-label {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #C5221F;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .content-text {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1A202C;
+      font-weight: 600;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: fadeIn 1s ease 0.3s both;
+    }
+
+    /* Quiz Styles */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 15px;
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+
+    .quiz-option {
+      background: #FFF;
+      border: 3px solid #D4AF37;
+      border-radius: 12px;
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 13px;
+      color: #4A5568;
+      font-weight: 600;
+      font-family: 'Merriweather', 'Times New Roman', serif;
+    }
+
+    .quiz-option:hover {
+      background: #FFF8E7;
+      transform: translateX(10px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .quiz-option.correct {
+      background: #D4EDDA;
+      border-color: #28A745;
+      color: #155724;
+      animation: correctPulse 0.5s ease;
+    }
+
+    .quiz-option.wrong {
+      background: #F8D7DA;
+      border-color: #DC3545;
+      color: #721C24;
+      animation: wrongShake 0.5s ease;
+    }
+
+    .quiz-explanation {
+      margin-top: 15px;
+      padding: 12px;
+      background: #E7F3FF;
+      border-left: 5px solid #2196F3;
+      border-radius: 12px;
+      color: #1A202C;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 600;
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      animation: fadeIn 0.5s ease;
+      display: none;
+    }
+
+    .quiz-explanation.show {
+      display: block;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+      animation: fadeInUp 0.6s ease 0.5s both;
+    }
+
+    .btn {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #C5221F 0%, #8B1A1A 100%);
+      color: #FFF;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(197, 34, 31, 0.5);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+      color: #FFF;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-30px);
+      }
+      60% {
+        transform: translateY(-15px);
+      }
+    }
+
+    @keyframes correctPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-10px);
+      }
+      75% {
+        transform: translateX(10px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gieo-que-title {
+        font-size: 48px;
+      }
+
+      .content-card {
+        padding: 30px 20px;
+      }
+
+      .content-text {
+        font-size: 16px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gieo-que-page">
+    <div class="gieo-que-header">
+      <h1 class="gieo-que-title">🎲 GIEO QUẺ</h1>
+      <p class="gieo-que-subtitle">Kiến thức thú vị về ẩm thực Việt Nam</p>
+    </div>
+
+    <div class="content-card" id="contentCard">
+      <div class="content-icon" id="contentIcon">💡</div>
+      <div class="content-label" id="contentLabel">DID YOU KNOW?</div>
+      <div class="content-text" id="contentText"></div>
+      
+      <div class="quiz-options" id="quizOptions" style="display: none;"></div>
+      <div class="quiz-explanation" id="quizExplanation"></div>
+    </div>
+
+    <div class="action-buttons" id="actionButtons">
+      <button class="btn btn-primary" id="continueBtn" onclick="continueGame()">Tiếp tục chơi</button>
+      <button class="btn btn-secondary" id="newBtn" onclick="newContent()">Câu mới</button>
+    </div>
+  </div>
+
+  <script>
+    // Fun Facts Data
+    const funFacts = [
+      "Bánh mì Việt Nam có nguồn gốc từ bánh mì kiểu Pháp, nhưng đã trở thành một món hoàn toàn khác. Baguette được du nhập vào Việt Nam từ thời Pháp thuộc. Người Việt biến tấu ổ bánh với phần ruột nhẹ, vỏ giòn, pate, thịt nguội, rau thơm, đồ chua và nước sốt. Đặc biệt, từ 'banh mi' đã được đưa vào Oxford English Dictionary năm 2011.",
+      "Cơm tấm là món ăn biểu tượng của Sài Gòn. Tấm là loại gạo bị vỡ, nhỏ không đều, thường bị bỏ đi. Người Việt đã sáng tạo nấu tấm thành cơm tấm, ăn kèm sườn nướng, chả, bì, trứng, dưa leo, đồ chua. Từ 'cơm tấm' cũng được đưa vào Oxford English Dictionary năm 2022.",
+      "Hủ tiếu Nam Vang gắn với Campuchia nhưng đã trở thành món sáng tạo của người Việt. Có hai loại chính: hủ tiếu nước (nước dùng trong, tươi) và hủ tiếu khô (không nước dùng, ăn kèm nước tương). Người miền Nam thích hủ tiếu nước, người miền Bắc thích hủ tiếu khô.",
+      "Bánh xèo xuất phát từ miền Trung Việt, đặc biệt là Bình Định và Quảng Ngãi. Bánh được làm từ bột gạo, rang trên chảo gang cho đến khi vàng giòn. Cùng ăn với rau sống, tôm, thịt, nước mắm pha chanh ớt. Ngày nay bánh xèo có nhiều biến thể như bánh xèo miền Tây, bánh xèo Huế.",
+      "Bún đậu mắm tôm là món ăn đường phố nổi tiếng Hà Nội. Mắm tôm được làm từ con tôm tươi, ủ lên men 3-6 tháng. Món ăn gồm bún, đậu rán, thịt lợn, ruốc, mắm tôm, rau thơm. Món này thường ăn kèm dấm tỏi ớt cay nồng.",
+      "Phá lấu là món ăn có nguồn gốc từ người Hoa tại Sài Gòn. Nguyên liệu chính là nội tạng động vật (tim, gan, phèo, lòng) nấu cùng gia vị đường, nước mắm, giấm bỗng, hoa hồi, quế. Phá lấu thường ăn kèm cơm, bánh mì hoặc hủ tiếu.",
+      "Xôi là món ăn sáng truyền thống của Việt Nam, có hàng ngàn năm lịch sử. Xôi gấc (xôi gà) là loại xôi phổ biến nhất, được làm từ gạo nếp, nhân đậu xanh, thịt gà, nếp cẩm. Xôi mặn, xôi ngọt, xôi trứng, xôi vò... mỗi loại có hương vị riêng.",
+      "Bột chiên là món ăn đường phố có ảnh hưởng từ ẩm thực người Hoa. Bột được làm từ bột gạo, bột nếp, trứng gà, nước cốt dừa, chiên trên chảo nóng. Bột chiên thường ăn kèm dưa leo cỏ ngọt, nước mắm chua ngọt.",
+      "Bò bía là món ăn có nguồn gốc từ Trung Quốc nhưng đã Việt hóa hoàn toàn. Nguyên liệu gồm bì lợn, tai lợn, thịt luộc, trứng cút, rau sống, dưa leo, đồ chua, cuốn trong bánh tráng. Tên 'bò bía' có nghĩa là 'trâu bò' trong tiếng Quảng Đông.",
+      "Chè là món tráng miệng truyền thống của Việt Nam, có hàng trăm loại. Chè Thái, chè bột lọc, chè hạt sen long nhãn, chè chuối hột sông, chè khoai tía... Mỗi vùng miền có loại chè đặc sắc. Chè không chỉ ngon mà còn có tác dụng giải nhiệt, dưỡng nhan."
+    ];
+
+    // Quiz Data
+    const quizData = [
+      {
+        question: "Bánh mì Sài Gòn thường kết hợp với những nguyên liệu nào?",
+        options: ["A. Pate, thịt nguội, rau thơm và đồ chua", "B. Phô mai xanh và mì Ý", "C. Kim chi và rong biển", "D. Bơ đậu phộng và mứt trái cây"],
+        answer: "A",
+        explanation: "Bánh mì Sài Gòn thường kết hợp pate, thịt nguội, rau thơm, dưa leo và đồ chua."
+      },
+      {
+        question: "Món ăn đường phố nào thường gồm những miếng bột gạo chiên với trứng?",
+        options: ["A. Bánh khọt", "B. Bột chiên", "C. Bánh cuốn", "D. Bánh bèo"],
+        answer: "B",
+        explanation: "Bột chiên là món ăn phổ biến, có dấu ấn ẩm thực người Hoa tại Sài Gòn."
+      },
+      {
+        question: "Phá lấu thường được chế biến chủ yếu từ nguyên liệu nào?",
+        options: ["A. Các loại đậu", "B. Hải sản sống", "C. Nội tạng động vật", "D. Trái cây nhiệt đới"],
+        answer: "C",
+        explanation: "Phá lấu thường dùng nội tạng, nấu cùng các loại gia vị thơm."
+      },
+      {
+        question: "Hủ tiếu Nam Vang gắn với thành phố nào ở Campuchia?",
+        options: ["A. Siem Reap", "B. Phnom Penh", "C. Battambang", "D. Sihanoukville"],
+        answer: "B",
+        explanation: "Nam Vang là tên gọi Hán-Việt gắn với Phnom Penh, thủ đô Campuchia."
+      },
+      {
+        question: "Điều gì thể hiện rõ nét sự giao thoa văn hóa trong ẩm thực TP.HCM?",
+        options: ["A. Tất cả món ăn đều có cùng nguồn gốc", "B. Chỉ sử dụng nguyên liệu nhập khẩu", "C. Nhiều món kết hợp ảnh hưởng Việt, Hoa và các nền ẩm thực khác", "D. Ẩm thực chỉ có món ăn truyền thống"],
+        answer: "C",
+        explanation: "Ẩm thực TP.HCM hình thành qua quá trình giao lưu, tiếp nhận và biến tấu giữa nhiều cộng đồng."
+      }
+    ];
+
+    let isQuiz = false;
+    let currentQuiz = null;
+    let hasAnswered = false;
+
+    // Initialize
+    function init() {
+      const type = getURLParameter('type');
+      if (type === 'quiz') {
+        loadQuiz();
+      } else {
+        loadFact();
+      }
+    }
+
+    function getURLParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    function loadFact() {
+      isQuiz = false;
+      const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+      
+      document.getElementById('contentIcon').textContent = '💡';
+      document.getElementById('contentLabel').textContent = 'DID YOU KNOW?';
+      document.getElementById('contentText').textContent = randomFact;
+      document.getElementById('quizOptions').style.display = 'none';
+      document.getElementById('quizExplanation').classList.remove('show');
+      document.getElementById('newBtn').style.display = 'inline-block';
+    }
+
+    function loadQuiz() {
+      isQuiz = true;
+      hasAnswered = false;
+      currentQuiz = quizData[Math.floor(Math.random() * quizData.length)];
+      
+      document.getElementById('contentIcon').textContent = '❓';
+      document.getElementById('contentLabel').textContent = 'CÂU HỎI';
+      document.getElementById('contentText').textContent = currentQuiz.question;
+      document.getElementById('quizOptions').style.display = 'flex';
+      document.getElementById('quizExplanation').classList.remove('show');
+      document.getElementById('newBtn').style.display = 'inline-block';
+
+      // Render options
+      const optionsContainer = document.getElementById('quizOptions');
+      optionsContainer.innerHTML = '';
+      
+      currentQuiz.options.forEach((option, index) => {
+        const optionBtn = document.createElement('div');
+        optionBtn.className = 'quiz-option';
+        optionBtn.textContent = option;
+        optionBtn.onclick = () => checkAnswer(optionBtn, option[0], currentQuiz.answer, currentQuiz.explanation);
+        optionsContainer.appendChild(optionBtn);
+      });
+    }
+
+    function checkAnswer(optionBtn, selected, correct, explanation) {
+      if (hasAnswered) return;
+      hasAnswered = true;
+
+      const options = document.querySelectorAll('.quiz-option');
+      
+      if (selected === correct) {
+        optionBtn.classList.add('correct');
+      } else {
+        optionBtn.classList.add('wrong');
+        // Highlight correct answer
+        options.forEach(opt => {
+          if (opt.textContent[0] === correct) {
+            opt.classList.add('correct');
+          }
+        });
+      }
+
+      // Show explanation
+      const explanationEl = document.getElementById('quizExplanation');
+      explanationEl.textContent = 'Giải thích: ' + explanation;
+      explanationEl.classList.add('show');
+    }
+
+    function newContent() {
+      if (isQuiz) {
+        loadQuiz();
+      } else {
+        loadFact();
+      }
+    }
+
+    function continueGame() {
+      const fromTile = getURLParameter('fromTile');
+      window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
+    }
+
+    // Initialize on load
+    init();
+  </script>
+</body>
+</html>

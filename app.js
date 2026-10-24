@@ -576,6 +576,10 @@
   // 4. MAIN WORKFLOW & INTERACTION CONTROLLER
   // ==========================================================================
   document.addEventListener('DOMContentLoaded', () => {
+    // Kiểm tra URL parameter để skip intro
+    const urlParams = new URLSearchParams(window.location.search);
+    const skipIntro = urlParams.get('skipIntro') === 'true';
+
     // Stage 1 & 2 Elements
     const introBoardStage = document.getElementById('introBoardStage');
     const fairytaleCloudsContainer = document.getElementById('fairytaleCloudsContainer');
@@ -826,9 +830,9 @@
       guidanceChatbox.classList.remove('hidden');
 
       // Lượt đầu: hiện 2 textbox lần lượt với animation
-      const introText1 = "Này này! Bạn ơi! Đứng đó làm gì mà ngó?  Lại đây, Tò Te Tí dẫn bạn rong ruổi một vòng.";
+      const introText1 = "Này này! Bạn ơi! Đứng đó làm gì mà ngó? || Lại đây, Tò Te Tí dẫn bạn rong ruổi một vòng.";
       const introText2 = "Trong từng ô cờ là một món ăn, một gánh hàng, một câu chuyện và một góc nhỏ của văn hóa Việt đang chờ bạn tìm đến.";
-      const introText3 = "Nhấn vào bàn cờ để bắt đầu chơi!";
+      const introText3 = "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.";
 
       // Đếm số textbox đã hiện
       let textBoxCount = 0;
@@ -865,8 +869,8 @@
         // Xóa nội dung cũ
         container.innerHTML = '';
 
-        // Tách câu theo dấu chấm (.) và dấu chấm hỏi (?)
-        const sentences = text.split(/(?<=[.?])\s+/);
+        // Tách câu theo dấu || (chỉ cho introText1) hoặc dấu chấm (.) và dấu chấm hỏi (?)
+        const sentences = text.includes('||') ? text.split('||') : text.split(/(?<=[.?])\s+/);
         let currentSentence = 0;
         let charIndex = 0;
 
@@ -974,7 +978,39 @@
     const tile17 = document.getElementById('tile-17');
     if (tile17) {
       tile17.addEventListener('click', () => {
-        window.location.href = 'ben_thanh_market.html';
+        window.location.href = 'ben_thanh_market.html?fromTile=17';
+      });
+    }
+
+    // Event listener cho Chợ Tân Định - chuyển sang trang so sánh xưa và nay
+    const tile24 = document.getElementById('tile-24');
+    if (tile24) {
+      tile24.addEventListener('click', () => {
+        window.location.href = 'tan_dinh_market.html?fromTile=24';
+      });
+    }
+
+    // Event listener cho Bánh Mì - chuyển sang trang banh_mi.html
+    const tile26 = document.getElementById('tile-26');
+    if (tile26) {
+      tile26.addEventListener('click', () => {
+        window.location.href = 'banh_mi.html?fromTile=26';
+      });
+    }
+
+    // Event listener cho Chợ Bà Chiểu - chuyển sang trang so sánh xưa và nay
+    const tile3 = document.getElementById('tile-3');
+    if (tile3) {
+      tile3.addEventListener('click', () => {
+        window.location.href = 'ba_chieu_market.html?fromTile=3';
+      });
+    }
+
+    // Event listener cho Chợ An Đông - chuyển sang trang so sánh xưa và nay
+    const tile11 = document.getElementById('tile-11');
+    if (tile11) {
+      tile11.addEventListener('click', () => {
+        window.location.href = 'an_dong_market.html?fromTile=11';
       });
     }
 
@@ -1010,7 +1046,7 @@
     // ------------------------------------------------------------------------
     // STEP 5: ADVANCE TO 3D DICE STAGE (CÂU THOẠI THAY ĐỔI MỖI LƯỢT)
     // ------------------------------------------------------------------------
-    const diceDialoguePool = ["Cứ gieo!","Xúc xắc đã sẵn!","Ta cùng đi!","Tiếp tục nào!","Đừng ngần ngại!","Tuyệt vời!","Cùng xem!","Tiến lên!","Wow!","Quá tuyệt!","Giỏi thật!","Hãy đi tiếp!","Lên đường!","Đi nào!","Cùng chạy!","Sẵn sàng!","Gieo thôi!","Tới đây!","Hăng hái!","Hay ho!"];
+    const diceDialoguePool = ["Cứ gieo!","Xúc xắc đã sẵn!","Ta cùng đi!","Tiếp tục nào!","Tuyệt vời!","Cùng xem!","Tiến lên!","Wow!","Quá tuyệt!","Giỏi thật!","Hãy đi tiếp!","Lên đường!","Đi nào!","Cùng chạy!","Sẵn sàng!","Gieo thôi!","Tới đây!","Hăng hái!","Hay ho!"];
 
     // Pool câu thoại cho các lượt sau (lần 2 trở đi) - nội dung khác, dài hơn
     const diceDialoguePoolLater = [
@@ -1070,21 +1106,8 @@
         }, 120);
       }
 
-      // Chọn câu thoại ngẫu nhiên cho từng lượt
-      // Lượt đầu (diceTurnCount == 0): dùng pool ngắn
-      // Lượt thứ 2 trở đi (diceTurnCount >= 1): dùng pool dài hơn
-      let dialoguePool;
-      if (diceTurnCount === 0) {
-        dialoguePool = diceDialoguePool;
-      } else {
-        dialoguePool = diceDialoguePoolLater;
-      }
-
-      const randomIndex = Math.floor(Math.random() * dialoguePool.length);
-      const diceInstruct = dialoguePool[randomIndex];
+      // KHÔNG hiển thị câu thoại ngẫu nhiên - chỉ dùng intro đã thêm
       diceTurnCount++;
-      displayTextDirect(chatMessageContainer, diceInstruct);
-
       diceCenterStage.classList.remove('hidden');
     }
 
@@ -1101,6 +1124,7 @@
 
         diceCenterStage.classList.add('hidden');
         guidanceChatbox.classList.add('hidden');
+        chatMessageContainer.innerHTML = '';
 
         if (!hasIntroducedBoard) {
           hasIntroducedBoard = true;
@@ -1308,16 +1332,10 @@
     function showGieoQueContent() {
       // Randomly choose between fact or quiz
       const isQuiz = Math.random() < 0.5;
+      const type = isQuiz ? 'quiz' : 'fact';
 
-      if (isQuiz) {
-        // Show random quiz question in modal
-        const randomQuiz = gieoQueQuestions[Math.floor(Math.random() * gieoQueQuestions.length)];
-        showQuizModal(randomQuiz);
-      } else {
-        // Show random fact in beautiful card
-        const randomFact = gieoQueFacts[Math.floor(Math.random() * gieoQueFacts.length)];
-        showFunFactCard(randomFact);
-      }
+      // Chuyển sang trang gieo_que.html với tham số type và vị trí tile hiện tại
+      window.location.href = `gieo_que.html?type=${type}&fromTile=${currentTile}`;
     }
 
     function showFunFactCard(fact) {
@@ -1507,10 +1525,31 @@
       if (!dish) {
         // Kiểm tra nếu là Chợ Bến Thành
         if (tileIndex === 17) {
-          window.location.href = 'ben_thanh_market.html';
+          window.location.href = 'ben_thanh_market.html?fromTile=17';
+          return;
+        }
+        // Kiểm tra nếu là Chợ Tân Định
+        if (tileIndex === 24) {
+          window.location.href = 'tan_dinh_market.html?fromTile=24';
+          return;
+        }
+        // Kiểm tra nếu là Chợ Bà Chiểu
+        if (tileIndex === 3) {
+          window.location.href = 'ba_chieu_market.html?fromTile=3';
+          return;
+        }
+        // Kiểm tra nếu là Chợ An Đông
+        if (tileIndex === 11) {
+          window.location.href = 'an_dong_market.html?fromTile=11';
           return;
         }
         showBoardOnReturn(true); // Tự động mở xúc xắc tiếp
+        return;
+      }
+
+      // Kiểm tra nếu là Bánh Mì - chuyển sang trang banh_mi.html
+      if (dish && dish.foodId === 'banh_mi') {
+        window.location.href = 'banh_mi.html?fromTile=${tileIndex}';
         return;
       }
 
@@ -1838,8 +1877,31 @@
     if (btnCloseZoom) btnCloseZoom.addEventListener('click', closeZoom);
     if (zoomModalBackdrop) zoomModalBackdrop.addEventListener('click', closeZoom);
 
-    // Bắt đầu game với màn rẽ mây cổ tích
-    triggerCloudPartingIntro();
+    // Bắt đầu game với màn rẽ mây cổ tích hoặc skip intro
+    if (skipIntro) {
+      // Skip intro và chuyển thẳng đến bàn cờ
+      currentStep = 4;
+      introBoardStage.classList.add('hidden');
+      monopolyStage.classList.remove('hidden');
+      boardTokenPlayer.classList.add('hidden-until-roll');
+
+      // Kiểm tra parameter fromTile để đặt nhân vật ở đúng vị trí
+      const fromTile = urlParams.get('fromTile');
+      if (fromTile) {
+        currentTile = parseInt(fromTile);
+        updateTokenPosition(currentTile);
+      } else {
+        currentTile = 0;
+        updateTokenPosition(0);
+      }
+
+      blackVeil.classList.add('hidden');
+      guideCharRight.classList.add('hidden');
+      guidanceChatbox.classList.add('hidden');
+      showGuideCharacterOnBoard();
+    } else {
+      triggerCloudPartingIntro();
+    }
 
     // ==========================================================================
     // DETAIL VERTICAL SCROLL CONTROLLER

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chợ Tân Định - Xưa và Nay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: url('assets/tan_dinh_background.jpg') center center no-repeat;
+      background-size: cover;
+      min-height: 100vh;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Pattaya', cursive;
+      font-size: clamp(36px, 6vw, 64px);
+      color: #D4AF37;
+      text-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+      margin-bottom: 10px;
+      animation: titleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes titleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 3vw, 24px);
+      color: #ffffff;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      text-align: center;
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 30px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      border: 4px solid #D4AF37;
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 60%;
+    }
+
+    .image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-xua {
+      z-index: 1;
+    }
+
+    .image-nay {
+      z-index: 2;
+      clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+      transition: clip-path 0.5s ease;
+    }
+
+    .slider-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      cursor: ew-resize;
+    }
+
+    .slider-line {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 4px;
+      height: 100%;
+      background: #D4AF37;
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: #D4AF37;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .slider-handle:hover {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    .slider-handle::before,
+    .slider-handle::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 20px;
+      background: #ffffff;
+      border-radius: 2px;
+    }
+
+    .slider-handle::before {
+      transform: rotate(90deg);
+    }
+
+    .labels {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .label {
+      background: rgba(212, 175, 55, 0.9);
+      color: #1a1a2e;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-family: 'Pattaya', cursive;
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-20px); }
+      60% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    .scroll-indicator svg {
+      width: 40px;
+      height: 40px;
+      fill: #D4AF37;
+    }
+
+    /* Content Sections */
+    .content-section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .content-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-family: 'Pattaya', cursive;
+      font-size: clamp(32px, 5vw, 48px);
+      color: #D4AF37;
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+    }
+
+    .info-card h3 {
+      font-family: 'Pattaya', cursive;
+      font-size: clamp(24px, 4vw, 32px);
+      color: #D4AF37;
+      margin-bottom: 15px;
+    }
+
+    .info-card p {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.8;
+      color: #e0e0e0;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #D4AF37, #C5221F);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 30px;
+      margin-bottom: 30px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -35px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      background: #D4AF37;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    .timeline-item h4 {
+      font-family: 'Pattaya', cursive;
+      font-size: clamp(20px, 3vw, 28px);
+      color: #D4AF37;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item p {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.8;
+      color: #e0e0e0;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .back-button {
+      margin: 30px auto;
+      padding: 15px 40px;
+      font-family: 'Pattaya', cursive;
+      font-size: clamp(18px, 3vw, 24px);
+      background: linear-gradient(135deg, #D4AF37 0%, #F2C94C 100%);
+      color: #1a1a2e;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    .back-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .content-section {
+        padding: 40px 15px;
+      }
+      
+      .grid-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-section">
+    <h1>Chợ Tân Định</h1>
+    <p class="subtitle">Ký ức từ quá khứ đến hiện tại</p>
+    
+    <div class="image-container">
+      <div class="image-wrapper">
+        <img src="assets/cho_tan_dinh_xua.jpg" alt="Chợ Tân Định Xưa" class="image image-xua">
+        <img src="assets/cho_tan_dinh_nay.jpg" alt="Chợ Tân Định Nay" class="image image-nay" id="imageNay">
+      </div>
+      
+      <div class="labels">
+        <div class="label">XƯA</div>
+        <div class="label">NAY</div>
+      </div>
+      
+      <div class="slider-container" id="sliderContainer">
+        <div class="slider-line"></div>
+        <div class="slider-handle" id="sliderHandle"></div>
+      </div>
+    </div>
+    
+    <p style="color: #ffffff; font-size: 18px; opacity: 0.8; margin-bottom: 20px;">👆 Kéo thanh để so sánh Chợ Tân Định xưa và nay</p>
+    
+    <div class="scroll-indicator">
+      <svg viewBox="0 0 24 24">
+        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="content-section" id="section1">
+    <h2 class="section-title">Thông Tin Chung & Lịch Sử Hình Thành</h2>
+    <div class="info-card">
+      <p>Chợ Tân Định nằm tại đường Hai Bà Trưng, TP.HCM, tiền thân là chợ Phú Hòa, hình thành khoảng thập niên 1870–1880. Chợ được xây dựng lại năm 1926 và khánh thành ngày 26/7/1927. Năm 2025, chợ được công nhận là Di tích kiến trúc nghệ thuật cấp thành phố.</p>
+    </div>
+  </div>
+
+  <div class="content-section" id="section2">
+    <h2 class="section-title">Các Cột Mốc Quan Trọng</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Thập niên 1870–1880</h4>
+        <p>Chợ Phú Hòa tiền thân hình thành.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Năm 1926</h4>
+        <p>Chợ được xây dựng lại với kiến trúc Pháp.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Ngày 26/7/1927</h4>
+        <p>Chợ Tân Định được khánh thành chính thức.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Năm 2025</h4>
+        <p>Chợ được công nhận là Di tích kiến trúc nghệ thuật cấp thành phố.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section" id="section3">
+    <h2 class="section-title">Đặc Điểm & Bản Sắc Văn Hóa</h2>
+    <div class="grid-cards">
+      <div class="info-card">
+        <h3>Kiến trúc</h3>
+        <p>Chợ nổi bật với kiến trúc Pháp, ba tháp mặt tiền và nét Art Deco đặc trưng, tạo nên vẻ đẹp độc đáo giữa lòng Sài Gòn.</p>
+      </div>
+      <div class="info-card">
+        <h3>Sản phẩm</h3>
+        <p>Nơi đây nổi tiếng với vải vóc, thực phẩm tươi sống và ẩm thực địa phương, thu hút cả người dân địa phương và du khách.</p>
+      </div>
+      <div class="info-card">
+        <h3>Văn hóa</h3>
+        <p>Hoạt động mua bán gần gũi giữa tiểu thương và khách quen góp phần lưu giữ văn hóa chợ truyền thống Sài Gòn.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section" id="section4">
+    <h2 class="section-title">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
+    <div class="grid-cards">
+      <div class="info-card">
+        <h3>Ký ức</h3>
+        <p>Chợ lưu giữ ký ức của nhiều thế hệ qua các sạp vải, hàng quán và nghề buôn bán lâu đời.</p>
+      </div>
+      <div class="info-card">
+        <h3>Bảo tồn</h3>
+        <p>Để bảo tồn, cần sưu tầm ảnh cũ, chụp ảnh hiện tại, số hóa bản đồ và phỏng vấn tiểu thương, giúp tái hiện sự thay đổi của chợ qua thời gian.</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="back-button" onclick="goBack()">Quay lại</button>
+
+  <script>
+    // Slider functionality
+    const sliderContainer = document.getElementById('sliderContainer');
+    const sliderHandle = document.getElementById('sliderHandle');
+    const imageNay = document.getElementById('imageNay');
+    let isDragging = false;
+
+    function updateSlider(percentage) {
+      percentage = Math.max(0, Math.min(100, percentage));
+      
+      sliderHandle.style.left = percentage + '%';
+      sliderHandle.style.transform = `translate(-50%, -50%)`;
+      
+      document.querySelector('.slider-line').style.left = percentage + '%';
+      document.querySelector('.slider-line').style.transform = `translateX(-50%)`;
+      
+      imageNay.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
+    }
+
+    sliderContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updateSlider((e.clientX / window.innerWidth) * 100);
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const rect = sliderContainer.getBoundingClientRect();
+        const percentage = ((e.clientX - rect.left) / rect.width) * 100;
+        updateSlider(percentage);
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Touch support
+    sliderContainer.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      const touch = e.touches[0];
+      const rect = sliderContainer.getBoundingClientRect();
+      const percentage = ((touch.clientX - rect.left) / rect.width) * 100;
+      updateSlider(percentage);
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (isDragging) {
+        const touch = e.touches[0];
+        const rect = sliderContainer.getBoundingClientRect();
+        const percentage = ((touch.clientX - rect.left) / rect.width) * 100;
+        updateSlider(percentage);
+      }
+    });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Scroll animations
+    const sections = document.querySelectorAll('.content-section');
+    
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    function goBack() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromTile = urlParams.get('fromTile');
+      window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
+    }
+  </script>
+</body>
+</html>

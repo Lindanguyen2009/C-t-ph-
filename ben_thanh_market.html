@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chợ Bến Thành - Xưa và Nay</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -245,6 +245,7 @@
     }
 
     .info-card p {
+      font-family: 'Merriweather', 'Times New Roman', serif;
       font-size: clamp(14px, 2vw, 18px);
       line-height: 1.8;
       color: #e0e0e0;
@@ -291,6 +292,7 @@
     }
 
     .timeline-item p {
+      font-family: 'Merriweather', 'Times New Roman', serif;
       font-size: clamp(14px, 2vw, 18px);
       line-height: 1.8;
       color: #e0e0e0;
@@ -527,7 +529,9 @@
     });
 
     function goBack() {
-      window.history.back();
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromTile = urlParams.get('fromTile');
+      window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
     }
   </script>
 </body>
