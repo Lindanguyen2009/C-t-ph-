@@ -33,25 +33,6 @@
   class SoundManager {
     constructor() {
       this.ctx = null;
-
-      // Trạng thái nhạc nền (BGM) - Mặc định BẬT phát nhạc đàn tranh êm dịu
-      this.bgmPlaying = false;
-      this.bgmMuted = false;
-      try {
-        const stored = localStorage.getItem('cotyphu_bgm_muted');
-        if (stored === 'true') {
-          this.bgmMuted = true;
-        } else {
-          this.bgmMuted = false;
-        }
-      } catch (e) {
-        this.bgmMuted = false;
-      }
-
-      this.bgmMasterGain = null;
-      this.bgmFilter = null;
-      this.droneNodes = [];
-      this.hasBoundInteraction = false;
     }
 
     init() {
@@ -59,29 +40,11 @@
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (AudioCtx) {
           this.ctx = new AudioCtx();
-          this.setupBgmBus();
         }
       }
       if (this.ctx && this.ctx.state === 'suspended') {
         this.ctx.resume();
       }
-    }
-
-    setupBgmBus() {
-      if (!this.ctx || this.bgmMasterGain) return;
-
-      // Master gain cho nhạc nền: êm ái, nhẹ nhàng (tối đa 0.025, whisper-quiet)
-      this.bgmMasterGain = this.ctx.createGain();
-      const initialVol = this.bgmMuted ? 0.0001 : 0.025;
-      this.bgmMasterGain.gain.setValueAtTime(initialVol, this.ctx.currentTime);
-
-      // Bộ lọc âm trầm (lowpass 220Hz) - loại bỏ hoàn toàn các tần số chói gắt
-      this.bgmFilter = this.ctx.createBiquadFilter();
-      this.bgmFilter.type = 'lowpass';
-      this.bgmFilter.frequency.setValueAtTime(220, this.ctx.currentTime);
-
-      this.bgmMasterGain.connect(this.bgmFilter);
-      this.bgmFilter.connect(this.ctx.destination);
     }
 
     playCloudParting() {
@@ -293,181 +256,9 @@
       osc.stop(this.ctx.currentTime + 0.19);
     }
 
-    // ========================================================================
-    // BGM SYNTHESIS INSTRUMENTS (ĐÀN TRANH, SÁO TRÚC, CHUÔNG GIÓ, NỀN TRẦM)
-    // ========================================================================
-
-    // ========================================================================
-    // BGM CONTROL - ÂM HƯỞNG THƯ THÁI ÊM DỊU, TUYỆT ĐỐI KHÔNG CHÓI TAI
-    // ========================================================================
-    startWarmDrone() {
-      if (!this.ctx || !this.bgmMasterGain || this.droneNodes.length > 0) return;
-
-      // Chỉ sử dụng các nốt trầm thuần khiết (sóng sin mềm mại dưới 150Hz)
-      const droneFreqs = [73.42, 110.00, 146.83];
-      droneFreqs.forEach((freq, idx) => {
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        const filter = this.ctx.createBiquadFilter();
-
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(150, this.ctx.currentTime);
-
-        const droneVol = 0.018 / (idx + 1);
-        gain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(droneVol, this.ctx.currentTime + 3.0);
-
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(this.bgmMasterGain);
-
-        osc.start();
-        this.droneNodes.push({ osc, gain });
-      });
-    }
-
-    stopWarmDrone() {
-      this.droneNodes.forEach(({ osc, gain }) => {
-        try {
-          gain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.8);
-          setTimeout(() => {
-            try { osc.stop(); osc.disconnect(); } catch (err) {}
-          }, 900);
-        } catch (e) {}
-      });
-      this.droneNodes = [];
-    }
-
-    startBGM() {
-      this.init();
-      if (this.bgmMuted) {
-        this.updateBgmUi();
-        return;
-      }
-
-      const audioEl = document.getElementById('bgmAudio');
-      if (audioEl) {
-        audioEl.volume = 0.35;
-        const playPromise = audioEl.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            this.bgmPlaying = true;
-            this.updateBgmUi();
-          }).catch(() => {
-            // Autoplay will be unlocked on user's first interaction
-            this.bgmPlaying = false;
-            this.updateBgmUi();
-          });
-        }
-      }
-      this.updateBgmUi();
-    }
-
-    stopBGM() {
-      this.bgmPlaying = false;
-      const audioEl = document.getElementById('bgmAudio');
-      if (audioEl) {
-        try { audioEl.pause(); } catch (e) {}
-      }
-      this.stopWarmDrone();
-      this.updateBgmUi();
-    }
-
-    toggleBGM() {
-      this.init();
-      const audioEl = document.getElementById('bgmAudio');
-      this.bgmMuted = !this.bgmMuted;
-      try { localStorage.setItem('cotyphu_bgm_muted', this.bgmMuted ? 'true' : 'false'); } catch (e) {}
-
-      if (this.bgmMuted) {
-        if (audioEl) audioEl.pause();
-        this.bgmPlaying = false;
-      } else {
-        if (audioEl) {
-          audioEl.volume = 0.35;
-          audioEl.play().then(() => {
-            this.bgmPlaying = true;
-            this.updateBgmUi();
-          }).catch(() => {});
-        }
-      }
-      this.updateBgmUi();
-    }
-
-    updateBgmUi() {
-      const btn = document.getElementById('bgmToggleBtn');
-      if (!btn) return;
-
-      const iconEl = btn.querySelector('.bgm-icon');
-      const textEl = btn.querySelector('.bgm-text');
-
-      if (this.bgmMuted || !this.bgmPlaying) {
-        btn.classList.add('is-muted');
-        btn.classList.remove('is-playing');
-        btn.setAttribute('aria-label', 'Bật nhạc nền');
-        btn.setAttribute('title', 'Nhấn để bật nhạc nền đàn tranh');
-        if (iconEl) iconEl.textContent = '🔇';
-        if (textEl) textEl.textContent = 'Nhạc: Tắt';
-      } else {
-        btn.classList.remove('is-muted');
-        btn.classList.add('is-playing');
-        btn.setAttribute('aria-label', 'Tắt nhạc nền');
-        btn.setAttribute('title', 'Nhấn để tắt nhạc nền');
-        if (iconEl) iconEl.textContent = '🎵';
-        if (textEl) textEl.textContent = 'Nhạc: Bật';
-      }
-    }
-
-    bindBgmControls() {
-      const btn = document.getElementById('bgmToggleBtn');
-      if (btn && !btn._bgmBound) {
-        btn._bgmBound = true;
-        btn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.init();
-          this.toggleBGM();
-        });
-      }
-      this.updateBgmUi();
-    }
-
-    bindFirstInteraction() {
-      if (this.hasBoundInteraction) return;
-      this.hasBoundInteraction = true;
-
-      // Khi người dùng chạm hoặc tương tác lần đầu với game, tự động mở âm thanh và phát nhạc nền đàn tranh
-      const handleGesture = () => {
-        this.init();
-        if (!this.bgmMuted) {
-          const audioEl = document.getElementById('bgmAudio');
-          if (audioEl && (audioEl.paused || !this.bgmPlaying)) {
-            audioEl.volume = 0.35;
-            audioEl.play().then(() => {
-              this.bgmPlaying = true;
-              this.updateBgmUi();
-            }).catch(() => {});
-          }
-        }
-        window.removeEventListener('pointerdown', handleGesture);
-        window.removeEventListener('click', handleGesture);
-        window.removeEventListener('keydown', handleGesture);
-        window.removeEventListener('touchstart', handleGesture);
-      };
-
-      window.addEventListener('pointerdown', handleGesture, { passive: true });
-      window.addEventListener('click', handleGesture, { passive: true });
-      window.addEventListener('keydown', handleGesture, { passive: true });
-      window.addEventListener('touchstart', handleGesture, { passive: true });
-    }
   }
 
   const sfx = new SoundManager();
-  sfx.bindBgmControls();
-  sfx.bindFirstInteraction();
-  sfx.startBGM();
 
   // ==========================================================================
   // 2. 10 ICONIC VIETNAMESE STREET FOOD DISHES
