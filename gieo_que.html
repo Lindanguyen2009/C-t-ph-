@@ -333,7 +333,6 @@
 
     <div class="action-buttons" id="actionButtons">
       <button class="btn btn-primary" id="continueBtn" onclick="continueGame()">Tiếp tục chơi</button>
-      <button class="btn btn-secondary" id="newBtn" onclick="newContent()">Câu mới</button>
     </div>
   </div>
 
@@ -414,7 +413,6 @@
       document.getElementById('contentText').textContent = randomFact;
       document.getElementById('quizOptions').style.display = 'none';
       document.getElementById('quizExplanation').classList.remove('show');
-      document.getElementById('newBtn').style.display = 'inline-block';
     }
 
     function loadQuiz() {
@@ -427,7 +425,6 @@
       document.getElementById('contentText').textContent = currentQuiz.question;
       document.getElementById('quizOptions').style.display = 'flex';
       document.getElementById('quizExplanation').classList.remove('show');
-      document.getElementById('newBtn').style.display = 'inline-block';
 
       // Render options
       const optionsContainer = document.getElementById('quizOptions');

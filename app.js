@@ -1037,10 +1037,14 @@
       guideCharRight.classList.add('hidden');
       guidanceChatbox.classList.add('hidden');
 
-      // Reset flag để lần tới nhấn bàn cờ sẽ hiển thị guide
-      hasShownGuideOnBoard = false;
+      // KHÔNG reset flag hasShownGuideOnBoard - để lần sau nhấn không hiển thị textbox nữa
+      // hasShownGuideOnBoard = false;
 
-      // KHÔNG tự động chuyển sang dice stage - người dùng phải nhấn vào bàn cờ
+      // Nếu autoOpenDice, cho phép gieo xúc xắc ngay
+      if (autoOpenDice) {
+        hasShownGuideOnBoard = true;
+        canAdvanceToDice = true;
+      }
     }
 
     // ------------------------------------------------------------------------
@@ -1244,6 +1248,27 @@
           item.onclick = () => showDishDetail(dish);
           grid.appendChild(item);
         }
+      });
+
+      // Add markets
+      const markets = [
+        { name: 'Chợ Bến Thành', description: 'Di sản thương mại lịch sử Sài Gòn, biểu tượng văn hóa đô thị TP.HCM', tile: 17, url: 'ben_thanh_market.html' },
+        { name: 'Chợ Tân Định', description: 'Di sản kiến trúc nghệ thuật cấp thành phố, nét văn hóa Sài Gòn xưa', tile: 24, url: 'tan_dinh_market.html' },
+        { name: 'Chợ Bà Chiểu', description: 'Di sản văn hóa Sài Gòn, nơi lưu giữ ký ức nhiều thế hệ tiểu thương', tile: 3, url: 'ba_chieu_market.html' },
+        { name: 'Chợ An Đông', description: 'Trung tâm thương mại nổi tiếng tại Chợ Lớn, đầu mối kinh doanh thời trang', tile: 11, url: 'an_dong_market.html' }
+      ];
+
+      markets.forEach(market => {
+        const item = document.createElement('div');
+        item.className = 'summary-item';
+        item.innerHTML = `
+          <h3>🏪 ${market.name}</h3>
+          <p>${market.description}</p>
+        `;
+        item.onclick = () => {
+          window.location.href = `${market.url}?fromTile=${market.tile}`;
+        };
+        grid.appendChild(item);
       });
 
       modal.classList.remove('hidden');
@@ -1898,7 +1923,16 @@
       blackVeil.classList.add('hidden');
       guideCharRight.classList.add('hidden');
       guidanceChatbox.classList.add('hidden');
-      showGuideCharacterOnBoard();
+
+      // Nếu quay lại từ trang khác (có fromTile), không hiển thị textbox Tò Te Tí
+      // Cho phép gieo xúc xắc ngay khi ấn vào bàn cờ
+      if (fromTile) {
+        hasShownGuideOnBoard = true;
+        canAdvanceToDice = true;
+      } else {
+        // Lần đầu chơi: hiển thị textbox Tò Te Tí
+        showGuideCharacterOnBoard();
+      }
     } else {
       triggerCloudPartingIntro();
     }
