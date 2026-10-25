@@ -21,11 +21,22 @@
   <!-- Film Grain Texture Overlay (Hạt grain nhẹ truyền thống) -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
-  <!-- Nút Tổng Hợp Món Ăn -->
-  <button id="summaryBtn" class="summary-button hidden" onclick="showFoodSummary()">
-    <span class="summary-icon">📋</span>
-    <span class="summary-text">Tổng Hợp Món Ăn</span>
-  </button>
+  <!-- Thanh tiện ích góc trên bên phải (Nhạc nền truyền thống & Tổng hợp) -->
+  <aside class="top-utility-bar" aria-label="Thanh tiện ích">
+    <button id="bgmToggleBtn" class="bgm-toggle-button is-playing" aria-label="Bật hoặc tắt nhạc nền" title="Nhạc nền dân gian Việt Nam (nhẹ nhàng)">
+      <span class="bgm-icon">🎵</span>
+      <span class="bgm-text">Nhạc: Bật</span>
+      <span class="bgm-wave-waves" aria-hidden="true">
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+        <span class="wave-bar"></span>
+      </span>
+    </button>
+    <button id="summaryBtn" class="summary-button hidden" onclick="showFoodSummary()">
+      <span class="summary-icon">📋</span>
+      <span class="summary-text">Tổng Hợp Món Ăn</span>
+    </button>
+  </aside>
 
   <!-- Vertical Ombre Background: Lightest #3A99BA on top to deepest #072865 at bottom -->
   <div class="site-ombre-bg"></div>

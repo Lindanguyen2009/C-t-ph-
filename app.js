@@ -27,21 +27,166 @@
   'use strict';
 
   // ==========================================================================
-  // 1. SOUND MANAGER (Web Audio API Synthesizer)
   // ==========================================================================
+  // 1. SOUND MANAGER & TRADITIONAL VIETNAMESE BGM SYNTHESIZER (Web Audio API)
+  // ==========================================================================
+  // Thang âm ngũ cung truyền thống (D Pentatonic - Điệu Bắc trong sáng, thanh bình)
+  const BGM_NOTES = {
+    D2: 73.42,
+    A2: 110.00,
+    D3: 146.83,
+    E3: 164.81,
+    G3: 196.00,
+    A3: 220.00,
+    B3: 246.94,
+    D4: 293.66,
+    E4: 329.63,
+    G4: 392.00,
+    A4: 440.00,
+    B4: 493.88,
+    D5: 587.33,
+    E5: 659.25,
+    G5: 783.99,
+    A5: 880.00,
+    B5: 987.77,
+    D6: 1174.66
+  };
+
+  // Bản nhạc ngũ cung nhẹ nhàng 16 ô nhịp (~58 giây mỗi vòng lặp tuần hoàn)
+  // Nhạc cụ: zither (Đàn Tranh), flute (Sáo Trúc), bell (Chuông Gió/Khánh Đồng)
+  const BGM_SCORE = [
+    // Đoạn 1: Mở màn tiếng Đàn Tranh thong dong, thanh cảnh như sớm mai chợ quê (Nhịp 0 - 15)
+    ['zither', 0, 2, 'D4', 0.65],
+    ['zither', 1.5, 1, 'A4', 0.55],
+    ['zither', 2.5, 1, 'B4', 0.6],
+    ['zither', 3.5, 2, 'D5', 0.7],
+    ['bell', 4, 3, 'A5', 0.35],
+    ['zither', 5, 1.5, 'E5', 0.65],
+    ['zither', 6.5, 1.5, 'D5', 0.6],
+    ['zither', 8, 2, 'B4', 0.55],
+    ['zither', 9.5, 1, 'A4', 0.5],
+    ['zither', 11, 2, 'G4', 0.55],
+    ['zither', 13, 1.5, 'A4', 0.6],
+    ['zither', 14.5, 1.5, 'D4', 0.65],
+
+    // Đoạn 2: Tiếng Sáo Trúc ngân nga vút bay, hòa cùng tiếng đàn dìu dặt (Nhịp 16 - 31)
+    ['flute', 16, 3, 'A4', 0.75],
+    ['zither', 16, 2, 'D4', 0.45],
+    ['flute', 19, 2, 'B4', 0.75],
+    ['zither', 18, 1.5, 'A4', 0.4],
+    ['flute', 21, 3, 'D5', 0.8],
+    ['zither', 21, 1.5, 'D4', 0.4],
+    ['zither', 22.5, 1.5, 'G4', 0.45],
+    ['flute', 24, 2.5, 'E5', 0.85],
+    ['flute', 26.5, 1.5, 'D5', 0.8],
+    ['zither', 25, 2, 'A4', 0.45],
+    ['flute', 28, 3.5, 'B4', 0.75],
+    ['bell', 28, 4, 'D5', 0.4],
+    ['zither', 28.5, 1.5, 'D4', 0.35],
+    ['zither', 30, 2, 'E4', 0.4],
+
+    // Đoạn 3: Ngũ cung chuyển ấm áp, phong vị ẩm thực ba miền thanh nhã (Nhịp 32 - 47)
+    ['flute', 32, 2.5, 'E5', 0.8],
+    ['zither', 32, 1.5, 'G4', 0.45],
+    ['flute', 34.5, 1.5, 'G5', 0.8],
+    ['zither', 34, 1.5, 'B4', 0.45],
+    ['flute', 36, 3, 'A5', 0.85],
+    ['bell', 36, 3.5, 'B5', 0.35],
+    ['zither', 36.5, 1, 'E5', 0.45],
+    ['zither', 38, 2, 'D5', 0.5],
+    ['flute', 39.5, 2, 'G5', 0.75],
+    ['flute', 41.5, 2, 'E5', 0.75],
+    ['zither', 41, 1.5, 'B4', 0.45],
+    ['flute', 43.5, 3.5, 'D5', 0.8],
+    ['zither', 43, 2, 'A4', 0.45],
+    ['zither', 45.5, 1.5, 'G4', 0.4],
+
+    // Đoạn 4: Gió thoảng, chuông chiều lững lờ, lắng đọng về lại nốt chủ D (Nhịp 48 - 63)
+    ['flute', 48, 3, 'B4', 0.7],
+    ['zither', 48, 2, 'D4', 0.45],
+    ['bell', 48, 4, 'A5', 0.35],
+    ['flute', 51, 2, 'A4', 0.65],
+    ['zither', 50.5, 1.5, 'E4', 0.4],
+    ['flute', 53, 3, 'G4', 0.65],
+    ['zither', 52.5, 1.5, 'G4', 0.45],
+    ['zither', 54.5, 1.5, 'A4', 0.5],
+    ['flute', 56, 4, 'D4', 0.75],
+    ['zither', 56.5, 2, 'D4', 0.55],
+    ['zither', 59, 2, 'A4', 0.45],
+    ['zither', 61, 2.5, 'D5', 0.6],
+    ['bell', 60, 4, 'D6', 0.35]
+  ];
+
   class SoundManager {
     constructor() {
       this.ctx = null;
+
+      // Trạng thái nhạc nền (BGM)
+      this.bgmPlaying = false;
+      let isMutedStored = false;
+      try {
+        isMutedStored = localStorage.getItem('cotyphu_bgm_muted') === 'true';
+      } catch (e) {}
+      this.bgmMuted = isMutedStored;
+      this.bgmMasterGain = null;
+      this.bgmFilter = null;
+      this.bgmDelayNode = null;
+      this.bgmDelayGain = null;
+      this.droneNodes = [];
+      this.bgmLoopTimer = null;
+      this.loopStartTime = 0;
+      this.tempoBpm = 66;
+      this.beatDuration = 60 / 66; // ~0.909s
+      this.totalLoopDuration = 64 * this.beatDuration; // 58.18s
+      this.hasBoundInteraction = false;
     }
 
     init() {
       if (!this.ctx) {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtx) this.ctx = new AudioCtx();
+        if (AudioCtx) {
+          this.ctx = new AudioCtx();
+          this.setupBgmBus();
+        }
       }
       if (this.ctx && this.ctx.state === 'suspended') {
         this.ctx.resume();
       }
+    }
+
+    setupBgmBus() {
+      if (!this.ctx || this.bgmMasterGain) return;
+
+      // Master gain cho nhạc nền: âm lượng nhẹ nhàng êm tai (~0.082)
+      this.bgmMasterGain = this.ctx.createGain();
+      const initialVol = this.bgmMuted ? 0.0001 : 0.082;
+      this.bgmMasterGain.gain.setValueAtTime(initialVol, this.ctx.currentTime);
+
+      // Bộ lọc ấm áp (lowpass 2600Hz) loại bỏ tiếng chát chúa, giữ âm mộc tự nhiên
+      this.bgmFilter = this.ctx.createBiquadFilter();
+      this.bgmFilter.type = 'lowpass';
+      this.bgmFilter.frequency.setValueAtTime(2600, this.ctx.currentTime);
+
+      // Hiệu ứng vang mộc tự nhiên (Acoustic Chamber Delay)
+      this.bgmDelayNode = this.ctx.createDelay();
+      this.bgmDelayNode.delayTime.setValueAtTime(0.32, this.ctx.currentTime);
+
+      this.bgmDelayGain = this.ctx.createGain();
+      this.bgmDelayGain.gain.setValueAtTime(0.28, this.ctx.currentTime);
+
+      const delayFilter = this.ctx.createBiquadFilter();
+      delayFilter.type = 'lowpass';
+      delayFilter.frequency.setValueAtTime(1100, this.ctx.currentTime);
+
+      // Kết nối tuyến âm thanh
+      this.bgmMasterGain.connect(this.bgmFilter);
+      this.bgmFilter.connect(this.ctx.destination);
+
+      this.bgmMasterGain.connect(this.bgmDelayNode);
+      this.bgmDelayNode.connect(delayFilter);
+      delayFilter.connect(this.bgmDelayGain);
+      delayFilter.connect(this.bgmDelayNode); // Phản hồi vang
+      this.bgmDelayGain.connect(this.ctx.destination);
     }
 
     playCloudParting() {
@@ -251,6 +396,329 @@
       gain.connect(this.ctx.destination);
       osc.start();
       osc.stop(this.ctx.currentTime + 0.19);
+    }
+
+    // ========================================================================
+    // BGM SYNTHESIS INSTRUMENTS (ĐÀN TRANH, SÁO TRÚC, CHUÔNG GIÓ, NỀN TRẦM)
+    // ========================================================================
+
+    // 1. Tiếng Đàn Tranh (Vietnamese Zither Pluck)
+    playDanTranhNote(freq, startTime, duration = 1.8, velocity = 0.7) {
+      if (!this.ctx || !this.bgmMasterGain) return;
+
+      const osc1 = this.ctx.createOscillator();
+      const osc2 = this.ctx.createOscillator();
+      const noteGain = this.ctx.createGain();
+      const noteFilter = this.ctx.createBiquadFilter();
+
+      // Kết hợp sóng tam giác và sóng sin tạo âm dây tơ/kim loại vang thanh thoát
+      osc1.type = 'triangle';
+      osc2.type = 'sine';
+
+      // Mô phỏng lực gảy ngón vuốt (attack transient)
+      osc1.frequency.setValueAtTime(freq * 1.018, startTime);
+      osc1.frequency.exponentialRampToValueAtTime(freq, startTime + 0.035);
+      osc2.frequency.setValueAtTime(freq * 2, startTime);
+
+      // Thùng đàn gỗ cộng hưởng ấm
+      noteFilter.type = 'lowpass';
+      noteFilter.frequency.setValueAtTime(Math.min(freq * 4.5, 3200), startTime);
+      noteFilter.frequency.exponentialRampToValueAtTime(Math.min(freq * 1.8, 1200), startTime + duration);
+      noteFilter.Q.setValueAtTime(1.8, startTime);
+
+      // Biên độ ngân nga tự nhiên
+      const peakGain = 0.14 * velocity;
+      noteGain.gain.setValueAtTime(0.0001, startTime);
+      noteGain.gain.linearRampToValueAtTime(peakGain, startTime + 0.006);
+      noteGain.gain.exponentialRampToValueAtTime(peakGain * 0.35, startTime + 0.18);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+      osc1.connect(noteFilter);
+      osc2.connect(noteFilter);
+      noteFilter.connect(noteGain);
+      noteGain.connect(this.bgmMasterGain);
+
+      osc1.start(startTime);
+      osc2.start(startTime);
+      osc1.stop(startTime + duration + 0.05);
+      osc2.stop(startTime + duration + 0.05);
+    }
+
+    // 2. Tiếng Sáo Trúc (Bamboo Flute với hơi thở và rung ngón Vibrato)
+    playSaoTrucNote(freq, startTime, duration = 2.5, velocity = 0.8) {
+      if (!this.ctx || !this.bgmMasterGain) return;
+
+      const osc = this.ctx.createOscillator();
+      const overtoneOsc = this.ctx.createOscillator();
+      const noteGain = this.ctx.createGain();
+      const noteFilter = this.ctx.createBiquadFilter();
+
+      // Bộ tạo rung ngón (LFO Vibrato 4.6Hz)
+      const vibratoLfo = this.ctx.createOscillator();
+      const vibratoGain = this.ctx.createGain();
+      vibratoLfo.frequency.setValueAtTime(4.6, startTime);
+      vibratoGain.gain.setValueAtTime(0, startTime);
+      // Rung nở dần sau khi bắt đầu nốt 0.25s
+      vibratoGain.gain.setValueAtTime(0, startTime + 0.25);
+      vibratoGain.gain.linearRampToValueAtTime(freq * 0.015, startTime + 0.8);
+
+      vibratoLfo.connect(vibratoGain);
+      vibratoGain.connect(osc.frequency);
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      // Họa âm ống trúc nhẹ nhàng
+      overtoneOsc.type = 'sine';
+      overtoneOsc.frequency.setValueAtTime(freq * 3, startTime);
+      const overtoneGain = this.ctx.createGain();
+      overtoneGain.gain.setValueAtTime(0.055, startTime);
+
+      noteFilter.type = 'lowpass';
+      noteFilter.frequency.setValueAtTime(1800, startTime);
+
+      // Vuốt hơi vào và nhả hơi ra mềm mại
+      const peakGain = 0.16 * velocity;
+      const attack = 0.18;
+      const release = 0.35;
+      noteGain.gain.setValueAtTime(0.0001, startTime);
+      noteGain.gain.linearRampToValueAtTime(peakGain, startTime + attack);
+      noteGain.gain.setValueAtTime(peakGain, startTime + Math.max(attack, duration - release));
+      noteGain.gain.linearRampToValueAtTime(0.0001, startTime + duration);
+
+      osc.connect(noteFilter);
+      overtoneOsc.connect(overtoneGain);
+      overtoneGain.connect(noteFilter);
+      noteFilter.connect(noteGain);
+      noteGain.connect(this.bgmMasterGain);
+
+      vibratoLfo.start(startTime);
+      osc.start(startTime);
+      overtoneOsc.start(startTime);
+
+      vibratoLfo.stop(startTime + duration + 0.05);
+      osc.stop(startTime + duration + 0.05);
+      overtoneOsc.stop(startTime + duration + 0.05);
+    }
+
+    // 3. Chuông Gió & Khánh Đồng (Wind Chime / Bronze Bell)
+    playChuongGioNote(freq, startTime, duration = 3.5, velocity = 0.5) {
+      if (!this.ctx || !this.bgmMasterGain) return;
+
+      const partials = [1.0, 1.48, 2.14, 2.76];
+      const partialGains = [0.12, 0.06, 0.04, 0.02];
+
+      partials.forEach((mult, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq * mult, startTime);
+
+        const pGain = partialGains[idx] * velocity;
+        gain.gain.setValueAtTime(0.0001, startTime);
+        gain.gain.linearRampToValueAtTime(pGain, startTime + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration / (1 + idx * 0.4));
+
+        osc.connect(gain);
+        gain.connect(this.bgmMasterGain);
+
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.1);
+      });
+    }
+
+    // 4. Âm Dương Nền Trầm (Warm Drone Pad)
+    startWarmDrone() {
+      if (!this.ctx || !this.bgmMasterGain || this.droneNodes.length > 0) return;
+
+      const droneFreqs = [73.42, 110.00, 146.83];
+      droneFreqs.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(160, this.ctx.currentTime);
+
+        const droneVol = 0.022 / (idx + 1);
+        gain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(droneVol, this.ctx.currentTime + 3.0);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.bgmMasterGain);
+
+        osc.start();
+        this.droneNodes.push({ osc, gain });
+      });
+    }
+
+    stopWarmDrone() {
+      this.droneNodes.forEach(({ osc, gain }) => {
+        try {
+          gain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.8);
+          setTimeout(() => {
+            try { osc.stop(); osc.disconnect(); } catch (err) {}
+          }, 900);
+        } catch (e) {}
+      });
+      this.droneNodes = [];
+    }
+
+    // ========================================================================
+    // BGM CONTROL & SCHEDULER
+    // ========================================================================
+    startBGM() {
+      this.init();
+      if (!this.ctx) return;
+      if (this.bgmPlaying) return;
+      this.bgmPlaying = true;
+
+      this.startWarmDrone();
+
+      if (this.bgmMuted) {
+        this.bgmMasterGain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
+      } else {
+        this.bgmMasterGain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
+        this.bgmMasterGain.gain.linearRampToValueAtTime(0.082, this.ctx.currentTime + 2.0);
+      }
+
+      this.updateBgmUi();
+
+      this.loopStartTime = this.ctx.currentTime + 0.1;
+      this.scheduleScoreLoop();
+
+      if (this.bgmLoopTimer) clearInterval(this.bgmLoopTimer);
+      this.bgmLoopTimer = setInterval(() => {
+        if (!this.bgmPlaying || !this.ctx) return;
+        if (this.ctx.currentTime >= this.loopStartTime + this.totalLoopDuration - 4) {
+          this.loopStartTime += this.totalLoopDuration;
+          this.scheduleScoreLoop();
+        }
+      }, 2000);
+    }
+
+    scheduleScoreLoop() {
+      if (!this.ctx) return;
+      const baseTime = this.loopStartTime;
+
+      BGM_SCORE.forEach(([inst, beat, durBeats, noteName, vel]) => {
+        const noteFreq = BGM_NOTES[noteName];
+        if (!noteFreq) return;
+        const noteStartTime = baseTime + beat * this.beatDuration;
+        const noteDuration = durBeats * this.beatDuration;
+
+        if (noteStartTime >= this.ctx.currentTime - 0.1) {
+          if (inst === 'zither') {
+            this.playDanTranhNote(noteFreq, noteStartTime, noteDuration, vel);
+          } else if (inst === 'flute') {
+            this.playSaoTrucNote(noteFreq, noteStartTime, noteDuration, vel);
+          } else if (inst === 'bell') {
+            this.playChuongGioNote(noteFreq, noteStartTime, noteDuration, vel);
+          }
+        }
+      });
+    }
+
+    stopBGM() {
+      if (!this.bgmPlaying) return;
+      this.bgmPlaying = false;
+      if (this.bgmLoopTimer) {
+        clearInterval(this.bgmLoopTimer);
+        this.bgmLoopTimer = null;
+      }
+      this.stopWarmDrone();
+      if (this.bgmMasterGain && this.ctx) {
+        this.bgmMasterGain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.6);
+      }
+      this.updateBgmUi();
+    }
+
+    toggleBGM() {
+      this.init();
+      if (!this.ctx) return;
+
+      if (!this.bgmPlaying) {
+        this.bgmMuted = false;
+        try { localStorage.setItem('cotyphu_bgm_muted', 'false'); } catch (e) {}
+        this.startBGM();
+        return;
+      }
+
+      this.bgmMuted = !this.bgmMuted;
+      try { localStorage.setItem('cotyphu_bgm_muted', this.bgmMuted ? 'true' : 'false'); } catch (e) {}
+
+      if (this.bgmMuted) {
+        this.bgmMasterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+        this.bgmMasterGain.gain.setValueAtTime(this.bgmMasterGain.gain.value, this.ctx.currentTime);
+        this.bgmMasterGain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.7);
+      } else {
+        this.bgmMasterGain.gain.cancelScheduledValues(this.ctx.currentTime);
+        this.bgmMasterGain.gain.setValueAtTime(this.bgmMasterGain.gain.value, this.ctx.currentTime);
+        this.bgmMasterGain.gain.linearRampToValueAtTime(0.082, this.ctx.currentTime + 1.2);
+      }
+
+      this.updateBgmUi();
+    }
+
+    updateBgmUi() {
+      const btn = document.getElementById('bgmToggleBtn');
+      if (!btn) return;
+
+      const iconEl = btn.querySelector('.bgm-icon');
+      const textEl = btn.querySelector('.bgm-text');
+
+      if (this.bgmMuted || !this.bgmPlaying) {
+        btn.classList.add('is-muted');
+        btn.classList.remove('is-playing');
+        btn.setAttribute('aria-label', 'Bật nhạc nền');
+        btn.setAttribute('title', 'Nhấn để bật nhạc nền dân gian nhẹ nhàng');
+        if (iconEl) iconEl.textContent = '🔇';
+        if (textEl) textEl.textContent = 'Nhạc: Tắt';
+      } else {
+        btn.classList.remove('is-muted');
+        btn.classList.add('is-playing');
+        btn.setAttribute('aria-label', 'Tắt nhạc nền');
+        btn.setAttribute('title', 'Nhấn để tắt nhạc nền');
+        if (iconEl) iconEl.textContent = '🎵';
+        if (textEl) textEl.textContent = 'Nhạc: Bật';
+      }
+    }
+
+    bindBgmControls() {
+      const btn = document.getElementById('bgmToggleBtn');
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.init();
+          this.toggleBGM();
+        });
+      }
+      this.updateBgmUi();
+    }
+
+    bindFirstInteraction() {
+      if (this.hasBoundInteraction) return;
+      this.hasBoundInteraction = true;
+
+      const handleGesture = () => {
+        this.init();
+        if (!this.bgmMuted && !this.bgmPlaying) {
+          this.startBGM();
+        }
+        window.removeEventListener('pointerdown', handleGesture);
+        window.removeEventListener('click', handleGesture);
+        window.removeEventListener('keydown', handleGesture);
+        window.removeEventListener('touchstart', handleGesture);
+      };
+
+      window.addEventListener('pointerdown', handleGesture, { passive: true });
+      window.addEventListener('click', handleGesture, { passive: true });
+      window.addEventListener('keydown', handleGesture, { passive: true });
+      window.addEventListener('touchstart', handleGesture, { passive: true });
     }
   }
 
@@ -576,6 +1044,10 @@
   // 4. MAIN WORKFLOW & INTERACTION CONTROLLER
   // ==========================================================================
   document.addEventListener('DOMContentLoaded', () => {
+    // Khởi tạo hệ thống nhạc nền truyền thống Việt Nam nhẹ nhàng
+    sfx.bindBgmControls();
+    sfx.bindFirstInteraction();
+
     // Kiểm tra URL parameter để skip intro
     const urlParams = new URLSearchParams(window.location.search);
     const skipIntro = urlParams.get('skipIntro') === 'true';
