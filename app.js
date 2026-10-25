@@ -580,9 +580,6 @@
   // 4. MAIN WORKFLOW & INTERACTION CONTROLLER
   // ==========================================================================
   document.addEventListener('DOMContentLoaded', () => {
-    // Khởi tạo hệ thống nhạc nền truyền thống Việt Nam nhẹ nhàng
-    sfx.bindBgmControls();
-    sfx.bindFirstInteraction();
 
     // Kiểm tra URL parameter để skip intro
     const urlParams = new URLSearchParams(window.location.search);
@@ -1178,12 +1175,26 @@
       activeTileEl.classList.add('active-step-glow');
     }
 
+    // Trạng thái tạm dừng game khi mở bảng Tổng Hợp
+    let isGamePausedForSummary = false;
+    let pendingMoveRemaining = 0;
+    let moveStepTimeout = null;
+    let wasDiceAvailableBeforeSummary = false;
+    let wasGuidanceVisibleBeforeSummary = false;
+    let wasGuideCharVisibleBeforeSummary = false;
+    let wasVeilVisibleBeforeSummary = false;
+
     // Bước đi trên bàn cờ
     function moveCharacterTokenSteps(steps) {
       let remaining = steps;
       tokenImg.src = 'assets/straw_boy_front_v6.png?v=60';
 
       function stepOne() {
+        if (isGamePausedForSummary) {
+          pendingMoveRemaining = remaining;
+          return;
+        }
+
         if (remaining > 0) {
           currentTile = (currentTile + 1) % 28;
           try {
@@ -1205,7 +1216,7 @@
           sfx.playHop();
 
           remaining--;
-          setTimeout(stepOne, 380);
+          moveStepTimeout = setTimeout(stepOne, 380);
         } else {
           // Đến nơi!
           try {
@@ -1223,21 +1234,46 @@
     }
 
     // ------------------------------------------------------------------------
-    // FOOD SUMMARY FUNCTIONS (TẠM DỪNG GAME KHI XEM, QUAY LẠI TIẾP TỤC CHƠI)
+    // FOOD SUMMARY FUNCTIONS (TẠM DỪNG TOÀN BỘ GAME KHI XEM, QUAY LẠI TIẾP TỤC CHƠI)
     // ------------------------------------------------------------------------
-    let wasDiceAvailableBeforeSummary = false;
-
     function showFoodSummary() {
       const modal = document.getElementById('foodSummaryModal');
       const grid = document.getElementById('summaryGrid');
       if (!modal || !grid) return;
       grid.innerHTML = '';
 
-      // Tạm dừng tương tác bàn cờ và xúc xắc (Dừng game)
+      // Tạm dừng toàn bộ hoạt động game
+      isGamePausedForSummary = true;
+      if (moveStepTimeout) {
+        clearTimeout(moveStepTimeout);
+        moveStepTimeout = null;
+      }
+
       const diceCenterStage = document.getElementById('diceCenterStage');
+      const guidanceChatbox = document.getElementById('guidanceChatbox');
+      const guideCharRight = document.getElementById('guideCharRight');
+      const blackVeil = document.getElementById('blackVeil');
+      const monopolyStage = document.getElementById('monopolyStage');
+
       if (diceCenterStage) {
         wasDiceAvailableBeforeSummary = !diceCenterStage.classList.contains('hidden');
+        diceCenterStage.classList.add('hidden');
         diceCenterStage.style.pointerEvents = 'none';
+      }
+      if (guidanceChatbox) {
+        wasGuidanceVisibleBeforeSummary = !guidanceChatbox.classList.contains('hidden');
+        guidanceChatbox.classList.add('hidden');
+      }
+      if (guideCharRight) {
+        wasGuideCharVisibleBeforeSummary = !guideCharRight.classList.contains('hidden');
+        guideCharRight.classList.add('hidden');
+      }
+      if (blackVeil) {
+        wasVeilVisibleBeforeSummary = blackVeil.classList.contains('visible');
+        blackVeil.classList.remove('visible');
+      }
+      if (monopolyStage) {
+        monopolyStage.style.pointerEvents = 'none';
       }
 
       // Get all dishes from food_data.js
@@ -1306,16 +1342,51 @@
       const modal = document.getElementById('foodSummaryModal');
       if (modal) modal.classList.add('hidden');
 
-      // Phục hồi lại game: tiếp tục chơi trên bàn cờ
+      // Khôi phục lại trạng thái game và tiếp tục chơi
+      isGamePausedForSummary = false;
+
       const diceCenterStage = document.getElementById('diceCenterStage');
-      if (diceCenterStage) {
+      const guidanceChatbox = document.getElementById('guidanceChatbox');
+      const guideCharRight = document.getElementById('guideCharRight');
+      const blackVeil = document.getElementById('blackVeil');
+      const monopolyStage = document.getElementById('monopolyStage');
+
+      if (monopolyStage) {
+        monopolyStage.style.pointerEvents = 'auto';
+      }
+      if (wasVeilVisibleBeforeSummary && blackVeil) {
+        blackVeil.classList.add('visible');
+      }
+      if (wasGuideCharVisibleBeforeSummary && guideCharRight) {
+        guideCharRight.classList.remove('hidden');
+      }
+      if (wasGuidanceVisibleBeforeSummary && guidanceChatbox) {
+        guidanceChatbox.classList.remove('hidden');
+      }
+      if (wasDiceAvailableBeforeSummary && diceCenterStage) {
+        diceCenterStage.classList.remove('hidden');
         diceCenterStage.style.pointerEvents = 'auto';
+      }
+
+      // Nếu đang đi dở trước khi bấm tổng hợp, tiếp tục bước đi
+      if (pendingMoveRemaining > 0) {
+        const remainingSteps = pendingMoveRemaining;
+        pendingMoveRemaining = 0;
+        moveCharacterTokenSteps(remainingSteps);
       }
     }
 
-    // Make functions globally accessible
+    // Gán hàm vào window và trực tiếp bắt sự kiện cho nút tổng hợp
     window.showFoodSummary = showFoodSummary;
     window.closeFoodSummary = closeFoodSummary;
+
+    const summaryBtnEl = document.getElementById('summaryBtn');
+    if (summaryBtnEl) {
+      summaryBtnEl.onclick = (e) => {
+        e.stopPropagation();
+        showFoodSummary();
+      };
+    }
 
 
     // ------------------------------------------------------------------------
