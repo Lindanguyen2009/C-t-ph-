@@ -34,18 +34,18 @@
     constructor() {
       this.ctx = null;
 
-      // Trạng thái nhạc nền (BGM) - MẶC ĐỊNH LÀ TẮT HOÀN TOÀN (MUTED)
+      // Trạng thái nhạc nền (BGM) - Mặc định BẬT phát nhạc đàn tranh êm dịu
       this.bgmPlaying = false;
-      this.bgmMuted = true;
+      this.bgmMuted = false;
       try {
         const stored = localStorage.getItem('cotyphu_bgm_muted');
-        if (stored === 'false') {
-          this.bgmMuted = false;
-        } else {
+        if (stored === 'true') {
           this.bgmMuted = true;
+        } else {
+          this.bgmMuted = false;
         }
       } catch (e) {
-        this.bgmMuted = true;
+        this.bgmMuted = false;
       }
 
       this.bgmMasterGain = null;
@@ -343,70 +343,57 @@
 
     startBGM() {
       this.init();
-      if (!this.ctx) return;
-      if (this.bgmPlaying) return;
-      this.bgmPlaying = true;
-
-      // Ưu tiên phát file âm thanh ngoài nếu có (assets/bgm.mp3)
-      const audioEl = document.getElementById('bgmAudio');
-      if (audioEl && audioEl.src) {
-        audioEl.volume = 0.35;
-        audioEl.play().catch(() => {});
-      } else {
-        this.startWarmDrone();
-      }
-
       if (this.bgmMuted) {
-        this.bgmMasterGain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
-      } else {
-        this.bgmMasterGain.gain.setValueAtTime(0.0001, this.ctx.currentTime);
-        this.bgmMasterGain.gain.linearRampToValueAtTime(0.025, this.ctx.currentTime + 2.0);
+        this.updateBgmUi();
+        return;
       }
 
+      const audioEl = document.getElementById('bgmAudio');
+      if (audioEl) {
+        audioEl.volume = 0.35;
+        const playPromise = audioEl.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            this.bgmPlaying = true;
+            this.updateBgmUi();
+          }).catch(() => {
+            // Autoplay will be unlocked on user's first interaction
+            this.bgmPlaying = false;
+            this.updateBgmUi();
+          });
+        }
+      }
       this.updateBgmUi();
     }
 
     stopBGM() {
-      if (!this.bgmPlaying) return;
       this.bgmPlaying = false;
       const audioEl = document.getElementById('bgmAudio');
       if (audioEl) {
         try { audioEl.pause(); } catch (e) {}
       }
       this.stopWarmDrone();
-      if (this.bgmMasterGain && this.ctx) {
-        this.bgmMasterGain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5);
-      }
       this.updateBgmUi();
     }
 
     toggleBGM() {
       this.init();
-      if (!this.ctx) return;
-
-      if (!this.bgmPlaying) {
-        this.bgmMuted = false;
-        try { localStorage.setItem('cotyphu_bgm_muted', 'false'); } catch (e) {}
-        this.startBGM();
-        return;
-      }
-
+      const audioEl = document.getElementById('bgmAudio');
       this.bgmMuted = !this.bgmMuted;
       try { localStorage.setItem('cotyphu_bgm_muted', this.bgmMuted ? 'true' : 'false'); } catch (e) {}
 
-      const audioEl = document.getElementById('bgmAudio');
       if (this.bgmMuted) {
         if (audioEl) audioEl.pause();
-        this.bgmMasterGain.gain.cancelScheduledValues(this.ctx.currentTime);
-        this.bgmMasterGain.gain.setValueAtTime(this.bgmMasterGain.gain.value, this.ctx.currentTime);
-        this.bgmMasterGain.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5);
+        this.bgmPlaying = false;
       } else {
-        if (audioEl && audioEl.src) audioEl.play().catch(() => {});
-        this.bgmMasterGain.gain.cancelScheduledValues(this.ctx.currentTime);
-        this.bgmMasterGain.gain.setValueAtTime(this.bgmMasterGain.gain.value, this.ctx.currentTime);
-        this.bgmMasterGain.gain.linearRampToValueAtTime(0.025, this.ctx.currentTime + 1.0);
+        if (audioEl) {
+          audioEl.volume = 0.35;
+          audioEl.play().then(() => {
+            this.bgmPlaying = true;
+            this.updateBgmUi();
+          }).catch(() => {});
+        }
       }
-
       this.updateBgmUi();
     }
 
@@ -421,7 +408,7 @@
         btn.classList.add('is-muted');
         btn.classList.remove('is-playing');
         btn.setAttribute('aria-label', 'Bật nhạc nền');
-        btn.setAttribute('title', 'Nhấn để bật nhạc nền thư thái');
+        btn.setAttribute('title', 'Nhấn để bật nhạc nền đàn tranh');
         if (iconEl) iconEl.textContent = '🔇';
         if (textEl) textEl.textContent = 'Nhạc: Tắt';
       } else {
@@ -436,7 +423,8 @@
 
     bindBgmControls() {
       const btn = document.getElementById('bgmToggleBtn');
-      if (btn) {
+      if (btn && !btn._bgmBound) {
+        btn._bgmBound = true;
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           this.init();
@@ -450,9 +438,19 @@
       if (this.hasBoundInteraction) return;
       this.hasBoundInteraction = true;
 
-      // Chỉ mở khóa AudioContext cho SFX trò chơi khi người dùng tương tác, KHÔNG TỰ ĐỘNG PHÁT NHẠC
+      // Khi người dùng chạm hoặc tương tác lần đầu với game, tự động mở âm thanh và phát nhạc nền đàn tranh
       const handleGesture = () => {
         this.init();
+        if (!this.bgmMuted) {
+          const audioEl = document.getElementById('bgmAudio');
+          if (audioEl && (audioEl.paused || !this.bgmPlaying)) {
+            audioEl.volume = 0.35;
+            audioEl.play().then(() => {
+              this.bgmPlaying = true;
+              this.updateBgmUi();
+            }).catch(() => {});
+          }
+        }
         window.removeEventListener('pointerdown', handleGesture);
         window.removeEventListener('click', handleGesture);
         window.removeEventListener('keydown', handleGesture);
@@ -467,6 +465,9 @@
   }
 
   const sfx = new SoundManager();
+  sfx.bindBgmControls();
+  sfx.bindFirstInteraction();
+  sfx.startBGM();
 
   // ==========================================================================
   // 2. 10 ICONIC VIETNAMESE STREET FOOD DISHES
