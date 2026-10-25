@@ -664,7 +664,7 @@
     const toastMessage = document.getElementById('toastMessage');
 
     let currentStep = 1;
-    let currentTile = 0;
+    let currentTile = 7;
     let typingTimer = null;
     let currentActiveDish = null;
     let toastTimer = null;
@@ -811,10 +811,13 @@
       introBoardStage.classList.add('hidden');
       monopolyStage.classList.remove('hidden');
       boardTokenPlayer.classList.add('hidden-until-roll');
-      updateTokenPosition(0);
+      updateTokenPosition(7); // Bắt đầu từ ô BẮT ĐẦU (góc phải bên dưới)
 
       // KHÔNG hiển thị black veil - bàn cờ hiện rõ ngay lập tức
       blackVeil.classList.add('hidden');
+
+      // Ẩn xúc xắc ban đầu
+      if (diceCenterStage) diceCenterStage.classList.add('hidden');
 
       // KHÔNG hiển thị guideCharRight và guidanceChatbox ngay lập tức
       // Chỉ hiển thị khi người dùng nhấn vào bàn cờ
@@ -824,20 +827,26 @@
 
     // Hiển thị guideCharRight và guidanceChatbox khi người dùng nhấn vào bàn cờ lần đầu
     function showGuideCharacterOnBoard() {
+      // Hiển thị màn đen mờ để làm nổi bật text box
+      blackVeil.classList.remove('hidden');
+      setTimeout(() => blackVeil.classList.add('visible'), 50);
+
       guideCharRight.classList.remove('hidden', 'facing-dice', 'shrinking-to-board');
       if (guideCharImg) guideCharImg.src = 'assets/straw_boy_pointing_v6.png?v=60';
 
       guidanceChatbox.classList.remove('hidden');
 
-      // Lượt đầu: hiện 2 textbox lần lượt với animation
-      const introText1 = "Này này! Bạn ơi! Đứng đó làm gì mà ngó? || Lại đây, Tò Te Tí dẫn bạn rong ruổi một vòng.";
+      // Lượt đầu: hiện 4 textbox lần lượt với animation
+      const introText1 = "Này này! Bạn ơi! Đứng đó làm gì mà ngó? Lại đây, Tò Te Tí dẫn bạn rong ruổi một vòng!";
       const introText2 = "Trong từng ô cờ là một món ăn, một gánh hàng, một câu chuyện và một góc nhỏ của văn hóa Việt đang chờ bạn tìm đến.";
       const introText3 = "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé.";
+      const introText4 = "Xúc xắc đã sẵn trong tay…Ta cùng lên đường thôi!";
 
       // Đếm số textbox đã hiện
       let textBoxCount = 0;
-      const totalTextBoxes = 3;
+      const totalTextBoxes = 4;
       let isTyping = false;
+      let currentTypewriterInterval = null;
 
       function showNextTextBox() {
         if (textBoxCount < totalTextBoxes && !isTyping) {
@@ -851,9 +860,15 @@
           } else if (textBoxCount === 2) {
             typewriteIntro(chatMessageContainer, introText2, () => {
               isTyping = false;
+              // Hiện xúc xắc sau textbox 2
+              if (diceCenterStage) diceCenterStage.classList.remove('hidden');
             });
           } else if (textBoxCount === 3) {
             typewriteIntro(chatMessageContainer, introText3, () => {
+              isTyping = false;
+            });
+          } else if (textBoxCount === 4) {
+            typewriteIntro(chatMessageContainer, introText4, () => {
               isTyping = false;
               // Sau khi hiện hết, cho phép người dùng nhấn vào bàn cờ để tiếp tục
               canAdvanceToDice = true;
@@ -863,14 +878,31 @@
         }
       }
 
+      // Click để skip text hoặc chuyển sang text tiếp theo
+      guidanceChatbox.addEventListener('click', () => {
+        if (isTyping && currentTypewriterInterval) {
+          // Nếu đang typing, hiển thị toàn bộ text ngay
+          clearInterval(currentTypewriterInterval);
+          currentTypewriterInterval = null;
+          isTyping = false;
+          // Hiển thị text đầy đủ (cần lấy từ text hiện tại)
+          const currentText = textBoxCount === 1 ? introText1 : textBoxCount === 2 ? introText2 : textBoxCount === 3 ? introText3 : introText4;
+          chatMessageContainer.textContent = currentText;
+          // KHÔNG tự động chuyển - chờ người dùng click tiếp
+        } else if (!isTyping && textBoxCount < totalTextBoxes) {
+          // Nếu đã xong, chuyển sang text tiếp theo
+          showNextTextBox();
+        }
+      });
+
       // Typewriter effect cho intro với sound
       function typewriteIntro(container, text, onComplete) {
         if (!container) return;
         // Xóa nội dung cũ
         container.innerHTML = '';
 
-        // Tách câu theo dấu || (chỉ cho introText1) hoặc dấu chấm (.) và dấu chấm hỏi (?)
-        const sentences = text.includes('||') ? text.split('||') : text.split(/(?<=[.?])\s+/);
+        // Tách câu theo dấu chấm (.) và dấu chấm hỏi (?)
+        const sentences = text.split(/(?<=[.?])\s+/);
         let currentSentence = 0;
         let charIndex = 0;
 
@@ -886,9 +918,9 @@
               currentDiv.textContent += sentence.charAt(charIndex);
               sfx.playDialogueChirp();
               charIndex++;
-              setTimeout(typeChar, 30);
+              currentTypewriterInterval = setTimeout(typeChar, 30);
             } else {
-              // Xong câu hiện tại, chuyển sang câu tiếp theo
+              // Chuyển sang câu tiếp theo
               currentSentence++;
               charIndex = 0;
               if (currentSentence < sentences.length) {
@@ -898,9 +930,10 @@
                 container.appendChild(newDiv);
                 // Scroll xuống để thấy câu mới
                 newDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                setTimeout(typeChar, 200);
+                currentTypewriterInterval = setTimeout(typeChar, 200);
               } else {
                 // Xong tất cả câu
+                currentTypewriterInterval = null;
                 if (onComplete) onComplete();
               }
             }
@@ -913,22 +946,36 @@
       // Hiện textbox đầu tiên
       showNextTextBox();
 
-      // Thêm click handler để chuyển textbox tiếp theo
+      // Thêm click handler để chuyển textbox tiếp theo - click bất cứ đâu trên màn hình
       const clickHandler = (e) => {
-        if (isTyping) {
+        if (isTyping && currentTypewriterInterval) {
           // Nếu đang gõ, skip animation và hiện hết text ngay
           e.stopPropagation();
-          // Skip logic - có thể thêm sau nếu cần
-        } else if (textBoxCount < totalTextBoxes) {
+          clearInterval(currentTypewriterInterval);
+          currentTypewriterInterval = null;
+          isTyping = false;
+          // Hiển thị text đầy đủ
+          const currentText = textBoxCount === 1 ? introText1 : textBoxCount === 2 ? introText2 : introText3;
+          chatMessageContainer.textContent = currentText;
+          // Chuyển sang text tiếp theo sau một khoảng thời gian ngắn
+          setTimeout(() => {
+            if (textBoxCount < totalTextBoxes) {
+              showNextTextBox();
+            } else {
+              canAdvanceToDice = true;
+              if (tapAnywhereAdvance) tapAnywhereAdvance.classList.remove('hidden');
+            }
+          }, 300);
+        } else if (!isTyping && textBoxCount < totalTextBoxes) {
           e.stopPropagation();
           showNextTextBox();
-        } else {
+        } else if (!isTyping && textBoxCount >= totalTextBoxes) {
           // Đã hiện hết textbox, xóa handler
-          guidanceChatbox.removeEventListener('click', clickHandler);
+          document.removeEventListener('click', clickHandler);
         }
       };
 
-      guidanceChatbox.addEventListener('click', clickHandler);
+      document.addEventListener('click', clickHandler);
     }
 
     // Nút Tiếp tục - chỉ chuyển sang dice stage khi nhấn
@@ -1110,6 +1157,10 @@
         }, 120);
       }
 
+      // Hiển thị màn đen mờ để làm nổi bật text box
+      blackVeil.classList.remove('hidden');
+      setTimeout(() => blackVeil.classList.add('visible'), 50);
+
       // KHÔNG hiển thị câu thoại ngẫu nhiên - chỉ dùng intro đã thêm
       diceTurnCount++;
       diceCenterStage.classList.remove('hidden');
@@ -1142,7 +1193,7 @@
           setTimeout(() => {
             guideCharRight.classList.add('hidden');
             boardTokenPlayer.classList.remove('hidden-until-roll');
-            updateTokenPosition(0);
+            updateTokenPosition(7);
 
             setTimeout(() => {
               boardCameraViewport.classList.add('zoomed-on-character');
@@ -1527,7 +1578,7 @@
 
 
     // ------------------------------------------------------------------------
-    // STEP 7: "CÙNG MÌNH KHÁM PHÁ THUII" -> 3-PANEL IMPERIAL RED SHOWCASE
+    // STEP 7: "CÙNG MÌNH KHÁM PHÁ THÔI" -> 3-PANEL IMPERIAL RED SHOWCASE
     // ------------------------------------------------------------------------
     function triggerArrivalAndTransitionToFoodStage(tileIndex) {
       const dish = getDishForTile(tileIndex);
@@ -1578,7 +1629,7 @@
         return;
       }
 
-      // 1. Dòng chữ hào hứng: "CÙNG MÌNH KHÁM PHÁ THUII!"
+      // 1. Dòng chữ hào hứng: "CÙNG MÌNH KHÁM PHÁ THÔI!"
       arrivalCelebrateTitle.classList.remove('hidden');
 
       setTimeout(() => {
@@ -1916,8 +1967,8 @@
         currentTile = parseInt(fromTile);
         updateTokenPosition(currentTile);
       } else {
-        currentTile = 0;
-        updateTokenPosition(0);
+        currentTile = 7; // Bắt đầu từ ô BẮT ĐẦU (góc phải bên dưới)
+        updateTokenPosition(7);
       }
 
       blackVeil.classList.add('hidden');
@@ -1929,6 +1980,8 @@
       if (fromTile) {
         hasShownGuideOnBoard = true;
         canAdvanceToDice = true;
+        // Thêm: Đặt lại board perspective để chuẩn bị gieo xúc xắc
+        boardPerspectiveWrapper.classList.add('board-tabletop-horizontal');
       } else {
         // Lần đầu chơi: hiển thị textbox Tò Te Tí
         showGuideCharacterOnBoard();

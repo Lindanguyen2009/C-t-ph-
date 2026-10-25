@@ -14,8 +14,9 @@
 
     body {
       font-family: 'Be Vietnam Pro', sans-serif;
-      background: url('assets/tan_dinh_background.jpg') center center no-repeat;
-      background-size: cover;
+      background: url('assets/ba_chieu_hero_bg2.jpg') center center no-repeat;
+      background-size: 100% 100%;
+      background-attachment: fixed;
       min-height: 100vh;
       color: #ffffff;
       overflow-x: hidden;
@@ -35,7 +36,12 @@
       font-family: 'Pattaya', cursive;
       font-size: clamp(36px, 6vw, 64px);
       color: #D4AF37;
-      text-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+      text-shadow: 
+        2px 2px 0px rgba(0, 0, 0, 0.3),
+        4px 4px 0px rgba(0, 0, 0, 0.4),
+        6px 6px 0px rgba(0, 0, 0, 0.5),
+        8px 8px 10px rgba(0, 0, 0, 0.6),
+        0 4px 20px rgba(212, 175, 55, 0.5);
       margin-bottom: 10px;
       animation: titleFloat 3s ease-in-out infinite;
     }
@@ -47,9 +53,12 @@
 
     .subtitle {
       font-size: clamp(18px, 3vw, 24px);
-      color: #ffffff;
+      color: #0D256E;
+      font-weight: 600;
+      font-style: italic;
       margin-bottom: 30px;
-      opacity: 0.9;
+      opacity: 0.95;
+      text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.9);
       text-align: center;
     }
 
@@ -195,6 +204,9 @@
       opacity: 0;
       transform: translateY(50px);
       transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      background: rgba(220, 220, 220, 0.6);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
     }
 
     .content-section.visible {
@@ -206,6 +218,11 @@
       font-family: 'Pattaya', cursive;
       font-size: clamp(32px, 5vw, 48px);
       color: #D4AF37;
+      text-shadow: 
+        2px 2px 0px rgba(0, 0, 0, 0.3),
+        4px 4px 0px rgba(0, 0, 0, 0.4),
+        6px 6px 0px rgba(0, 0, 0, 0.5),
+        8px 8px 10px rgba(0, 0, 0, 0.6);
       margin-bottom: 30px;
       text-align: center;
       position: relative;
@@ -223,7 +240,7 @@
     }
 
     .info-card {
-      background: rgba(255, 255, 255, 0.05);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 30px;
@@ -271,6 +288,10 @@
       position: relative;
       padding-bottom: 30px;
       margin-bottom: 30px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
     }
 
     .timeline-item::before {
@@ -358,7 +379,7 @@
       </div>
     </div>
     
-    <p style="color: #ffffff; font-size: 18px; opacity: 0.8; margin-bottom: 20px;">👆 Kéo thanh để so sánh Chợ Tân Định xưa và nay</p>
+    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;">👆 Kéo thanh để so sánh Chợ Tân Định xưa và nay</p>
     
     <div class="scroll-indicator">
       <svg viewBox="0 0 24 24">
@@ -425,6 +446,20 @@
         <h3>Bảo tồn</h3>
         <p>Để bảo tồn, cần sưu tầm ảnh cũ, chụp ảnh hiện tại, số hóa bản đồ và phỏng vấn tiểu thương, giúp tái hiện sự thay đổi của chợ qua thời gian.</p>
       </div>
+    </div>
+  </div>
+
+  <div class="content-section" id="section5">
+    <h2 class="section-title">Tài Liệu Tham Khảo</h2>
+    <div class="info-card">
+      <h3>Nguồn Thanh Niên</h3>
+      <p>100 năm chợ Tân Định: Chuyện về 'chợ nhà giàu' giữa lòng Sài Gòn</p>
+      <p><a href="https://thanhnien.vn/100-nam-cho-tan-dinh-chuyen-ve-cho-nha-giau-giua-long-sai-gon-185260624082522348.htm" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://thanhnien.vn/100-nam-cho-tan-dinh-chuyen-ve-cho-nha-giau-giua-long-sai-gon-185260624082522348.htm</a></p>
+    </div>
+    <div class="info-card">
+      <h3>Nguồn MIA.vn</h3>
+      <p>Chợ Tân Định: Thiên đường ẩm thực chợ nhà giàu nứt tiếng Sài Thành</p>
+      <p><a href="https://mia.vn/cam-nang-du-lich/cho-tan-dinh-12490" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://mia.vn/cam-nang-du-lich/cho-tan-dinh-12490</a></p>
     </div>
   </div>
 
