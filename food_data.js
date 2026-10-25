@@ -68,7 +68,7 @@
       badge: "Vàng Rụm Miền Sông Nước",
       category: "Món Bánh Dân Gian",
       quote: "Âm thanh xèo xèo trên chảo gang đỏ lửa và mâm rau rừng ngút ngàn tươi mát.",
-      desc: "Nguồn gốc: Bánh xèo là món ăn dân dã của Việt Nam, được cho là có nguồn gốc từ miền Trung rồi phổ biến rộng rãi ở miền Nam. Tên gọi 'bánh xèo' bắt nguồn từ âm thanh 'xèo xèo' khi đổ bột vào chảo nóng. Khi đến Nam Bộ, bánh được biến tấu thành phiên bản lớn hơn, vỏ mỏng giòn, thường có nước cốt dừa và nhân tôm thịt phong phú. Ngày nay, bánh xèo có nhiều phiên bản đặc trưng ở từng vùng miền. Ảnh hưởng: Bánh xèo gắn với những bữa ăn gia đình và nét ẩm thực dân dã của người Việt. Tại TP.HCM, món ăn góp phần làm phong phú văn hóa ẩm thực đường phố, kết hợp hương vị vùng miền và thu hút du khách. Fun fact – Điều thú vị: Bánh xèo miền Trung thường nhỏ bằng lòng bàn tay, được đổ trong khuôn nhỏ và ăn kèm rau sống. Trong khi đó, bánh xèo miền Tây có thể to gần bằng cả chiếc đĩa, thường thêm nước cốt dừa vào bột để tạo vị béo đặc trưng.",
+      desc: "Nguồn gốc: Bánh xèo là món ăn dân dã của Việt Nam, được cho là có nguồn gốc từ miền Trung rồi phổ biến rộng rãi ở miền Nam. Tên gọi 'bánh xèo' bắt nguồn từ âm thanh 'xèo xèo' khi đổ bột vào chảo nóng. Khi đến Nam Bộ, bánh được biến tấu thành phiên bản lớn hơn, vỏ mỏng giòn, thường có nước cốt dừa và nhân tôm thịt phong phú. Ngày nay, bánh xèo có nhiều phiên bản đặc trưng ở từng vùng miền. Ảnh hưởng: Bánh xèo gắn với những bữa ăn gia đình và nét ẩm thực dân dã của người Việt. Tại TP.HCM, món ăn góp phần làm phong phú văn hóa ẩm thực đường phố, kết hợp hương vị vùng miền và thu hút du khách. Fun fact: Bánh xèo miền Trung thường nhỏ bằng lòng bàn tay, được đổ trong khuôn nhỏ và ăn kèm rau sống. Trong khi đó, bánh xèo miền Tây có thể to gần bằng cả chiếc đĩa, thường thêm nước cốt dừa vào bột để tạo vị béo đặc trưng.",
       story: "Người miền Tây thích đúc bánh xèo thật to, vành bánh mỏng như lá lúa và giòn tan. Bột bánh được xay từ gạo thơm ngâm qua đêm, pha thêm nước cốt dừa xiêm tạo vị béo ngậy, chút bột nghệ cho màu vàng óng và hành lá xắt nhuyễn.",
       ingredients: [
         "Bột gạo xay tươi ngâm nước cốt dừa xiêm béo ngậy",
@@ -134,7 +134,7 @@
       badge: "Hồn Cốt Phố Chiều Sài Gòn",
       category: "Món Ăn Vặt Đường Phố Đậm Đà",
       quote: "Nồi lòng bò sôi sùng sục ngập tràn nước cốt dừa và chén nước mắm me tắc chua ngọt.",
-      desc: "Nguồn gốc: Phá lấu được cho là chịu ảnh hưởng từ văn hóa ẩm thực người Hoa, sau đó phổ biến ở miền Nam Việt Nam, đặc biệt là TP.HCM. Tên gọi: 'Phá lấu' có nguồn gốc từ tiếng Triều Châu, gắn với cách tẩm ướp và hầm thịt, nội tạng cùng gia vị. Ảnh hưởng: Phá lấu là món ăn đường phố quen thuộc tại TP.HCM, phổ biến ở các hàng quán gần trường học và khu chợ, góp phần tạo nên nét riêng của ẩm thực Sài Gòn. Fun fact – Điều thú vị: Phá lấu Sài Gòn thường được ăn với bánh mì hoặc mì gói, chấm cùng nước me chua ngọt, tạo nên sự kết hợp giữa vị béo, mặn và chua.",
+      desc: "Nguồn gốc: Phá lấu được cho là chịu ảnh hưởng từ văn hóa ẩm thực người Hoa, sau đó phổ biến ở miền Nam Việt Nam, đặc biệt là TP.HCM. Tên gọi: 'Phá lấu' có nguồn gốc từ tiếng Triều Châu, gắn với cách tẩm ướp và hầm thịt, nội tạng cùng gia vị. Ảnh hưởng: Phá lấu là món ăn đường phố quen thuộc tại TP.HCM, phổ biến ở các hàng quán gần trường học và khu chợ, góp phần tạo nên nét riêng của ẩm thực Sài Gòn. Fun fact: Phá lấu Sài Gòn thường được ăn với bánh mì hoặc mì gói, chấm cùng nước me chua ngọt, tạo nên sự kết hợp giữa vị béo, mặn và chua.",
       story: "Phá lấu có nguồn gốc từ người Tiều ở vùng Chợ Lớn. Bí quyết nằm ở khâu làm sạch nội tạng với rượu gừng và hoa hồi, sau đó ninh nhừ trong nước dừa tươi ngọt lịm hàng giờ liền.",
       ingredients: [
         "Nội tạng bò tươi sơ chế rượu gừng kỹ càng (tổ ong, lá mía, phèo)",
@@ -198,7 +198,7 @@
       badge: "Hạt Ngọc Gói Lá Chuối",
       category: "Món Nếp Truyền Thống Đậm Tình",
       quote: "Từng hạt nếp bóng bẩy dẻo quánh gói trong lá chuối xanh thơm ngát tình quê.",
-      desc: "Nguồn gốc: Xôi là món ăn truyền thống gắn liền với nền văn minh lúa nước của Việt Nam và phổ biến ở nhiều vùng miền. Tên gọi: 'Xôi' là món ăn được chế biến chủ yếu từ gạo nếp, làm chín bằng phương pháp đồ hoặc hấp bằng hơi nước. Xôi xuất hiện trong đời sống hằng ngày cũng như các dịp lễ, Tết và nghi lễ truyền thống. Ảnh hưởng: Xôi là món ăn quen thuộc trong đời sống người Việt, đặc biệt phổ biến vào bữa sáng nhờ sự tiện lợi và chắc bụng. Bên cạnh đó, xôi còn xuất hiện trong các dịp cưới hỏi, lễ Tết, cúng giỗ, thể hiện nét đẹp văn hóa ẩm thực truyền thống. Fun fact – Điều thú vị: Xôi gấc có màu đỏ tự nhiên, tượng trưng cho may mắn và thường xuất hiện trong đám cưới, lễ Tết của người Việt.",
+      desc: "Nguồn gốc: Xôi là món ăn truyền thống gắn liền với nền văn minh lúa nước của Việt Nam và phổ biến ở nhiều vùng miền. Tên gọi: 'Xôi' là món ăn được chế biến chủ yếu từ gạo nếp, làm chín bằng phương pháp đồ hoặc hấp bằng hơi nước. Xôi xuất hiện trong đời sống hằng ngày cũng như các dịp lễ, Tết và nghi lễ truyền thống. Ảnh hưởng: Xôi là món ăn quen thuộc trong đời sống người Việt, đặc biệt phổ biến vào bữa sáng nhờ sự tiện lợi và chắc bụng. Bên cạnh đó, xôi còn xuất hiện trong các dịp cưới hỏi, lễ Tết, cúng giỗ, thể hiện nét đẹp văn hóa ẩm thực truyền thống. Fun fact: Xôi gấc có màu đỏ tự nhiên, tượng trưng cho may mắn và thường xuất hiện trong đám cưới, lễ Tết của người Việt.",
       story: "Gói xôi nóng hổi bọc trong lớp lá chuối tươi là hình ảnh quen thuộc trên khắp nẻo đường đất nước, nuôi dưỡng tuổi thơ của biết bao thế hệ người Việt.",
       ingredients: [
         "Gạo nếp cái hoa vàng đồ chín dẻo quánh hai lửa",
@@ -329,7 +329,7 @@
       badge: "Ngọt Ngào Tinh Hoa Đất Trời",
       category: "Món Tráng Miệng & Giải Nhiệt",
       quote: "Hàng chục nồi chè rực rỡ sắc màu chan ngập nước cốt dừa béo bùi và ngọt dịu thốt nốt.",
-      desc: "Nguồn gốc: Chè là món ngọt quen thuộc trong ẩm thực Việt Nam, có nhiều biến thể theo vùng miền. Tại TP.HCM, chè còn chịu ảnh hưởng từ văn hóa ẩm thực người Hoa, tạo nên sự đa dạng về nguyên liệu và hương vị. Tên gọi: 'Chè' dùng chung cho nhiều món ngọt dạng nước hoặc sánh đặc. Ảnh hưởng: Chè là món ăn vặt phổ biến tại TP.HCM, xuất hiện từ chợ truyền thống, xe hàng rong đến các quán chè lâu năm. Đặc biệt, khu vực Chợ Lớn (Quận 5) nổi bật với nhiều món chè mang phong vị người Hoa, góp phần tạo nên nét đa dạng cho ẩm thực Sài Gòn. Fun fact – Điều thú vị: Chè không chỉ để ăn ngọt: Ở Chợ Lớn (TP.HCM), thực khách còn có thể thử chè mè đen và chè hột gà trà – những món chè người Hoa có hương vị khác biệt, thường được dùng nóng.",
+      desc: "Nguồn gốc: Chè là món ngọt quen thuộc trong ẩm thực Việt Nam, có nhiều biến thể theo vùng miền. Tại TP.HCM, chè còn chịu ảnh hưởng từ văn hóa ẩm thực người Hoa, tạo nên sự đa dạng về nguyên liệu và hương vị. Tên gọi: 'Chè' dùng chung cho nhiều món ngọt dạng nước hoặc sánh đặc. Ảnh hưởng: Chè là món ăn vặt phổ biến tại TP.HCM, xuất hiện từ chợ truyền thống, xe hàng rong đến các quán chè lâu năm. Đặc biệt, khu vực Chợ Lớn (Quận 5) nổi bật với nhiều món chè mang phong vị người Hoa, góp phần tạo nên nét đa dạng cho ẩm thực Sài Gòn. Fun fact: Chè không chỉ để ăn ngọt: Ở Chợ Lớn (TP.HCM), thực khách còn có thể thử chè mè đen và chè hột gà trà – những món chè người Hoa có hương vị khác biệt, thường được dùng nóng.",
       story: "Chè Nam Bộ trù phú như chính dải đất đồng bằng sông Cửu Long: từ hạt bắp non, khoai lang, củ năng đến hạt sen Đồng Tháp, nấu cùng đường thốt nốt thanh dịu và nước cốt dừa ép tươi béo ngậy.",
       ingredients: [
         "Bắp nếp ngọt dẻo, đậu xanh cà đãi vỏ",
@@ -548,6 +548,83 @@
       funFact: "Giá các món ốc tại TP.HCM: khoảng 40.000–150.000đ/phần, tùy loại ốc và cách chế biến."
     }
   };
+
+  const DISH_SOURCES = {
+    com_tam: [
+      { domain: 'Marie Claire Việt Nam', title: 'Cơm tấm: Món ăn vỉa hè biểu trưng cho ẩm thực Sài Gòn - Nam Bộ', url: 'https://marieclaire.vn/com-tam-mon-an-via-he-bieu-trung-cho-am-thuc-sai-gon-nam-bo' },
+      { domain: 'MIA.vn Cẩm Nang Du Lịch', title: 'Cơm tấm Sài Gòn: Hương vị ẩm thực nức tiếng làm say lòng thực khách', url: 'https://mia.vn/cam-nang-du-lich/com-tam-sai-gon-12569' }
+    ],
+    banh_xeo: [
+      { domain: 'Traveloka Ẩm Thực', title: 'Bánh xèo: Nét đặc sắc ẩm thực ba miền Việt Nam', url: 'https://www.traveloka.com/vi-vn/explore/culinary/banh-xeo-dac-san-o-dau/155928' },
+      { domain: 'VnExpress Du Lịch', title: 'Khác biệt thú vị giữa bánh xèo miền Tây và miền Trung', url: 'https://vnexpress.net/khac-biet-banh-xeo-mien-tay-va-mien-trung-4290363.html' }
+    ],
+    banh_mi: [
+      { domain: 'Cục Du Lịch Quốc Gia Việt Nam', title: 'Bánh mì Việt Nam: Nét tinh hoa ẩm thực đường phố vang danh thế giới', url: 'https://vietnamtourism.gov.vn/post/32035' },
+      { domain: 'MIA.vn Cẩm Nang Du Lịch', title: 'Top tiệm bánh mì Sài Gòn nức danh gần xa', url: 'https://mia.vn/cam-nang-du-lich/top-tiem-banh-mi-sai-gon-noi-danh-14370' }
+    ],
+    pha_lau: [
+      { domain: 'Đồ Buôn Việt Nam', title: 'Nguồn gốc món phá lấu và nét văn hóa ẩm thực độc đáo', url: 'https://dobuon.vn/nguon-goc-mon-pha-lau/' },
+      { domain: 'VietnamMM Ẩm Thực', title: 'Phá lấu Sài Gòn: Món ăn vặt đường phố hấp dẫn', url: 'https://vietnammm.com/pha-lau-sai-gon/' }
+    ],
+    hu_tieu: [
+      { domain: 'Mikiri Ẩm Thực Việt', title: 'Hủ tiếu: Hành trình đến với ẩm thực Việt Nam', url: 'https://mikiri.com.vn/hu-tieu-hanh-trinh-den-voi-am-thuc-viet/' },
+      { domain: 'VinWonders Wonderpedia', title: 'Hủ tiếu Sài Gòn: Món ngon đậm đà phong vị phương Nam', url: 'https://vinwonders.com/vi/wonderpedia/news/hu-tieu-sai-gon/' }
+    ],
+    xoi: [
+      { domain: 'VTC News', title: 'Xôi trong ẩm thực Việt: Món ăn vội chứng kiến từng cột mốc đời người', url: 'https://vtcnews.vn/xoi-trong-am-thuc-viet-mon-an-voi-nhung-lai-chung-kien-tung-cot-moc-doi-nguoi-ar613151.html' },
+      { domain: 'Tràng An Palace', title: 'Ý nghĩa của món xôi gấc trong mâm cỗ cưới truyền thống người Việt', url: 'https://tranganpalace.vn/tin-tuc/y-nghia-cua-mon-xoi-gac-trong-mam-co-cuoi-truyen-thong-nguoi-viet' }
+    ],
+    bun_thit_nuong: [
+      { domain: 'Vietnam Tourism', title: 'Cẩm nang đầy đủ về tô bún thịt nướng Việt Nam', url: 'https://www.vietnamtourism.com/vi/bun-thit-nuong-cam-nang-ay-u-ve-to-bun-thit-nuong-viet-nam' },
+      { domain: 'MIA.vn Cẩm Nang Du Lịch', title: 'Quán bún thịt nướng Sài Gòn ngon chuẩn vị', url: 'https://mia.vn/cam-nang-du-lich/quan-bun-thit-nuong-sai-gon-16349' }
+    ],
+    bot_chien: [
+      { domain: 'Đặc Sản Ngon', title: 'Món ăn đường phố đậm chất Sài Gòn', url: 'https://dacsanngontaybac.com/mon-an-duong-pho-dam-chat-sai-gon/' },
+      { domain: 'Báo Thanh Niên', title: 'Thèm lắm bột chiên Sài Gòn giòn rụm thơm nức mũi', url: 'https://thanhnien.vn/them-lam-bot-chien-sai-gon-185597887.htm' }
+    ],
+    bo_bia: [
+      { domain: 'Hướng Nghiệp Á Âu', title: 'Bò bía: Món cuốn dân dã thanh mát đậm đà', url: 'https://www.huongnghiepaau.com/bo-bia' },
+      { domain: 'VinWonders Wonderpedia', title: 'Bò bía Sài Gòn: Món ăn vặt thanh đạm gắn liền ký ức học trò', url: 'https://vinwonders.com/vi/wonderpedia/news/bo-bia-sai-gon/' }
+    ],
+    che: [
+      { domain: 'VinWonders Wonderpedia', title: 'Quán chè ngon ở Sài Gòn: Những địa chỉ thanh mát nức tiếng', url: 'https://vinwonders.com/vi/wonderpedia/news/quan-che-ngon-o-sai-gon/' },
+      { domain: 'Báo Tuổi Trẻ Online', title: 'Ký ức mùa hè: Chè bưởi thanh mát giòn thơm', url: 'https://tuoitre.vn/phunuonline/ky-uc-mua-he-che-buoi-thanh-mat-1101488209.htm' }
+    ],
+    che_buoi: [
+      { domain: 'VinWonders Wonderpedia', title: 'Quán chè ngon ở Sài Gòn: Những địa chỉ thanh mát nức tiếng', url: 'https://vinwonders.com/vi/wonderpedia/news/quan-che-ngon-o-sai-gon/' },
+      { domain: 'Báo Tuổi Trẻ Online', title: 'Ký ức mùa hè: Chè bưởi thanh mát giòn thơm', url: 'https://tuoitre.vn/phunuonline/ky-uc-mua-he-che-buoi-thanh-mat-1101488209.htm' }
+    ],
+    bun_dau_mam_tom: [
+      { domain: 'Báo Sài Gòn Giải Phóng (SGGP)', title: 'Bún đậu mắm tôm: Món ngon Bắc Bộ chinh phục người phương Nam', url: 'https://www.sggp.org.vn/bun-dau-mam-tom-post147909.html' },
+      { domain: 'Nguyễn Kim Cẩm Nang', title: 'Top quán bún đậu mắm tôm ngon đỉnh chóp tại TP.HCM', url: 'https://www.nguyenkim.com/quan-bun-dau-mam-tom-NKPC2831.b' }
+    ],
+    banh_canh_cua: [
+      { domain: 'Traveloka Ẩm Thực', title: 'Bánh canh cua: Món ăn sánh mịn đậm đà vị biển', url: 'https://www.traveloka.com/vi-vn/explore/culinary/banh-canh-cua/437394' },
+      { domain: 'VinWonders Wonderpedia', title: 'Bánh canh cua Sài Gòn: Món ngon dinh dưỡng nức tiếng', url: 'https://vinwonders.com/vi/wonderpedia/news/banh-canh-cua-sai-gon/' }
+    ],
+    oc: [
+      { domain: 'Báo Mới', title: 'Ốc Sài Gòn không chỉ là món ăn mà còn là một văn hóa ẩm thực', url: 'http://baomoi.com/oc-sai-gon-khong-chi-la-mon-an-ma-con-la-mot-van-hoa-am-thuc-r23316868.epi' },
+      { domain: 'BShip Ẩm Thực', title: 'Quán ốc ngon nức tiếng tại Sài Gòn tụ tập thâu đêm', url: 'https://bship.vn/quan-oc-ngon-sai-gon/' }
+    ],
+    banh_trang_tron: [
+      { domain: 'VTC News', title: 'Bánh tráng trộn: Món ăn vặt được giới trẻ yêu thích bậc nhất ở TP.HCM', url: 'https://vtcnews.vn/banh-trang-tron-mon-an-vat-duoc-gioi-tre-yeu-thich-bac-nhat-o-tp-hcm-ar852585.html' },
+      { domain: 'VnExpress Đời Sống', title: 'Bánh tráng trộn: Món ăn đường phố nổi tiếng Sài Gòn', url: 'https://vnexpress.net/banh-trang-tron-mon-an-duong-pho-noi-tieng-sai-gon-3249657.html' }
+    ],
+    sui_cao: [
+      { domain: 'Thanhmaihsk Văn Hóa', title: 'Sủi cảo: Nguồn gốc và ý nghĩa món ăn truyền thống', url: 'https://thanhmaihsk.edu.vn/sui-cao-nguon-goc-va-y-nghia-mon-an-truyen-thong-nguoi-trung-quoc/' },
+      { domain: 'VnExpress Ẩm Thực', title: '12 món ăn may mắn trên mâm cỗ Tết mang ý nghĩa tốt lành', url: 'https://vnexpress.net/12-mon-an-may-man-tren-mam-co-tet-o-trung-quoc-4840293.html' }
+    ],
+    mi_vit_tiem: [
+      { domain: 'Eva.vn Ẩm Thực', title: 'Món mì sặc mùi thảo mộc ở TP.HCM nghe vừa lạ vừa quen', url: 'https://eva.vn/di-dau-xem-gi/mon-mi-sac-mui-thao-moc-o-tp-hcm-nghe-vua-la-vua-quen-co-quan-gia-350000-dong-van-dong-khach-c40a653464.html' },
+      { domain: 'MIA.vn Cẩm Nang Du Lịch', title: 'Top quán mì vịt tiềm Sài Gòn gia truyền chuẩn vị', url: 'https://mia.vn/cam-nang-du-lich/top-quan-mi-vit-tiem-sai-gon-17714' }
+    ]
+  };
+
+  Object.keys(DISH_SOURCES).forEach(key => {
+    if (FOOD_DATABASE[key]) {
+      FOOD_DATABASE[key].sources = DISH_SOURCES[key];
+    }
+  });
 
   return FOOD_DATABASE;
 });

@@ -29,7 +29,7 @@
   /* Typography */
   --font-main: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Baloo 2', 'Be Vietnam Pro', cursive, sans-serif;
-  --font-traditional: 'Charm', 'Pattaya', 'Dancing Script', cursive, serif;
+  --font-traditional: 'Pattaya', 'Charm', cursive, serif;
   --font-serif: 'Merriweather', 'Times New Roman', serif;
 
   /* Transitions */
@@ -1081,27 +1081,29 @@ html, body {
 }
 
 .chat-speaker {
-  font-family: var(--font-display);
-  font-size: 13.5px;
-  font-weight: 800;
+  font-family: var(--font-traditional);
+  font-size: 17px;
+  font-weight: 700;
   color: #B71C1C;
   letter-spacing: 0.5px;
 }
 
 .chat-message {
   font-family: var(--font-serif);
-  font-size: 15px;
-  line-height: 1.5;
-  color: #1A202C;
-  font-weight: 600;
-  min-height: 42px;
-}
-
-.chat-message-line {
-  margin-bottom: 8px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: #1A202C;
   font-weight: 600;
+  min-height: 44px;
+}
+
+.chat-message-text,
+.chat-message-line {
+  margin-bottom: 4px;
+  line-height: 1.6;
+  color: #1A202C;
+  font-weight: 600;
+  font-family: var(--font-serif);
 }
 
 .chat-message-line:last-child {
@@ -1821,28 +1823,17 @@ html, body {
    - Không gian bồng bềnh, họa tiết rồng bay phượng múa & trống đồng Đông Sơn
    - Thẻ hiển thị món ăn chính giữa trang nhã, không còn các nút thừa hay dòng chữ rườm rà
    ========================================================================== */
-.food-detail-stage.theme-dreamy-pastel,
-.food-detail-stage.theme-imperial-red {
+.food-detail-stage {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 30;
+  z-index: 999;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(ellipse at 50% 15%, #EAF6FF 0%, #BAE6FD 35%, #7DD3FC 68%, #0284C7 115%);
+  background-color: var(--color-warm-bg, #F1DEBE) !important;
   overflow: hidden;
   animation: fadeInDetailStage 0.65s ease forwards;
-}
-
-.food-detail-stage.theme-dreamy-pastel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.45) 0%, transparent 45%),
-              radial-gradient(circle at 85% 25%, rgba(255, 255, 255, 0.4) 0%, transparent 40%);
-  pointer-events: none;
-  z-index: 1;
 }
 
 @keyframes fadeInDetailStage {
@@ -2749,101 +2740,39 @@ html, body {
   --parallax-offset: 0px;
 }
 
-/* Parallax Background Layers */
-.detail-scroll-section::before {
-  content: '';
+/* ==========================================================================
+   MINIMAL TOP BAR FOR PARALLAX SHOWCASE (GÓC TRÊN TRÁI)
+   ========================================================================== */
+.culinary-top-bar-minimal {
   position: absolute;
-  inset: -50%;
-  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
-              url('assets/parallax_bg1.png') center/cover no-repeat;
-  animation: parallaxFloat 20s ease-in-out infinite;
-  z-index: 0;
-  transition: transform 0.8s ease;
-  opacity: 0.6;
+  top: 18px;
+  left: 20px;
+  z-index: 100;
+  pointer-events: none;
 }
 
-.detail-scroll-section::after {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
-              url('assets/parallax_bg2.png') center/cover no-repeat;
-  animation: parallaxPulse 15s ease-in-out infinite;
-  z-index: 0;
-  transition: transform 0.8s ease;
-  opacity: 0.4;
+.culinary-top-bar-minimal .btn-top-back {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-family: 'Baloo 2', 'Be Vietnam Pro', sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #A8201A 0%, #8D3B1B 100%);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 16px rgba(168, 32, 26, 0.4);
+  transition: all 0.25s ease;
 }
 
-/* Additional parallax layers for section 1 */
-#detailSection1::before {
-  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
-              url('assets/parallax_bg1.png') center/cover no-repeat;
-}
-
-#detailSection1::after {
-  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
-              url('assets/parallax_bg2.png') center/cover no-repeat;
-}
-
-/* Section 2 backgrounds */
-#detailSection2::before {
-  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
-              url('assets/parallax_bg3.png') center/cover no-repeat;
-}
-
-#detailSection2::after {
-  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
-              url('assets/parallax_bg4.png') center/cover no-repeat;
-}
-
-/* Section 3 backgrounds */
-#detailSection3::before {
-  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 70% 30%, rgba(197, 34, 31, 0.15) 0%, transparent 50%),
-              url('assets/parallax_bg5.png') center/cover no-repeat;
-}
-
-#detailSection3::after {
-  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
-              url('assets/parallax_bg1.png') center/cover no-repeat;
-}
-
-.detail-scroll-section.active::before {
-  transform: translate(calc(var(--parallax-offset, 0px) * 0.5), calc(var(--parallax-offset, 0px) * 0.5));
-}
-
-.detail-scroll-section.active::after {
-  transform: translate(calc(var(--parallax-offset, 0px) * -0.3), calc(var(--parallax-offset, 0px) * -0.3));
-}
-
-@keyframes parallaxFloat {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(30px, -30px) rotate(5deg); }
-  50% { transform: translate(0, -50px) rotate(0deg); }
-  75% { transform: translate(-30px, -30px) rotate(-5deg); }
-}
-
-@keyframes parallaxPulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.1); }
-}
-
-.detail-scroll-section.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(var(--parallax-offset, 0px)) scale(1);
-  pointer-events: all;
-}
-
-.detail-scroll-section.active::before {
-  animation-play-state: running;
-}
-
-.detail-scroll-section.active::after {
-  animation-play-state: running;
+.culinary-top-bar-minimal .btn-top-back:hover {
+  background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 32, 26, 0.55);
 }
 
 .detail-scroll-section.previous {

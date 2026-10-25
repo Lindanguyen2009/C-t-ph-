@@ -3,378 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bánh Mì - Câu Chuyện & Nguyên Liệu</title>
+  <title>Bánh Mì Sài Gòn - Khám Phá Parallax</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Baloo+2:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="parallax-showcase.css">
   <style>
-    :root {
-      --c-gold: #D4AF37;
-      --c-gold-bright: #F2C94C;
-      --c-cinnabar: #C5221F;
-      --font-main: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-display: 'Baloo 2', 'Be Vietnam Pro', cursive, sans-serif;
-      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: var(--color-warm-bg, #F1DEBE);
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-      width: 100%; height: 100%; overflow: hidden;
-      font-family: var(--font-main);
-      background: #08110e;
-      user-select: none;
-    }
-
-    .hidden { display: none !important; }
-
-    /* ---- Food Detail Stage ---- */
-    .food-detail-stage {
-      position: fixed; inset: 0; width: 100vw; height: 100vh;
-      z-index: 30; display: flex; flex-direction: column;
-      background: #08110e; overflow: hidden;
-      animation: fadeInDetailStage 0.65s ease forwards;
-    }
-
-    .food-detail-stage::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(2,12,10,0.34) 0%, rgba(2,12,10,0.04) 45%, rgba(2,12,10,0.5) 100%);
-      pointer-events: none; z-index: 1;
-    }
-
-    @keyframes fadeInDetailStage {
-      0% { opacity: 0; transform: scale(1.02); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    /* ---- Bánh mì parallax background ---- */
-    .banh-mi-parallax-background {
-      position: absolute; inset: -18vh 0; z-index: 0; pointer-events: none; opacity: 0;
-      background-image: linear-gradient(90deg, rgba(3,15,12,0.76) 0%, rgba(3,15,12,0.16) 48%, rgba(3,15,12,0.72) 100%), url('assets/parallax/1792842930652_216063341195503653_3897924624546102210_98133dcf17160427c31ec062eef94b87.jpg');
-      background-position: center calc(50% + var(--food-parallax-y, 0px));
-      background-repeat: no-repeat; background-size: cover;
-      filter: saturate(0.92) contrast(1.08); transform: scale(1.04);
-      transition: opacity 0.45s ease, background-position 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .food-detail-stage.banh-mi-parallax-active .banh-mi-parallax-background { opacity: 1; }
-    .food-detail-stage.banh-mi-parallax-active::before {
-      background: linear-gradient(180deg, rgba(2,12,10,0.34) 0%, rgba(2,12,10,0.08) 42%, rgba(2,12,10,0.48) 100%);
-    }
-    @media (min-width: 900px) {
-      .banh-mi-parallax-background { background-size: min(100vw, 900px) auto; background-color: #08110e; }
-    }
-
-    /* ---- Seven-step showcase (overrides parallax) ---- */
-    .food-detail-stage.banh-mi-seven-step-active::before { background: transparent !important; }
-    .food-detail-stage.banh-mi-seven-step-active .banh-mi-parallax-background {
-      background-image: url('assets/parallax/1792842930652_216063341195503653_3897924624546102210_98133dcf17160427c31ec062eef94b87.jpg');
-      filter: saturate(1) contrast(1.04);
-    }
-
-    /* ---- Top bar ---- */
-    .culinary-top-bar {
-      position: relative; z-index: 50; display: flex;
-      justify-content: space-between; align-items: center;
-      padding: 12px 28px;
-      background: rgba(240, 249, 255, 0.88);
-      border-bottom: 2px solid rgba(186, 230, 253, 0.9);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      box-shadow: 0 4px 20px rgba(12, 74, 110, 0.15);
-    }
-    .btn-top-back {
-      display: inline-flex; align-items: center; gap: 8px;
-      border-radius: 999px; padding: 8px 20px;
-      font-family: var(--font-display); font-size: 14.5px; font-weight: 800;
-      cursor: pointer; background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
-      color: #FFFFFF; border: 1.5px solid #BAE6FD;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-      transition: all 0.25s var(--ease-spring);
-    }
-    .btn-top-back:hover {
-      background: linear-gradient(135deg, #0369A1 0%, #075985 100%);
-      border-color: #E0F2FE; transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(2, 132, 199, 0.5);
-    }
-
-    /* ---- Vertical scroll container ---- */
-    .detail-vertical-container {
-      position: fixed; inset: 0; width: 100vw; height: 100vh;
-      overflow: hidden; z-index: 40;
-      transform-style: preserve-3d; perspective: 1500px;
-    }
-
-    .detail-scroll-section {
-      position: absolute; inset: 0; width: 100vw; height: 100vh;
-      display: flex; justify-content: center; align-items: center;
-      opacity: 0; visibility: hidden;
-      transform: translateY(100vh) scale(0.9);
-      transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-      pointer-events: none; will-change: transform, opacity; padding: 20px;
-      background: transparent; overflow: hidden; --parallax-offset: 0px;
-    }
-    .detail-scroll-section::before, .detail-scroll-section::after { display: none; }
-
-    .detail-scroll-section.active {
-      opacity: 1; visibility: visible;
-      transform: translateY(var(--parallax-offset, 0px)) scale(1);
-      pointer-events: all;
-    }
-    .detail-scroll-section.previous {
-      opacity: 0; visibility: hidden;
-      transform: translateY(-30vh) scale(0.85) rotate(-5deg);
+    .culinary-top-bar-minimal {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      z-index: 100;
       pointer-events: none;
-      transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
-
-    /* ---- Scroll indicator ---- */
-    .detail-scroll-indicator {
-      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      opacity: 0; transition: opacity 0.5s ease; z-index: 10;
+    .culinary-top-bar-minimal .btn-top-back {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-family: 'Baloo 2', 'Be Vietnam Pro', sans-serif;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, #A8201A 0%, #8D3B1B 100%);
+      color: #FFFFFF;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 4px 16px rgba(168, 32, 26, 0.4);
+      transition: all 0.25s ease;
+      text-decoration: none;
     }
-    .detail-scroll-section.active .detail-scroll-indicator {
-      opacity: 1; animation: detailScrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes detailScrollPulse {
-      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 0.6; transform: translateX(-50%) translateY(-8px); }
-    }
-    .scroll-arrow-down {
-      width: 30px; height: 30px;
-      border-right: 3px solid var(--c-gold);
-      border-bottom: 3px solid var(--c-gold);
-      transform: rotate(45deg);
-      animation: scrollArrowDownBounce 1.5s ease-in-out infinite;
-    }
-    @keyframes scrollArrowDownBounce {
-      0%, 100% { transform: rotate(45deg) translateY(0); }
-      50% { transform: rotate(45deg) translateY(8px); }
-    }
-    .scroll-hint-text {
-      font-family: var(--font-main); font-size: 14px; font-weight: 600;
-      color: #FFFFFF; text-shadow: 0 2px 4px rgba(0,0,0,0.5); letter-spacing: 0.5px;
-    }
-
-    /* ---- Nav dots ---- */
-    .detail-nav-dots {
-      position: fixed; right: 30px; top: 50%; transform: translateY(-50%);
-      display: flex; flex-direction: column; gap: 16px; z-index: 100;
-      opacity: 0; transition: opacity 0.5s ease;
-    }
-    .detail-nav-dots.visible { opacity: 1; }
-    .detail-nav-dot {
-      width: 14px; height: 14px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3); border: 2px solid var(--c-gold);
-      cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-    }
-    .detail-nav-dot::before {
-      content: ''; position: absolute; inset: -4px; border-radius: 50%;
-      border: 2px solid transparent; transition: all 0.3s ease;
-    }
-    .detail-nav-dot:hover { transform: scale(1.3); background: rgba(255, 255, 255, 0.5); }
-    .detail-nav-dot.active {
-      background: var(--c-gold); transform: scale(1.4);
-      box-shadow: 0 0 16px rgba(212, 175, 55, 0.6);
-    }
-    .detail-nav-dot.active::before {
-      border-color: var(--c-gold);
-      animation: detailNavDotPulse 2s ease-in-out infinite;
-    }
-    @keyframes detailNavDotPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.5; }
-    }
-
-    /* ---- Seven-step showcase ---- */
-    .banh-mi-seven-step-showcase {
-      position: absolute; inset: 0; z-index: 45; pointer-events: none;
-    }
-    .banh-mi-seven-step-showcase.active { pointer-events: auto; }
-    .food-detail-stage.banh-mi-seven-step-active > .detail-vertical-container > .detail-scroll-section { display: none; }
-
-    /* ---- Bánh mì content cards ---- */
-    .banh-mi-content-section {
-      background: transparent;
-    }
-    .banh-mi-content-section::before { display: none !important; }
-
-    .banh-mi-content-card {
-      position: relative; z-index: 2;
-      width: min(310px, calc(100vw - 64px));
-      max-height: calc(100vh - 150px);
-      overflow-y: auto;
-      padding: clamp(24px, 4vw, 48px);
-      border: 2px solid rgba(255, 255, 255, 0.98);
-      border-radius: 26px;
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
-      color: #17352d; text-align: left;
-    }
-    .banh-mi-card-right {
-      margin-left: auto; margin-right: clamp(12px, 5vw, 72px);
-    }
-    .banh-mi-card-left {
-      margin-left: clamp(12px, 5vw, 72px); margin-right: auto;
-    }
-    .banh-mi-content-heading {
-      display: block; margin-bottom: 18px; color: #a74d22;
-      font-family: var(--font-display);
-      font-size: clamp(24px, 4vw, 38px); font-weight: 900;
-      line-height: 1.15; text-align: center;
-    }
-    .banh-mi-content-card p {
-      margin: 0; color: #29463d; font-family: var(--font-main);
-      font-size: clamp(14px, 1.7vw, 16px); line-height: 1.55;
-      white-space: normal; overflow-wrap: anywhere;
-    }
-    .banh-mi-location-card { width: min(340px, calc(100vw - 64px)); }
-    .banh-mi-location-card p {
-      font-size: clamp(12px, 1.55vw, 14px); line-height: 1.42;
-    }
-    .banh-mi-image-step { padding: 0; background: transparent; }
-
-    @media (max-width: 768px) {
-      .detail-nav-dots { right: 15px; }
-      .detail-nav-dot { width: 12px; height: 12px; }
-      .detail-scroll-section { padding: 15px; }
+    .culinary-top-bar-minimal .btn-top-back:hover {
+      background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(168, 32, 26, 0.55);
     }
   </style>
 </head>
 <body>
 
-  <div class="food-detail-stage banh-mi-parallax-active banh-mi-seven-step-active" id="foodDetailStage">
-    <div class="banh-mi-parallax-background" aria-hidden="true"></div>
-
-    <header class="culinary-top-bar">
-      <button class="btn-top-back" id="btnBackToBoard" aria-label="Quay lại">
-        <span>◀</span><span>Quay lại</span>
-      </button>
+  <div class="culinary-parallax-stage" id="foodDetailStage" data-active-dish="banh_mi">
+    <header class="culinary-top-bar-minimal">
+      <a href="index.html?skipIntro=true&fromTile=26" class="btn-top-back" id="btnBackToBoard" aria-label="Quay lại bàn cờ">
+        <span class="btn-icon">◀</span>
+        <span>Quay lại Bàn Cờ</span>
+      </a>
     </header>
 
-    <div class="detail-vertical-container" id="detailVerticalContainer">
-      <div class="banh-mi-seven-step-showcase active" id="banhMiSevenStepShowcase" aria-live="polite"></div>
-    </div>
-
-    <div class="detail-nav-dots" id="detailNavDots"></div>
+    <div class="culinary-parallax-background"></div>
+    <div class="culinary-showcase-container"></div>
+    <div class="detail-nav-dots"></div>
   </div>
 
+  <script src="parallax-showcase.js"></script>
   <script>
-    (function () {
-      const foodDetailStage = document.getElementById('foodDetailStage');
-      const detailVerticalContainer = document.getElementById('detailVerticalContainer');
-      const showcase = document.getElementById('banhMiSevenStepShowcase');
-      const btnBack = document.getElementById('btnBackToBoard');
-
-      let detailSections = [];
-      let detailNavDots = [];
-      let currentDetailSection = 1;
-      let totalDetailSections = 0;
-      let isDetailScrollTransitioning = false;
-      let detailTouchStartY = 0;
-      let detailWheelDebounce = null;
-
-      const content = [
-        ['Nguồn gốc', 'Bánh mì Việt Nam có nguồn gốc từ bánh baguette của Pháp, du nhập vào Việt Nam từ thế kỉ XIX.', 'right'],
-        ['', 'Người Việt dần biến tấu ổ bánh nhỏ gọn hơn, vỏ giòn, ruột xốp và kết hợp với các loại nhân quen thuộc như thịt, chả, pate, rau thơm và đồ chua.', 'right'],
-        ['', 'Đến khoảng thập niên 1950–1960, bánh mì kẹp dần phổ biến tại Sài Gòn, trở thành món ăn tiện lợi và gần gũi với đời sống người dân.', 'left'],
-        ['', 'Bánh mì trở thành món ăn đường phố tiêu biểu của Sài Gòn nhờ giá cả phải chăng, tiện lợi và phù hợp với nhịp sống đô thị. Từ món bánh mang ảnh hưởng Pháp, người Việt đã sáng tạo nên hương vị riêng, góp phần quảng bá ẩm thực Việt Nam đến bạn bè quốc tế.', 'right'],
-        ['', 'Các hàng bánh mì nổi tiếng tại Sài Gòn\nBánh mì Huỳnh Hoa (26 Lê Thị Riêng, Bến Thành, Hồ Chí Minh)\nBánh mì Chim Chạy (147D Nguyễn Thị Minh Khai, Bến Thành, Hồ Chí Minh)\nBánh mì Hoàng Lam (Số 168 Nguyễn Thượng Hiền, phường 5, Đức Nhuận)\nBánh mì Bà Huynh (197A Nguyễn Trãi, P, Cầu Ông Lãnh, Hồ Chí Minh)\nBánh mì Bảy Hổ (25 Huỳnh Khương Ninh, Quận 1, Hồ Chí Minh)', 'left'],
-        ['', 'Giá tham khảo\nBánh mì tại các quán phổ biến ở TP.HCM: khoảng 15.000–40.000đ/ổ.', 'left']
-      ];
-
-      showcase.innerHTML = content.map(([heading, text, side], index) => `
-        <section class="detail-scroll-section banh-mi-content-section banh-mi-step-${index + 1}" data-section="${index + 1}">
-          <div class="banh-mi-content-card banh-mi-card-${side}${index === 4 ? ' banh-mi-location-card' : ''}">
-            ${heading ? `<span class="banh-mi-content-heading">${heading}</span>` : ''}
-            <p>${text.replaceAll('\n', '<br>')}</p>
-          </div>
-        </section>
-      `).join('') + `
-        <section class="detail-scroll-section banh-mi-image-step" data-section="7" aria-label="Bánh mì giòn"></section>
-      `;
-
-      detailSections = showcase.querySelectorAll('.detail-scroll-section');
-      totalDetailSections = detailSections.length;
-
-      const dotsContainer = document.getElementById('detailNavDots');
-      dotsContainer.innerHTML = Array.from({ length: totalDetailSections }, (_, i) =>
-        `<div class="detail-nav-dot${i === 0 ? ' active' : ''}" data-section="${i + 1}" aria-label="Đến phần ${i + 1}"></div>`
-      ).join('');
-      detailNavDots = dotsContainer.querySelectorAll('.detail-nav-dot');
-      detailNavDots.forEach((dot, i) => dot.addEventListener('click', () => showDetailSection(i + 1)));
-
-      function showDetailSection(sectionNum) {
-        if (isDetailScrollTransitioning || sectionNum < 1 || sectionNum > totalDetailSections) return;
-        isDetailScrollTransitioning = true;
-        const oldSection = currentDetailSection;
-        currentDetailSection = sectionNum;
-
-        detailSections.forEach((section, index) => {
-          const si = index + 1;
-          section.classList.remove('active', 'previous');
-          if (si === currentDetailSection) {
-            section.classList.add('active');
-            const off = si > oldSection ? 20 : -20;
-            section.style.setProperty('--parallax-offset', off + 'px');
-          } else if (si === oldSection && si < currentDetailSection) {
-            section.classList.add('previous');
-            section.style.setProperty('--parallax-offset', '30px');
-          } else {
-            section.style.setProperty('--parallax-offset', '0px');
-          }
-        });
-
-        const parallaxPositions = ['68vh', '41vh', '21vh', '4vh', '-18vh', '-36vh', '-57vh'];
-        foodDetailStage.style.setProperty('--food-parallax-y', parallaxPositions[currentDetailSection - 1] || '0px');
-
-        detailNavDots.forEach((dot, i) => dot.classList.toggle('active', i + 1 === currentDetailSection));
-        setTimeout(() => { isDetailScrollTransitioning = false; }, 900);
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromTile = urlParams.get('fromTile') || '26';
+      const backBtn = document.getElementById('btnBackToBoard');
+      if (backBtn) {
+        backBtn.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
       }
-
-      detailVerticalContainer.addEventListener('wheel', (e) => {
-        if (isDetailScrollTransitioning) return;
-        if (detailWheelDebounce) clearTimeout(detailWheelDebounce);
-        detailWheelDebounce = setTimeout(() => {
-          if (e.deltaY > 50) showDetailSection(currentDetailSection + 1);
-          else if (e.deltaY < -50) showDetailSection(currentDetailSection - 1);
-        }, 50);
-      }, { passive: true });
-
-      detailVerticalContainer.addEventListener('touchstart', (e) => {
-        detailTouchStartY = e.changedTouches[0].screenY;
-      }, { passive: true });
-
-      detailVerticalContainer.addEventListener('touchend', (e) => {
-        if (isDetailScrollTransitioning) return;
-        const dy = detailTouchStartY - e.changedTouches[0].screenY;
-        if (Math.abs(dy) > 50) {
-          if (dy > 0) showDetailSection(currentDetailSection + 1);
-          else showDetailSection(currentDetailSection - 1);
-        }
-      }, { passive: true });
-
-      document.addEventListener('keydown', (e) => {
-        if (isDetailScrollTransitioning) return;
-        switch (e.key) {
-          case 'ArrowDown': case 'PageDown': case ' ':
-            e.preventDefault(); showDetailSection(currentDetailSection + 1); break;
-          case 'ArrowUp': case 'PageUp':
-            e.preventDefault(); showDetailSection(currentDetailSection - 1); break;
-        }
-      });
-
-      if (btnBack) btnBack.addEventListener('click', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const fromTile = urlParams.get('fromTile');
-        window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
-      });
-
-      // Start at section 1
-      dotsContainer.classList.add('visible');
-      showDetailSection(1);
-    })();
+      CulinaryParallax.init('foodDetailStage');
+    });
   </script>
 </body>
 </html>
