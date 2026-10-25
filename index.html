@@ -21,11 +21,11 @@
   <!-- Film Grain Texture Overlay (Hạt grain nhẹ truyền thống) -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
-  <!-- Thanh tiện ích góc trên bên phải (Nhạc nền truyền thống & Tổng hợp) -->
+  <!-- Thanh tiện ích góc trên bên phải (Nhạc nền & Tổng hợp) -->
   <aside class="top-utility-bar" aria-label="Thanh tiện ích">
-    <button id="bgmToggleBtn" class="bgm-toggle-button is-playing" aria-label="Bật hoặc tắt nhạc nền" title="Nhạc nền dân gian Việt Nam (nhẹ nhàng)">
-      <span class="bgm-icon">🎵</span>
-      <span class="bgm-text">Nhạc: Bật</span>
+    <button id="bgmToggleBtn" class="bgm-toggle-button is-muted" aria-label="Bật nhạc nền" title="Bật nhạc nền nhẹ nhàng">
+      <span class="bgm-icon">🔇</span>
+      <span class="bgm-text">Nhạc: Tắt</span>
       <span class="bgm-wave-waves" aria-hidden="true">
         <span class="wave-bar"></span>
         <span class="wave-bar"></span>
@@ -34,7 +34,7 @@
     </button>
     <button id="summaryBtn" class="summary-button hidden" onclick="showFoodSummary()">
       <span class="summary-icon">📋</span>
-      <span class="summary-text">Tổng Hợp Món Ăn</span>
+      <span class="summary-text">Tổng Hợp</span>
     </button>
   </aside>
 
@@ -639,15 +639,25 @@
   <!-- Multi-Scene Fade Overlay -->
   <div class="scene-fade-overlay hidden" id="sceneFadeOverlay"></div>
 
-  <!-- Food Summary Modal -->
-  <div class="food-summary-modal hidden" id="foodSummaryModal">
+  <!-- Food Summary Modal (Tạm dừng game & Quay lại bàn cờ) -->
+  <div class="food-summary-modal hidden" id="foodSummaryModal" role="dialog" aria-modal="true" aria-label="Bảng tổng hợp">
     <div class="summary-content">
       <div class="summary-header">
-        <h2>TỔNG HỢP</h2>
-        <button class="summary-close-btn" onclick="closeFoodSummary()">✕</button>
+        <div class="summary-title-wrap">
+          <span class="summary-sub-badge">TẠM DỪNG HÀNH TRÌNH</span>
+          <h2>TỔNG HỢP</h2>
+        </div>
+        <button class="btn-return-board-summary" onclick="closeFoodSummary()" aria-label="Quay lại bàn cờ và tiếp tục chơi">
+          <span>◀ Quay lại bàn cờ</span>
+        </button>
       </div>
       <div class="summary-grid" id="summaryGrid">
         <!-- Món ăn sẽ được tạo động bằng JavaScript -->
+      </div>
+      <div class="summary-footer-bar">
+        <button class="btn-return-board-summary large" onclick="closeFoodSummary()" aria-label="Quay lại bàn cờ và tiếp tục chơi">
+          <span>◀ Tiếp tục hành trình (Quay lại bàn cờ)</span>
+        </button>
       </div>
     </div>
   </div>
