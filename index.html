@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cờ Tỷ Phú Ẩm Thực Việt Nam</title>
+  <title data-i18n="title">Cờ Tỷ Phú Ẩm Thực Việt Nam</title>
   <meta name="description" content="Trải nghiệm du lịch ẩm thực Việt Nam đặc sắc qua bàn cờ tỷ phú truyền thống với 10 món ăn đường phố nức tiếng.">
 
   <!-- Google Fonts: Charm (Uốn lượn thư pháp truyền thống), Pattaya, Baloo 2, Be Vietnam Pro & Merriweather (Font có chân) -->
@@ -15,19 +15,53 @@
   <link rel="stylesheet" href="parallax-showcase.css">
   <!-- Three.js cho xúc xắc 3D ngà sứ gốc -->
   <script src="assets/three.min.js"></script>
+  <!-- File dịch song ngữ -->
+  <script src="translations.js"></script>
+
+  <!-- Nhạc nền -->
+  <audio id="backgroundMusic" loop>
+    <source src="assets/background_music.mp3" type="audio/mpeg">
+  </audio>
 </head>
 <body>
 
   <!-- Film Grain Texture Overlay (Hạt grain nhẹ truyền thống) -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
-  <!-- Thanh tiện ích góc trên bên phải (Tổng hợp) -->
+  <!-- Thanh tiện ích góc trên bên phải (Tổng hợp & Cài đặt) -->
   <aside class="top-utility-bar" aria-label="Thanh tiện ích">
     <button id="summaryBtn" class="summary-button hidden" onclick="showFoodSummary()">
       <span class="summary-icon">📋</span>
-      <span class="summary-text">Tổng Hợp</span>
+      <span class="summary-text" data-i18n="summary">Tổng Hợp</span>
+    </button>
+    <button id="settingsBtn" class="settings-button" onclick="toggleSettings()">
+      <span class="settings-icon">⚙️</span>
     </button>
   </aside>
+
+  <!-- Modal Cài đặt -->
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2 data-i18n="settings">Cài Đặt</h2>
+        <button class="settings-close-btn" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-item">
+          <label for="volumeSlider" data-i18n="volume">Âm lượng nhạc nền</label>
+          <input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+          <span id="volumeValue">30%</span>
+        </div>
+        <div class="setting-item">
+          <label for="languageSelect" data-i18n="language">Ngôn ngữ / Language</label>
+          <select id="languageSelect" class="language-select">
+            <option value="vi">Tiếng Việt</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Vertical Ombre Background: Lightest #3A99BA on top to deepest #072865 at bottom -->
   <div class="site-ombre-bg"></div>
@@ -108,15 +142,18 @@
       <!-- State A: Tên Game TÒ TE TÍ PHIÊU LƯU KÍ -->
       <div class="board-blank-content" id="boardBlankContent">
         <div class="board-game-header">
-          <h1 class="board-game-title">TÒ TE TÍ<br>PHIÊU LƯU KÝ</h1>
+          <h1 class="board-game-title">
+            <span data-i18n="game_title_line1">TÒ TE TÍ</span><br>
+            <span data-i18n="game_title_line2">PHIÊU LƯU KÝ</span>
+          </h1>
         </div>
-        <p class="board-click-prompt">Được thực hiện bởi nhóm Hi5</p>
+        <p class="board-click-prompt" data-i18n="game_subtitle">Được thực hiện bởi nhóm Hi5</p>
       </div>
 
       <!-- State B: "BẮT ĐẦU" (Khi người dùng chạm vào bảng) -->
       <div class="board-start-content hidden" id="boardStartContent">
-        <h1 class="start-big-text">BẮT ĐẦU</h1>
-        <p class="start-small-cue">Nhấn để tiếp tục <span class="start-arrow">➔</span></p>
+        <h1 class="start-big-text" data-i18n="start">BẮT ĐẦU</h1>
+        <p class="start-small-cue" data-i18n="click_to_continue">Nhấn để tiếp tục <span class="start-arrow">➔</span></p>
       </div>
 
       <!-- Bottom Decorative Wave -->
@@ -161,11 +198,11 @@
           <!-- BOTTOM ROW (Tiles 0-7) - T từ trái sang phải -->
           <!-- Tile 0: BẮT ĐẦU (Góc dưới trái - nơi nhân vật bắt đầu) -->
           <div class="real-tile tile-start-square" data-tile="0" id="tile-0">
-            <div class="start-header-bar">BẮT ĐẦU</div>
+            <div class="start-header-bar" data-i18n="start">BẮT ĐẦU</div>
             <div class="start-badge-wrap">
               <span class="start-arrow-symbol">⬅</span>
             </div>
-            <div class="start-footer-label">GO</div>
+            <div class="start-footer-label" data-i18n="go">GO</div>
           </div>
 
           <!-- Tile 1: Cơm Tấm -->
@@ -184,13 +221,13 @@
 
           <!-- Tile 3: Chợ Bà Chiểu -->
           <div class="real-tile market-tile" data-tile="3" id="tile-3">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">BÀ CHIỂU</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="ba_chieu">BÀ CHIỂU</div>
           </div>
 
           <!-- Tile 4: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="4" id="tile-4">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 5: Phá Lấu -->
@@ -209,7 +246,7 @@
 
           <!-- Tile 7: GIEO QUẺ (Góc dưới phải) -->
           <div class="real-tile gieo-que-tile" data-tile="7" id="tile-7">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- RIGHT COLUMN (Tiles 8-13) - T từ dưới lên -->
@@ -229,13 +266,13 @@
 
           <!-- Tile 10: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="10" id="tile-10">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 11: Chợ An Đông -->
           <div class="real-tile market-tile" data-tile="11" id="tile-11">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">AN ĐÔNG</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="an_dong">AN ĐÔNG</div>
           </div>
 
           <!-- Tile 12: Bò Bía -->
@@ -255,7 +292,7 @@
           <!-- TOP ROW (Tiles 14-21) - T từ phải sang trái -->
           <!-- Tile 14: GIEO QUẺ (Góc trên phải) -->
           <div class="real-tile gieo-que-tile" data-tile="14" id="tile-14">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 15: Mì Vịt Tiềm -->
@@ -274,13 +311,13 @@
 
           <!-- Tile 17: Chợ Bến Thành -->
           <div class="real-tile market-tile" data-tile="17" id="tile-17">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">BẾN THÀNH</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="ben_thanh">BẾN THÀNH</div>
           </div>
 
           <!-- Tile 18: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="18" id="tile-18">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 19: Bánh Tráng Trộn -->
@@ -299,7 +336,7 @@
 
           <!-- Tile 21: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="21" id="tile-21">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- LEFT COLUMN (Tiles 22-27) - T từ trên xuống -->
@@ -319,8 +356,8 @@
 
           <!-- Tile 24: Chợ Tân Định -->
           <div class="real-tile market-tile" data-tile="24" id="tile-24">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">TÂN ĐỊNH</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="tan_dinh">TÂN ĐỊNH</div>
           </div>
 
           <!-- Tile 25: Bánh Xèo (lặp lại) -->
@@ -339,7 +376,7 @@
 
           <!-- Tile 27: GIEO QUẺ (Góc trên trái) -->
           <div class="real-tile gieo-que-tile" data-tile="27" id="tile-27">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
           <!-- BOTTOM ROW (Tiles 0-7) - T từ trái sang phải -->
           <!-- Tile 0: BẮT ĐẦU (Góc dưới trái) -->
@@ -367,13 +404,13 @@
 
           <!-- Tile 3: Chợ Bà Chiểu -->
           <div class="real-tile market-tile" data-tile="3" id="tile-3">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">BÀ CHIỂU</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="ba_chieu">BÀ CHIỂU</div>
           </div>
 
           <!-- Tile 4: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="4" id="tile-4">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 5: Phá Lấu -->
@@ -392,7 +429,7 @@
 
           <!-- Tile 7: GIEO QUẺ (Góc dưới phải) -->
           <div class="real-tile gieo-que-tile" data-tile="7" id="tile-7">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- RIGHT COLUMN (Tiles 8-13) - T từ dưới lên -->
@@ -412,13 +449,13 @@
 
           <!-- Tile 10: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="10" id="tile-10">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 11: Chợ An Đông -->
           <div class="real-tile market-tile" data-tile="11" id="tile-11">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">AN ĐÔNG</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="an_dong">AN ĐÔNG</div>
           </div>
 
           <!-- Tile 12: Bò Bía -->
@@ -438,7 +475,7 @@
           <!-- TOP ROW (Tiles 14-21) - T từ phải sang trái -->
           <!-- Tile 14: GIEO QUẺ (Góc trên phải) -->
           <div class="real-tile gieo-que-tile" data-tile="14" id="tile-14">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 15: Mì Vịt Tiềm -->
@@ -457,13 +494,13 @@
 
           <!-- Tile 17: Chợ Bến Thành -->
           <div class="real-tile market-tile" data-tile="17" id="tile-17">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">BẾN THÀNH</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="ben_thanh">BẾN THÀNH</div>
           </div>
 
           <!-- Tile 18: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="18" id="tile-18">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Tile 19: Bánh Tráng Trộn -->
@@ -482,7 +519,7 @@
 
           <!-- Tile 21: GIEO QUẺ -->
           <div class="real-tile gieo-que-tile" data-tile="21" id="tile-21">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- LEFT COLUMN (Tiles 22-27) - T từ trên xuống -->
@@ -502,8 +539,8 @@
 
           <!-- Tile 24: Chợ Tân Định -->
           <div class="real-tile market-tile" data-tile="24" id="tile-24">
-            <div class="market-header">CHỢ</div>
-            <div class="market-name">TÂN ĐỊNH</div>
+            <div class="market-header" data-i18n="market">CHỢ</div>
+            <div class="market-name" data-i18n="tan_dinh">TÂN ĐỊNH</div>
           </div>
 
           <!-- Tile 25: Bánh Xèo (lặp lại) -->
@@ -522,7 +559,7 @@
 
           <!-- Tile 27: GIEO QUẺ (Góc trên trái) -->
           <div class="real-tile gieo-que-tile" data-tile="27" id="tile-27">
-            <div class="gieo-que-label">GIEO QUẺ</div>
+            <div class="gieo-que-label" data-i18n="gieo_que">GIEO QUẺ</div>
           </div>
 
           <!-- Character Walking Player Token on Board -->
@@ -565,14 +602,14 @@
          3D WHITE PORCELAIN DICE STAGE (XÚC XẮC 3D GỐC)
          ============================================================== -->
     <div class="dice-center-stage hidden" id="diceCenterStage">
-      <canvas id="diceCanvas" title="Chạm để tung xúc xắc"></canvas>
+      <canvas id="diceCanvas" data-i18n-title="click_to_roll" title="Chạm để tung xúc xắc"></canvas>
     </div>
 
     <!-- ARRIVAL CELEBRATION BANNER -->
     <div class="arrival-celebrate-title hidden" id="arrivalCelebrateTitle">
       <div class="celebrate-banner-card">
-        <div class="celebrate-badge-tag">ĐIỂM DỪNG CHÂN ĐẶC BIỆT</div>
-        <h2 class="celebrate-hero-heading">CÙNG MÌNH KHÁM PHÁ THÔI!</h2>
+        <div class="celebrate-badge-tag" data-i18n="special_stop">ĐIỂM DỪNG CHÂN ĐẶC BIỆT</div>
+        <h2 class="celebrate-hero-heading" data-i18n="lets_explore">CÙNG MÌNH KHÁM PHÁ THÔI!</h2>
         <div class="celebrate-filigree-divider">
           <span class="divider-diamond">◆</span>
           <span class="divider-line"></span>
@@ -594,7 +631,7 @@
     </div>
     <div class="mist-golden-sunbeams"></div>
     <div class="mist-center-title" id="mistCenterTitle">
-      <span class="mist-badge-sub">ĐIỂM DỪNG CHÂN MỸ VỊ</span>
+      <span class="mist-badge-sub" data-i18n="flavor_stop">ĐIỂM DỪNG CHÂN MỸ VỊ</span>
       <h2 class="mist-heading" id="mistDishHeading">CƠM TẤM SÀI GÒN</h2>
     </div>
   </div>
@@ -635,10 +672,10 @@
     <div class="summary-content">
       <div class="summary-header">
         <div class="summary-title-wrap">
-          <h2>TỔNG HỢP</h2>
+          <h2 data-i18n="summary_modal_title">TỔNG HỢP</h2>
         </div>
         <button class="btn-return-board-summary" onclick="closeFoodSummary()" aria-label="Quay lại bàn cờ">
-          <span>◀ Quay lại bàn cờ</span>
+          <span data-i18n="summary_back_button">◀ Quay lại bàn cờ</span>
         </button>
       </div>
       <div class="summary-grid" id="summaryGrid">
@@ -646,7 +683,7 @@
       </div>
       <div class="summary-footer-bar">
         <button class="btn-return-board-summary large" onclick="closeFoodSummary()" aria-label="Quay lại bàn cờ">
-          <span>◀ Quay lại bàn cờ</span>
+          <span data-i18n="summary_back_button">◀ Quay lại bàn cờ</span>
         </button>
       </div>
     </div>
@@ -656,7 +693,7 @@
   <div class="quiz-modal hidden" id="quizModal">
     <div class="quiz-content">
       <div class="quiz-header">
-        <h2>GIEO QUẺ - CÂU HỎI</h2>
+        <h2 data-i18n="gieo_que_quiz_title">GIEO QUẺ - CÂU HỎI</h2>
         <button class="quiz-close-btn" onclick="closeQuiz()">✕</button>
       </div>
       <div class="quiz-body">

@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chợ An Đông - Xưa và Nay</title>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script src="translations.js"></script>
+
+  <!-- Nhạc nền -->
+  <audio id="backgroundMusic" loop>
+    <source src="assets/background_music.mp3" type="audio/mpeg">
+  </audio>
+
   <style>
     * {
       margin: 0;
@@ -375,8 +382,8 @@
 </head>
 <body>
   <div class="hero-section">
-    <h1>Chợ An Đông</h1>
-    <p class="subtitle">Trung Tâm Thương Mại Quận 5</p>
+    <h1 data-i18n="cho_an_dong">Chợ An Đông</h1>
+    <p class="subtitle" data-i18n="market_subtitle">Ký ức từ quá khứ đến hiện tại</p>
     
     <div class="image-container">
       <div class="image-wrapper">
@@ -385,8 +392,8 @@
       </div>
       
       <div class="labels">
-        <div class="label">XƯA</div>
-        <div class="label">NAY</div>
+        <div class="label" data-i18n="xua">XƯA</div>
+        <div class="label" data-i18n="nay">NAY</div>
       </div>
       
       <div class="slider-container" id="sliderContainer">
@@ -395,7 +402,7 @@
       </div>
     </div>
     
-    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;">👆 Kéo thanh để so sánh Chợ An Đông xưa và nay</p>
+    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;" data-i18n="drag_to_compare">👆 Kéo thanh để so sánh Chợ An Đông xưa và nay</p>
     
     <div class="scroll-indicator">
       <svg viewBox="0 0 24 24">
@@ -405,9 +412,9 @@
   </div>
 
   <div class="content-section" id="section1">
-    <h2 class="section-title">Thông Tin Chung & Lịch Sử Hình Thành</h2>
+    <h2 class="section-title" data-i18n="an_dong_history_title">Thông Tin Chung & Lịch Sử Hình Thành</h2>
     <div class="info-card">
-      <p>Chợ An Đông nằm trên đường An Dương Vương, khu vực Chợ Lớn, TP.HCM. Chợ hình thành khoảng năm 1950–1954, gắn với hoạt động giao thương của cộng đồng người Hoa. Năm 1954, chợ cũ được xây dựng; năm 1989, chợ bắt đầu xây mới và đến năm 1991, chợ mới đi vào hoạt động. Ngày nay, chợ là đầu mối kinh doanh thời trang nổi tiếng.</p>
+      <p data-i18n="an_dong_history_content">Chợ An Đông nằm trên đường An Dương Vương, khu vực Chợ Lớn, TP.HCM. Chợ hình thành khoảng năm 1950–1954, gắn với hoạt động giao thương của cộng đồng người Hoa. Năm 1954, chợ cũ được xây dựng; năm 1989, chợ bắt đầu xây mới và đến năm 1991, chợ mới đi vào hoạt động. Ngày nay, chợ là đầu mối kinh doanh thời trang nổi tiếng.</p>
     </div>
   </div>
 
@@ -415,71 +422,88 @@
     <h2 class="section-title">Các Cột Mốc Quan Trọng</h2>
     <div class="timeline">
       <div class="timeline-item">
-        <h4>Năm 1950–1954</h4>
-        <p>Chợ hình thành, gắn với hoạt động giao thương của cộng đồng người Hoa.</p>
+        <h4 data-i18n="an_dong_timeline_1950">Năm 1950–1954</h4>
+        <p data-i18n="an_dong_timeline_1950_content">Chợ hình thành, gắn với hoạt động giao thương của cộng đồng người Hoa.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 1954</h4>
-        <p>Chợ cũ được xây dựng.</p>
+        <h4 data-i18n="an_dong_timeline_1954_1">Năm 1954</h4>
+        <p data-i18n="an_dong_timeline_1954_1_content">Chợ cũ được xây dựng.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 1989</h4>
-        <p>Chợ bắt đầu xây mới.</p>
+        <h4 data-i18n="an_dong_timeline_1989">Năm 1989</h4>
+        <p data-i18n="an_dong_timeline_1989_content">Chợ bắt đầu xây mới.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 1991</h4>
-        <p>Chợ mới đi vào hoạt động.</p>
+        <h4 data-i18n="an_dong_timeline_1991">Năm 1991</h4>
+        <p data-i18n="an_dong_timeline_1991_content">Chợ mới đi vào hoạt động.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section3">
-    <h2 class="section-title">Đặc Điểm & Bản Sắc Văn Hóa</h2>
+    <h2 class="section-title" data-i18n="characteristics">Đặc Điểm & Bản Sắc Văn Hóa</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Kiến trúc</h3>
-        <p>Chợ phát triển thành công trình thương mại nhiều tầng với hàng nghìn quầy sạp.</p>
+        <h3 data-i18n="an_dong_architecture">Kiến trúc</h3>
+        <p data-i18n="an_dong_architecture_content">Chợ phát triển thành công trình thương mại nhiều tầng với hàng nghìn quầy sạp.</p>
       </div>
       <div class="info-card">
-        <h3>Sản phẩm</h3>
-        <p>Chuyên kinh doanh quần áo, vải vóc, giày dép và phụ kiện.</p>
+        <h3 data-i18n="an_dong_products">Sản phẩm</h3>
+        <p data-i18n="an_dong_products_content">Chuyên kinh doanh quần áo, vải vóc, giày dép và phụ kiện.</p>
       </div>
       <div class="info-card">
-        <h3>Văn hóa</h3>
-        <p>Hoạt động bán sỉ, sự nhạy bén trong kinh doanh và dấu ấn cộng đồng người Hoa tạo nên bản sắc riêng.</p>
+        <h3 data-i18n="an_dong_culture">Văn hóa</h3>
+        <p data-i18n="an_dong_culture_content">Hoạt động bán sỉ, sự nhạy bén trong kinh doanh và dấu ấn cộng đồng người Hoa tạo nên bản sắc riêng.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section4">
-    <h2 class="section-title">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
+    <h2 class="section-title" data-i18n="heritage">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Ký ức</h3>
-        <p>Chợ là nơi mưu sinh của nhiều hộ kinh doanh, lưu giữ ký ức của nhiều thế hệ tiểu thương.</p>
+        <h3 data-i18n="an_dong_memory">Ký ức</h3>
+        <p data-i18n="an_dong_memory_content">Chợ là nơi mưu sinh của nhiều hộ kinh doanh, lưu giữ ký ức của nhiều thế hệ tiểu thương.</p>
       </div>
       <div class="info-card">
-        <h3>Bảo tồn</h3>
-        <p>Hiện nay, hoạt động buôn bán chịu ảnh hưởng từ sức mua và xu hướng mua sắm trực tuyến. Sưu tầm ảnh cũ, chụp ảnh hiện tại, lưu bản đồ, video và phỏng vấn tiểu thương giúp ghi lại sự thay đổi, góp phần bảo tồn lịch sử thương mại Chợ Lớn.</p>
+        <h3 data-i18n="an_dong_preservation">Bảo tồn</h3>
+        <p data-i18n="an_dong_preservation_content">Hiện nay, hoạt động buôn bán chịu ảnh hưởng từ sức mua và xu hướng mua sắm trực tuyến. Sưu tầm ảnh cũ, chụp ảnh hiện tại, lưu bản đồ, video và phỏng vấn tiểu thương giúp ghi lại sự thay đổi, góp phần bảo tồn lịch sử thương mại Chợ Lớn.</p>
       </div>
     </div>
   </div>
 
-  <div class="content-section" id="section4">
-    <h2 class="section-title">Tài Liệu Tham Khảo</h2>
+  <div class="content-section" id="section5">
+    <h2 class="section-title"><h2 class="section-title" data-i18n="reference">Tài Liệu Tham Khảo</h2></h2>
     <div class="info-card">
-      <h3>Nguồn Traveloka</h3>
-      <p>Dạo quanh chợ An Đông - Khu chợ náo nhiệt bậc nhất Sài Gòn</p>
+      <h3 data-i18n="an_dong_reference_1">Nguồn Traveloka</h3>
+      <p data-i18n="an_dong_reference_1_content">Dạo quanh chợ An Đông - Khu chợ náo nhiệt bậc nhất Sài Gòn</p>
       <p><a href="https://www.traveloka.com/vi-vn/explore/destination/cho-an-dong-acc/214795?utm_id=Pamlbfc2" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://www.traveloka.com/vi-vn/explore/destination/cho-an-dong-acc/214795</a></p>
     </div>
     <div class="info-card">
-      <h3>Nguồn MIA.vn</h3>
-      <p>Chợ An Đông: Đầu mối thời trang bỏ sỉ sầm uất nhất Sài thành</p>
+      <h3 data-i18n="an_dong_reference_2">Nguồn MIA.vn</h3>
+      <p data-i18n="an_dong_reference_2_content">Chợ An Đông: Đầu mối thời trang bỏ sỉ sầm uất nhất Sài thành</p>
       <p><a href="https://mia.vn/cam-nang-du-lich/cho-an-dong-dau-moi-thoi-trang-bo-si-sam-uat-nhat-sai-thanh-12189" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://mia.vn/cam-nang-du-lich/cho-an-dong-dau-moi-thoi-trang-bo-si-sam-uat-nhat-sai-thanh-12189</a></p>
     </div>
   </div>
 
-  <button class="back-button" onclick="goBack()">Quay lại</button>
+  <!-- Modal Cài đặt -->
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2 data-i18n="settings">Cài Đặt</h2>
+        <button class="settings-close-btn" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-item">
+          <label for="volumeSlider" data-i18n="volume">Âm lượng nhạc nền</label>
+          <input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+          <span id="volumeValue">30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="back-button" onclick="goBack()" data-i18n="back">Quay lại</button>
 
   <script>
     // Slider functionality
@@ -564,6 +588,70 @@
       const fromTile = urlParams.get('fromTile');
       window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
     }
+
+    // Phát nhạc nền khi trang load
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = 0.3;
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    });
+
+    // Hàm tạm dừng nhạc khi mở cài đặt
+    function pauseBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Hàm tiếp tục nhạc khi đóng cài đặt
+    function resumeBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm điều chỉnh âm lượng
+    function setVolume(value) {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = value / 100;
+      }
+    }
+
+    // Hàm toggle modal cài đặt
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        if (modal.classList.contains('hidden')) {
+          modal.classList.remove('hidden');
+          pauseBackgroundMusic();
+        } else {
+          modal.classList.add('hidden');
+          resumeBackgroundMusic();
+        }
+      }
+    }
+
+    // Slider điều chỉnh âm lượng
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeValue = document.getElementById('volumeValue');
+    if (volumeSlider && volumeValue) {
+      volumeSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        volumeValue.textContent = value + '%';
+        setVolume(value);
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updatePageLanguage();
+    });
   </script>
 </body>
 </html>

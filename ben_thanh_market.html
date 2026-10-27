@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chợ Bến Thành - Xưa và Nay</title>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script src="translations.js"></script>
+
+  <!-- Nhạc nền -->
+  <audio id="backgroundMusic" loop>
+    <source src="assets/background_music.mp3" type="audio/mpeg">
+  </audio>
+
   <style>
     * {
       margin: 0;
@@ -375,8 +382,8 @@
 </head>
 <body>
   <div class="hero-section">
-    <h1>Chợ Bến Thành</h1>
-    <p class="subtitle">Ký ức từ quá khứ đến hiện tại</p>
+    <h1 data-i18n="cho_ben_thanh">Chợ Bến Thành</h1>
+    <p class="subtitle" data-i18n="market_subtitle">Ký ức từ quá khứ đến hiện tại</p>
     
     <div class="image-container">
       <div class="image-wrapper">
@@ -385,8 +392,8 @@
       </div>
       
       <div class="labels">
-        <div class="label">XƯA</div>
-        <div class="label">NAY</div>
+        <div class="label" data-i18n="xua">XƯA</div>
+        <div class="label" data-i18n="nay">NAY</div>
       </div>
       
       <div class="slider-container" id="sliderContainer">
@@ -395,7 +402,7 @@
       </div>
     </div>
     
-    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;">👆 Kéo thanh để so sánh Chợ Bến Thành xưa và nay</p>
+    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;" data-i18n="drag_to_compare">👆 Kéo thanh để so sánh Chợ Bến Thành xưa và nay</p>
     
     <div class="scroll-indicator">
       <svg viewBox="0 0 24 24">
@@ -405,16 +412,16 @@
   </div>
 
   <div class="content-section" id="section1">
-    <h2 class="section-title">Thông Tin Chung</h2>
+    <h2 class="section-title" data-i18n="ben_thanh_history_title">Thông Tin Chung</h2>
     <div class="info-card">
-      <p>Chợ Bến Thành nằm tại khu vực trung tâm Quận 1 cũ, nay thuộc phường Bến Thành, TP.HCM. Đây là một trong những khu chợ nổi tiếng nhất thành phố, nổi bật với tháp đồng hồ ở cổng chính và hoạt động mua bán đa dạng.</p>
+      <p data-i18n="ben_thanh_history_content">Chợ Bến Thành nằm tại khu vực trung tâm Quận 1 cũ, nay thuộc phường Bến Thành, TP.HCM. Đây là một trong những khu chợ nổi tiếng nhất thành phố, nổi bật với tháp đồng hồ ở cổng chính và hoạt động mua bán đa dạng.</p>
     </div>
   </div>
 
   <div class="content-section" id="section2">
-    <h2 class="section-title">Nguồn Gốc & Tên Gọi</h2>
+    <h2 class="section-title" data-i18n="ben_thanh_origin_title">Nguồn Gốc & Tên Gọi</h2>
     <div class="info-card">
-      <p>Tên chợ gắn với vị trí gần bến sông Bến Nghé xưa, nơi người dân và khách vãng lai thường cập bến để vào thành Gia Định.</p>
+      <p data-i18n="ben_thanh_origin_content">Tên chợ gắn với vị trí gần bến sông Bến Nghé xưa, nơi người dân và khách vãng lai thường cập bến để vào thành Gia Định.</p>
     </div>
   </div>
 
@@ -422,80 +429,97 @@
     <h2 class="section-title">Các Cột Mốc Quan Trọng</h2>
     <div class="timeline">
       <div class="timeline-item">
-        <h4>Thời kỳ trước Pháp thuộc</h4>
-        <p>Chợ có nguồn gốc từ khu chợ ven sông trước thời Pháp thuộc.</p>
+        <h4 data-i18n="ben_thanh_timeline_pre_french">Thời kỳ trước Pháp thuộc</h4>
+        <p data-i18n="ben_thanh_timeline_pre_french_content">Chợ có nguồn gốc từ khu chợ ven sông trước thời Pháp thuộc.</p>
       </div>
       <div class="timeline-item">
-        <h4>Cuối thế kỷ XIX</h4>
-        <p>Chợ cũ xuống cấp, cần xây dựng lại.</p>
+        <h4 data-i18n="ben_thanh_timeline_late_19th">Cuối thế kỷ XIX</h4>
+        <p data-i18n="ben_thanh_timeline_late_19th_content">Chợ cũ xuống cấp, cần xây dựng lại.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 1914</h4>
-        <p>Chợ mới được xây dựng tại vị trí hiện nay và khánh thành.</p>
+        <h4 data-i18n="ben_thanh_timeline_1914">Năm 1914</h4>
+        <p data-i18n="ben_thanh_timeline_1914_content">Chợ mới được xây dựng tại vị trí hiện nay và khánh thành.</p>
       </div>
       <div class="timeline-item">
-        <h4>Hiện nay</h4>
-        <p>Chợ trải qua nhiều lần sửa chữa, nâng cấp để đáp ứng nhu cầu buôn bán và du lịch.</p>
+        <h4 data-i18n="ben_thanh_timeline_present">Hiện nay</h4>
+        <p data-i18n="ben_thanh_timeline_present_content">Chợ trải qua nhiều lần sửa chữa, nâng cấp để đáp ứng nhu cầu buôn bán và du lịch.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section4">
-    <h2 class="section-title">Vai Trò Xưa và Nay</h2>
+    <h2 class="section-title" data-i18n="ben_thanh_role_title">Vai Trò Xưa và Nay</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Trước đây</h3>
-        <p>Chợ là đầu mối giao thương và cung cấp hàng hóa thiết yếu cho cư dân Sài Gòn.</p>
+        <h3 data-i18n="ben_thanh_role_past">Trước đây</h3>
+        <p data-i18n="ben_thanh_role_past_content">Chợ là đầu mối giao thương và cung cấp hàng hóa thiết yếu cho cư dân Sài Gòn.</p>
       </div>
       <div class="info-card">
-        <h3>Ngày nay</h3>
-        <p>Chợ vừa phục vụ mua sắm, vừa là điểm tham quan, trải nghiệm ẩm thực và biểu tượng văn hóa của TP.HCM.</p>
+        <h3 data-i18n="ben_thanh_role_present">Ngày nay</h3>
+        <p data-i18n="ben_thanh_role_present_content">Chợ vừa phục vụ mua sắm, vừa là điểm tham quan, trải nghiệm ẩm thực và biểu tượng văn hóa của TP.HCM.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section5">
-    <h2 class="section-title">Đặc Điểm & Bản Sắc Văn Hóa</h2>
+    <h2 class="section-title" data-i18n="characteristics">Đặc Điểm & Bản Sắc Văn Hóa</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Kiến trúc</h3>
-        <p>Chợ được xây dựng theo phong cách kiến trúc đầu thế kỷ XX, với kết cấu rộng, các cổng ra vào và tháp đồng hồ đặc trưng. Qua thời gian, công trình được sửa chữa nhưng vẫn giữ hình ảnh quen thuộc.</p>
+        <h3 data-i18n="ben_thanh_architecture">Kiến trúc</h3>
+        <p data-i18n="ben_thanh_architecture_content">Chợ được xây dựng theo phong cách kiến trúc đầu thế kỷ XX, với kết cấu rộng, các cổng ra vào và tháp đồng hồ đặc trưng. Qua thời gian, công trình được sửa chữa nhưng vẫn giữ hình ảnh quen thuộc.</p>
       </div>
       <div class="info-card">
-        <h3>Hoạt động buôn bán</h3>
-        <p>Xưa kia, chợ chủ yếu cung cấp thực phẩm, nông sản, hàng gia dụng. Hiện nay, bên cạnh hàng thiết yếu, chợ còn nổi bật với đồ lưu niệm, thủ công mỹ nghệ, quần áo, đặc sản và dịch vụ ăn uống phục vụ khách du lịch.</p>
+        <h3 data-i18n="ben_thanh_trading">Hoạt động buôn bán</h3>
+        <p data-i18n="ben_thanh_trading_content">Xưa kia, chợ chủ yếu cung cấp thực phẩm, nông sản, hàng gia dụng. Hiện nay, bên cạnh hàng thiết yếu, chợ còn nổi bật với đồ lưu niệm, thủ công mỹ nghệ, quần áo, đặc sản và dịch vụ ăn uống phục vụ khách du lịch.</p>
       </div>
       <div class="info-card">
-        <h3>Bản sắc văn hóa</h3>
-        <p>Chợ thể hiện nhịp sống thương mại sôi động, sự giao lưu giữa nhiều cộng đồng và nét văn hóa mặc cả, giao tiếp trực tiếp. Tuy nhiên, sự phát triển của trung tâm thương mại và mua sắm trực tuyến đang làm thay đổi thói quen tiêu dùng.</p>
+        <h3 data-i18n="ben_thanh_culture">Bản sắc văn hóa</h3>
+        <p data-i18n="ben_thanh_culture_content">Chợ thể hiện nhịp sống thương mại sôi động, sự giao lưu giữa nhiều cộng đồng và nét văn hóa mặc cả, giao tiếp trực tiếp. Tuy nhiên, sự phát triển của trung tâm thương mại và mua sắm trực tuyến đang làm thay đổi thói quen tiêu dùng.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section6">
-    <h2 class="section-title">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
+    <h2 class="section-title" data-i18n="heritage">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Ký ức xưa</h3>
-        <p>Chợ gắn với ký ức đi chợ cùng gia đình, tiếng rao hàng, cảnh người mua kẻ bán đông đúc và những mối quan hệ lâu năm giữa tiểu thương với khách quen.</p>
+        <h3 data-i18n="ben_thanh_memory">Ký ức xưa</h3>
+        <p data-i18n="ben_thanh_memory_content">Chợ gắn với ký ức đi chợ cùng gia đình, tiếng rao hàng, cảnh người mua kẻ bán đông đúc và những mối quan hệ lâu năm giữa tiểu thương với khách quen.</p>
       </div>
       <div class="info-card">
-        <h3>Đời sống hiện nay</h3>
-        <p>Chợ vẫn là nơi mưu sinh của nhiều hộ kinh doanh, đồng thời đón đông đảo du khách trong và ngoài nước. Trải nghiệm ngày nay đa dạng hơn nhưng cũng mang tính du lịch rõ nét hơn trước.</p>
+        <h3 data-i18n="ben_thanh_life">Đời sống hiện nay</h3>
+        <p data-i18n="ben_thanh_life_content">Chợ vẫn là nơi mưu sinh của nhiều hộ kinh doanh, đồng thời đón đông đảo du khách trong và ngoài nước. Trải nghiệm ngày nay đa dạng hơn nhưng cũng mang tính du lịch rõ nét hơn trước.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section7">
-    <h2 class="section-title">Tài Liệu Tham Khảo</h2>
+    <h2 class="section-title" data-i18n="reference">Tài Liệu Tham Khảo</h2>
     <div class="info-card">
-      <h3>Nguồn MIA.vn</h3>
-      <p>Chợ Bến Thành: Điểm đến lâu đời giữa trung tâm Sài Gòn</p>
+      <h3 data-i18n="ben_thanh_reference_content">Nguồn MIA.vn</h3>
+      <p data-i18n="ben_thanh_reference_content">Chợ Bến Thành: Điểm đến lâu đời giữa trung tâm Sài Gòn</p>
       <p><a href="https://mia.vn/cam-nang-du-lich/kham-pha-cho-ben-thanh-12521" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://mia.vn/cam-nang-du-lich/kham-pha-cho-ben-thanh-12521</a></p>
     </div>
   </div>
 
-  <button class="back-button" onclick="goBack()">Quay lại</button>
+  <!-- Modal Cài đặt -->
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2 data-i18n="ben_thanh_settings">Cài Đặt</h2>
+        <button class="settings-close-btn" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-item">
+          <label for="volumeSlider" data-i18n="ben_thanh_volume">Âm lượng nhạc nền</label>
+          <input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+          <span id="volumeValue">30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="back-button" onclick="goBack()" data-i18n="back">Quay lại</button>
 
   <script>
     // Slider functionality
@@ -580,6 +604,70 @@
       const fromTile = urlParams.get('fromTile');
       window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
     }
+
+    // Phát nhạc nền khi trang load
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = 0.3;
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    });
+
+    // Hàm tạm dừng nhạc khi mở cài đặt
+    function pauseBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Hàm tiếp tục nhạc khi đóng cài đặt
+    function resumeBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm điều chỉnh âm lượng
+    function setVolume(value) {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = value / 100;
+      }
+    }
+
+    // Hàm toggle modal cài đặt
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        if (modal.classList.contains('hidden')) {
+          modal.classList.remove('hidden');
+          pauseBackgroundMusic();
+        } else {
+          modal.classList.add('hidden');
+          resumeBackgroundMusic();
+        }
+      }
+    }
+
+    // Slider điều chỉnh âm lượng
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeValue = document.getElementById('volumeValue');
+    if (volumeSlider && volumeValue) {
+      volumeSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        volumeValue.textContent = value + '%';
+        setVolume(value);
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updatePageLanguage();
+    });
   </script>
 </body>
 </html>

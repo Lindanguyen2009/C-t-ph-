@@ -10,9 +10,160 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Baloo+2:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="style.css?v=110">
-  
+  <script src="translations.js"></script>
+
+  <!-- Nhạc nền -->
+  <audio id="backgroundMusic" loop>
+    <source src="assets/background_music.mp3" type="audio/mpeg">
+  </audio>
+
+  <style>
+    .settings-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+      border: 3px solid #8B6914;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      font-size: 24px;
+      z-index: 1000;
+    }
+
+    .settings-button:hover {
+      transform: rotate(90deg);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, #E5C158 0%, #C9A227 100%);
+    }
+
+    .settings-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .settings-modal.hidden {
+      display: none;
+    }
+
+    .settings-content {
+      background: linear-gradient(180deg, #FFF8E7 0%, #FFE4B5 100%);
+      border: 4px solid #D4AF37;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .settings-header {
+      background: linear-gradient(135deg, #C5221F 0%, #8B1A1A 100%);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #D4AF37;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .settings-header h2 {
+      color: #FFF;
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 20px;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .settings-close-btn {
+      background: #FFF;
+      border: 2px solid #D4AF37;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #C5221F;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+
+    .settings-close-btn:hover {
+      background: #C5221F;
+      color: #FFF;
+    }
+
+    .settings-body {
+      padding: 30px;
+    }
+
+    .setting-item {
+      margin-bottom: 20px;
+    }
+
+    .setting-item label {
+      display: block;
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 16px;
+      color: #1A202C;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .volume-slider {
+      width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #D4AF37;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #C5221F;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #C5221F;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      border: none;
+    }
+
+    #volumeValue {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 14px;
+      color: #C5221F;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+  </style>  
   <style>
     /* GIEO QUẺ Page Styles */
     body {
@@ -328,70 +479,70 @@
 <body>
   <div class="gieo-que-page">
     <div class="gieo-que-header">
-      <h1 class="gieo-que-title">GIEO QUẺ</h1>
-      <p class="gieo-que-subtitle">Kiến thức thú vị về ẩm thực Việt Nam</p>
+      <h1 class="gieo-que-title" data-i18n="gieo_que_title">GIEO QUẺ</h1>
+      <p class="gieo-que-subtitle" data-i18n="gieo_que_subtitle">Kiến thức thú vị về ẩm thực Việt Nam</p>
     </div>
 
     <div class="content-card" id="contentCard">
       <div class="content-icon" id="contentIcon">💡</div>
-      <div class="content-label" id="contentLabel">DID YOU KNOW?</div>
+      <div class="content-label" id="contentLabel" data-i18n="did_you_know">DID YOU KNOW?</div>
       <div class="content-text" id="contentText"></div>
-      
+
       <div class="quiz-options" id="quizOptions" style="display: none;"></div>
       <div class="quiz-explanation" id="quizExplanation"></div>
-      
+
       <div class="action-buttons" id="actionButtons" style="display: none;">
-        <button class="btn btn-primary" id="continueBtn" onclick="continueGame()">Tiếp tục chơi</button>
+        <button class="btn btn-primary" id="continueBtn" onclick="continueGame()" data-i18n="continue">Tiếp tục chơi</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Fun Facts Data
+    // Fun Facts Data - using translation keys
     const funFacts = [
-      "Bánh mì Việt Nam có nguồn gốc từ bánh mì kiểu Pháp, nhưng đã trở thành một món hoàn toàn khác. Baguette được du nhập vào Việt Nam từ thời Pháp thuộc. Người Việt biến tấu ổ bánh với phần ruột nhẹ, vỏ giòn, pate, thịt nguội, rau thơm, đồ chua và nước sốt. Đặc biệt, từ 'banh mi' đã được đưa vào Oxford English Dictionary năm 2011.",
-      "Cơm tấm là món ăn biểu tượng của Sài Gòn. Tấm là loại gạo bị vỡ, nhỏ không đều, thường bị bỏ đi. Người Việt đã sáng tạo nấu tấm thành cơm tấm, ăn kèm sườn nướng, chả, bì, trứng, dưa leo, đồ chua. Từ 'cơm tấm' cũng được đưa vào Oxford English Dictionary năm 2022.",
-      "Hủ tiếu Nam Vang gắn với Campuchia nhưng đã trở thành món sáng tạo của người Việt. Có hai loại chính: hủ tiếu nước (nước dùng trong, tươi) và hủ tiếu khô (không nước dùng, ăn kèm nước tương). Người miền Nam thích hủ tiếu nước, người miền Bắc thích hủ tiếu khô.",
-      "Bánh xèo xuất phát từ miền Trung Việt, đặc biệt là Bình Định và Quảng Ngãi. Bánh được làm từ bột gạo, rang trên chảo gang cho đến khi vàng giòn. Cùng ăn với rau sống, tôm, thịt, nước mắm pha chanh ớt. Ngày nay bánh xèo có nhiều biến thể như bánh xèo miền Tây, bánh xèo Huế.",
-      "Bún đậu mắm tôm là món ăn đường phố nổi tiếng Hà Nội. Mắm tôm được làm từ con tôm tươi, ủ lên men 3-6 tháng. Món ăn gồm bún, đậu rán, thịt lợn, ruốc, mắm tôm, rau thơm. Món này thường ăn kèm dấm tỏi ớt cay nồng.",
-      "Phá lấu là món ăn có nguồn gốc từ người Hoa tại Sài Gòn. Nguyên liệu chính là nội tạng động vật (tim, gan, phèo, lòng) nấu cùng gia vị đường, nước mắm, giấm bỗng, hoa hồi, quế. Phá lấu thường ăn kèm cơm, bánh mì hoặc hủ tiếu.",
-      "Xôi là món ăn sáng truyền thống của Việt Nam, có hàng ngàn năm lịch sử. Xôi gấc (xôi gà) là loại xôi phổ biến nhất, được làm từ gạo nếp, nhân đậu xanh, thịt gà, nếp cẩm. Xôi mặn, xôi ngọt, xôi trứng, xôi vò... mỗi loại có hương vị riêng.",
-      "Bột chiên là món ăn đường phố có ảnh hưởng từ ẩm thực người Hoa. Bột được làm từ bột gạo, bột nếp, trứng gà, nước cốt dừa, chiên trên chảo nóng. Bột chiên thường ăn kèm dưa leo cỏ ngọt, nước mắm chua ngọt.",
-      "Bò bía là món ăn có nguồn gốc từ Trung Quốc nhưng đã Việt hóa hoàn toàn. Nguyên liệu gồm bì lợn, tai lợn, thịt luộc, trứng cút, rau sống, dưa leo, đồ chua, cuốn trong bánh tráng. Tên 'bò bía' có nghĩa là 'trâu bò' trong tiếng Quảng Đông.",
-      "Chè là món tráng miệng truyền thống của Việt Nam, có hàng trăm loại. Chè Thái, chè bột lọc, chè hạt sen long nhãn, chè chuối hột sông, chè khoai tía... Mỗi vùng miền có loại chè đặc sắc. Chè không chỉ ngon mà còn có tác dụng giải nhiệt, dưỡng nhan."
+      "gieo_que_fact_1",
+      "gieo_que_fact_2",
+      "gieo_que_fact_3",
+      "gieo_que_fact_4",
+      "gieo_que_fact_5",
+      "gieo_que_fact_6",
+      "gieo_que_fact_7",
+      "gieo_que_fact_8",
+      "gieo_que_fact_9",
+      "gieo_que_fact_10"
     ];
 
-    // Quiz Data
+    // Quiz Data - using translation keys
     const quizData = [
       {
-        question: "Bánh mì Sài Gòn thường kết hợp với những nguyên liệu nào?",
-        options: ["A. Pate, thịt nguội, rau thơm và đồ chua", "B. Phô mai xanh và mì Ý", "C. Kim chi và rong biển", "D. Bơ đậu phộng và mứt trái cây"],
+        question: "gieo_que_quiz_1_question",
+        options: ["gieo_que_quiz_1_option_a", "gieo_que_quiz_1_option_b", "gieo_que_quiz_1_option_c", "gieo_que_quiz_1_option_d"],
         answer: "A",
-        explanation: "Bánh mì Sài Gòn thường kết hợp pate, thịt nguội, rau thơm, dưa leo và đồ chua."
+        explanation: "gieo_que_quiz_1_explanation"
       },
       {
-        question: "Món ăn đường phố nào thường gồm những miếng bột gạo chiên với trứng?",
-        options: ["A. Bánh khọt", "B. Bột chiên", "C. Bánh cuốn", "D. Bánh bèo"],
+        question: "gieo_que_quiz_2_question",
+        options: ["gieo_que_quiz_2_option_a", "gieo_que_quiz_2_option_b", "gieo_que_quiz_2_option_c", "gieo_que_quiz_2_option_d"],
         answer: "B",
-        explanation: "Bột chiên là món ăn phổ biến, có dấu ấn ẩm thực người Hoa tại Sài Gòn."
+        explanation: "gieo_que_quiz_2_explanation"
       },
       {
-        question: "Phá lấu thường được chế biến chủ yếu từ nguyên liệu nào?",
-        options: ["A. Các loại đậu", "B. Hải sản sống", "C. Nội tạng động vật", "D. Trái cây nhiệt đới"],
+        question: "gieo_que_quiz_3_question",
+        options: ["gieo_que_quiz_3_option_a", "gieo_que_quiz_3_option_b", "gieo_que_quiz_3_option_c", "gieo_que_quiz_3_option_d"],
         answer: "C",
-        explanation: "Phá lấu thường dùng nội tạng, nấu cùng các loại gia vị thơm."
+        explanation: "gieo_que_quiz_3_explanation"
       },
       {
-        question: "Hủ tiếu Nam Vang gắn với thành phố nào ở Campuchia?",
-        options: ["A. Siem Reap", "B. Phnom Penh", "C. Battambang", "D. Sihanoukville"],
+        question: "gieo_que_quiz_4_question",
+        options: ["gieo_que_quiz_4_option_a", "gieo_que_quiz_4_option_b", "gieo_que_quiz_4_option_c", "gieo_que_quiz_4_option_d"],
         answer: "B",
-        explanation: "Nam Vang là tên gọi Hán-Việt gắn với Phnom Penh, thủ đô Campuchia."
+        explanation: "gieo_que_quiz_4_explanation"
       },
       {
-        question: "Điều gì thể hiện rõ nét sự giao thoa văn hóa trong ẩm thực TP.HCM?",
-        options: ["A. Tất cả món ăn đều có cùng nguồn gốc", "B. Chỉ sử dụng nguyên liệu nhập khẩu", "C. Nhiều món kết hợp ảnh hưởng Việt, Hoa và các nền ẩm thực khác", "D. Ẩm thực chỉ có món ăn truyền thống"],
+        question: "gieo_que_quiz_5_question",
+        options: ["gieo_que_quiz_5_option_a", "gieo_que_quiz_5_option_b", "gieo_que_quiz_5_option_c", "gieo_que_quiz_5_option_d"],
         answer: "C",
-        explanation: "Ẩm thực TP.HCM hình thành qua quá trình giao lưu, tiếp nhận và biến tấu giữa nhiều cộng đồng."
+        explanation: "gieo_que_quiz_5_explanation"
       }
     ];
 
@@ -416,48 +567,59 @@
 
     function loadFact() {
       isQuiz = false;
-      const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
-      
+      const randomFactKey = funFacts[Math.floor(Math.random() * funFacts.length)];
+
       document.getElementById('contentIcon').textContent = '💡';
-      document.getElementById('contentLabel').textContent = 'DID YOU KNOW?';
-      document.getElementById('contentText').textContent = randomFact;
+      document.getElementById('contentLabel').setAttribute('data-i18n', 'did_you_know');
+      document.getElementById('contentText').textContent = getText(randomFactKey);
+      document.getElementById('contentText').setAttribute('data-i18n', randomFactKey);
       document.getElementById('quizOptions').style.display = 'none';
       document.getElementById('quizExplanation').classList.remove('show');
-      
+
       // Show action buttons for fun facts too
       document.getElementById('actionButtons').style.display = 'flex';
+
+      // Update language after setting content
+      updatePageLanguage();
     }
 
     function loadQuiz() {
       isQuiz = true;
       hasAnswered = false;
       currentQuiz = quizData[Math.floor(Math.random() * quizData.length)];
-      
+
       document.getElementById('contentIcon').textContent = '❓';
-      document.getElementById('contentLabel').textContent = 'CÂU HỎI';
-      document.getElementById('contentText').textContent = currentQuiz.question;
+      document.getElementById('contentLabel').setAttribute('data-i18n', 'question');
+      document.getElementById('contentText').textContent = getText(currentQuiz.question);
+      document.getElementById('contentText').setAttribute('data-i18n', currentQuiz.question);
       document.getElementById('quizOptions').style.display = 'flex';
       document.getElementById('quizExplanation').classList.remove('show');
 
       // Render options
       const optionsContainer = document.getElementById('quizOptions');
       optionsContainer.innerHTML = '';
-      
-      currentQuiz.options.forEach((option, index) => {
+
+      currentQuiz.options.forEach((optionKey, index) => {
         const optionBtn = document.createElement('div');
         optionBtn.className = 'quiz-option';
-        optionBtn.textContent = option;
-        optionBtn.onclick = () => checkAnswer(optionBtn, option[0], currentQuiz.answer, currentQuiz.explanation);
+        optionBtn.textContent = getText(optionKey);
+        optionBtn.setAttribute('data-i18n', optionKey);
+        // Extract the letter (A, B, C, D) from the option
+        const optionLetter = getText(optionKey)[0];
+        optionBtn.onclick = () => checkAnswer(optionBtn, optionLetter, currentQuiz.answer, currentQuiz.explanation);
         optionsContainer.appendChild(optionBtn);
       });
+
+      // Update language after setting content
+      updatePageLanguage();
     }
 
-    function checkAnswer(optionBtn, selected, correct, explanation) {
+    function checkAnswer(optionBtn, selected, correct, explanationKey) {
       if (hasAnswered) return;
       hasAnswered = true;
 
       const options = document.querySelectorAll('.quiz-option');
-      
+
       if (selected === correct) {
         optionBtn.classList.add('correct');
         // Play correct sound effect
@@ -476,9 +638,9 @@
 
       // Show explanation
       const explanationEl = document.getElementById('quizExplanation');
-      explanationEl.textContent = 'Giải thích: ' + explanation;
+      explanationEl.textContent = getText('gieo_que_explanation_prefix') + getText(explanationKey);
       explanationEl.classList.add('show');
-      
+
       // Show continue button
       document.getElementById('actionButtons').style.display = 'flex';
     }
@@ -531,6 +693,88 @@
 
     // Initialize on load
     init();
+
+    // Phát nhạc nền khi trang load
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    if (backgroundMusic) {
+      backgroundMusic.volume = 0.3;
+      backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+    }
+
+    // Hàm tạm dừng nhạc khi mở cài đặt
+    function pauseBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Hàm tiếp tục nhạc khi đóng cài đặt
+    function resumeBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm điều chỉnh âm lượng
+    function setVolume(value) {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = value / 100;
+      }
+    }
+
+    // Hàm toggle modal cài đặt
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        if (modal.classList.contains('hidden')) {
+          modal.classList.remove('hidden');
+          pauseBackgroundMusic();
+        } else {
+          modal.classList.add('hidden');
+          resumeBackgroundMusic();
+        }
+      }
+    }
+
+    // Slider điều chỉnh âm lượng
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeValue = document.getElementById('volumeValue');
+    if (volumeSlider && volumeValue) {
+      volumeSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        volumeValue.textContent = value + '%';
+        setVolume(value);
+      });
+    }
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updatePageLanguage();
+    });
+  </script>
+
+  <!-- Nút cài đặt -->
+  <button class="settings-button" onclick="toggleSettings()">⚙️</button>
+
+  <!-- Modal Cài đặt -->
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2 data-i18n="settings">Cài Đặt</h2>
+        <button class="settings-close-btn" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-item">
+          <label for="volumeSlider" data-i18n="volume">Âm lượng nhạc nền</label>
+          <input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+          <span id="volumeValue">30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chợ Tân Định - Xưa và Nay</title>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script src="translations.js"></script>
+
+  <!-- Nhạc nền -->
+  <audio id="backgroundMusic" loop>
+    <source src="assets/background_music.mp3" type="audio/mpeg">
+  </audio>
+
   <style>
     * {
       margin: 0;
@@ -375,8 +382,8 @@
 </head>
 <body>
   <div class="hero-section">
-    <h1>Chợ Tân Định</h1>
-    <p class="subtitle">Ký ức từ quá khứ đến hiện tại</p>
+    <h1 data-i18n="cho_tan_dinh">Chợ Tân Định</h1>
+    <p class="subtitle" data-i18n="market_subtitle">Ký ức từ quá khứ đến hiện tại</p>
     
     <div class="image-container">
       <div class="image-wrapper">
@@ -385,8 +392,8 @@
       </div>
       
       <div class="labels">
-        <div class="label">XƯA</div>
-        <div class="label">NAY</div>
+        <div class="label" data-i18n="xua">XƯA</div>
+        <div class="label" data-i18n="nay">NAY</div>
       </div>
       
       <div class="slider-container" id="sliderContainer">
@@ -395,7 +402,7 @@
       </div>
     </div>
     
-    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;">👆 Kéo thanh để so sánh Chợ Tân Định xưa và nay</p>
+    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;" data-i18n="drag_to_compare">👆 Kéo thanh để so sánh Chợ Tân Định xưa và nay</p>
     
     <div class="scroll-indicator">
       <svg viewBox="0 0 24 24">
@@ -405,9 +412,9 @@
   </div>
 
   <div class="content-section" id="section1">
-    <h2 class="section-title">Thông Tin Chung & Lịch Sử Hình Thành</h2>
+    <h2 class="section-title" data-i18n="tan_dinh_history_title">Thông Tin Chung & Lịch Sử Hình Thành</h2>
     <div class="info-card">
-      <p>Chợ Tân Định nằm tại đường Hai Bà Trưng, TP.HCM, tiền thân là chợ Phú Hòa, hình thành khoảng thập niên 1870–1880. Chợ được xây dựng lại năm 1926 và khánh thành ngày 26/7/1927. Năm 2025, chợ được công nhận là Di tích kiến trúc nghệ thuật cấp thành phố.</p>
+      <p data-i18n="tan_dinh_history_content">Chợ Tân Định nằm tại đường Hai Bà Trưng, TP.HCM, tiền thân là chợ Phú Hòa, hình thành khoảng thập niên 1870–1880. Chợ được xây dựng lại năm 1926 và khánh thành ngày 26/7/1927. Năm 2025, chợ được công nhận là Di tích kiến trúc nghệ thuật cấp thành phố.</p>
     </div>
   </div>
 
@@ -415,71 +422,88 @@
     <h2 class="section-title">Các Cột Mốc Quan Trọng</h2>
     <div class="timeline">
       <div class="timeline-item">
-        <h4>Thập niên 1870–1880</h4>
-        <p>Chợ Phú Hòa tiền thân hình thành.</p>
+        <h4 data-i18n="tan_dinh_timeline_1870">Thập niên 1870–1880</h4>
+        <p data-i18n="tan_dinh_timeline_1870_content">Chợ Phú Hòa tiền thân hình thành.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 1926</h4>
-        <p>Chợ được xây dựng lại với kiến trúc Pháp.</p>
+        <h4 data-i18n="tan_dinh_timeline_1926">Năm 1926</h4>
+        <p data-i18n="tan_dinh_timeline_1926_content">Chợ được xây dựng lại với kiến trúc Pháp.</p>
       </div>
       <div class="timeline-item">
-        <h4>Ngày 26/7/1927</h4>
-        <p>Chợ Tân Định được khánh thành chính thức.</p>
+        <h4 data-i18n="tan_dinh_timeline_1927">Ngày 26/7/1927</h4>
+        <p data-i18n="tan_dinh_timeline_1927_content">Chợ Tân Định được khánh thành chính thức.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 2025</h4>
-        <p>Chợ được công nhận là Di tích kiến trúc nghệ thuật cấp thành phố.</p>
+        <h4 data-i18n="tan_dinh_timeline_2025">Năm 2025</h4>
+        <p data-i18n="tan_dinh_timeline_2025_content">Chợ được công nhận là Di tích kiến trúc nghệ thuật cấp thành phố.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section3">
-    <h2 class="section-title">Đặc Điểm & Bản Sắc Văn Hóa</h2>
+    <h2 class="section-title" data-i18n="characteristics">Đặc Điểm & Bản Sắc Văn Hóa</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Kiến trúc</h3>
-        <p>Chợ nổi bật với kiến trúc Pháp, ba tháp mặt tiền và nét Art Deco đặc trưng, tạo nên vẻ đẹp độc đáo giữa lòng Sài Gòn.</p>
+        <h3 data-i18n="tan_dinh_architecture">Kiến trúc</h3>
+        <p data-i18n="tan_dinh_architecture_content">Chợ nổi bật với kiến trúc Pháp, ba tháp mặt tiền và nét Art Deco đặc trưng, tạo nên vẻ đẹp độc đáo giữa lòng Sài Gòn.</p>
       </div>
       <div class="info-card">
-        <h3>Sản phẩm</h3>
-        <p>Nơi đây nổi tiếng với vải vóc, thực phẩm tươi sống và ẩm thực địa phương, thu hút cả người dân địa phương và du khách.</p>
+        <h3 data-i18n="tan_dinh_products">Sản phẩm</h3>
+        <p data-i18n="tan_dinh_products_content">Nơi đây nổi tiếng với vải vóc, thực phẩm tươi sống và ẩm thực địa phương, thu hút cả người dân địa phương và du khách.</p>
       </div>
       <div class="info-card">
-        <h3>Văn hóa</h3>
-        <p>Hoạt động mua bán gần gũi giữa tiểu thương và khách quen góp phần lưu giữ văn hóa chợ truyền thống Sài Gòn.</p>
+        <h3 data-i18n="tan_dinh_culture">Văn hóa</h3>
+        <p data-i18n="tan_dinh_culture_content">Hoạt động mua bán gần gũi giữa tiểu thương và khách quen góp phần lưu giữ văn hóa chợ truyền thống Sài Gòn.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section4">
-    <h2 class="section-title">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
+    <h2 class="section-title" data-i18n="heritage">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Ký ức</h3>
-        <p>Chợ lưu giữ ký ức của nhiều thế hệ qua các sạp vải, hàng quán và nghề buôn bán lâu đời.</p>
+        <h3 data-i18n="tan_dinh_memory">Ký ức</h3>
+        <p data-i18n="tan_dinh_memory_content">Chợ lưu giữ ký ức của nhiều thế hệ qua các sạp vải, hàng quán và nghề buôn bán lâu đời.</p>
       </div>
       <div class="info-card">
-        <h3>Bảo tồn</h3>
-        <p>Để bảo tồn, cần sưu tầm ảnh cũ, chụp ảnh hiện tại, số hóa bản đồ và phỏng vấn tiểu thương, giúp tái hiện sự thay đổi của chợ qua thời gian.</p>
+        <h3 data-i18n="tan_dinh_preservation">Bảo tồn</h3>
+        <p data-i18n="tan_dinh_preservation_content">Để bảo tồn, cần sưu tầm ảnh cũ, chụp ảnh hiện tại, số hóa bản đồ và phỏng vấn tiểu thương, giúp tái hiện sự thay đổi của chợ qua thời gian.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section5">
-    <h2 class="section-title">Tài Liệu Tham Khảo</h2>
+    <h2 class="section-title" data-i18n="reference">Tài Liệu Tham Khảo</h2>
     <div class="info-card">
-      <h3>Nguồn Thanh Niên</h3>
-      <p>100 năm chợ Tân Định: Chuyện về 'chợ nhà giàu' giữa lòng Sài Gòn</p>
+      <h3 data-i18n="tan_dinh_reference_1">Nguồn Thanh Niên</h3>
+      <p data-i18n="tan_dinh_reference_1_content">100 năm chợ Tân Định: Chuyện về 'chợ nhà giàu' giữa lòng Sài Gòn</p>
       <p><a href="https://thanhnien.vn/100-nam-cho-tan-dinh-chuyen-ve-cho-nha-giau-giua-long-sai-gon-185260624082522348.htm" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://thanhnien.vn/100-nam-cho-tan-dinh-chuyen-ve-cho-nha-giau-giua-long-sai-gon-185260624082522348.htm</a></p>
     </div>
     <div class="info-card">
-      <h3>Nguồn MIA.vn</h3>
-      <p>Chợ Tân Định: Thiên đường ẩm thực chợ nhà giàu nứt tiếng Sài Thành</p>
+      <h3 data-i18n="tan_dinh_reference_2">Nguồn MIA.vn</h3>
+      <p data-i18n="tan_dinh_reference_2_content">Chợ Tân Định: Thiên đường ẩm thực chợ nhà giàu nứt tiếng Sài Thành</p>
       <p><a href="https://mia.vn/cam-nang-du-lich/cho-tan-dinh-12490" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://mia.vn/cam-nang-du-lich/cho-tan-dinh-12490</a></p>
     </div>
   </div>
 
-  <button class="back-button" onclick="goBack()">Quay lại</button>
+  <!-- Modal Cài đặt -->
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2 data-i18n="settings">Cài Đặt</h2>
+        <button class="settings-close-btn" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-item">
+          <label for="volumeSlider" data-i18n="volume">Âm lượng nhạc nền</label>
+          <input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+          <span id="volumeValue">30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="back-button" onclick="goBack()" data-i18n="back">Quay lại</button>
 
   <script>
     // Slider functionality
@@ -564,6 +588,70 @@
       const fromTile = urlParams.get('fromTile');
       window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
     }
+
+    // Phát nhạc nền khi trang load
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = 0.3;
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    });
+
+    // Hàm tạm dừng nhạc khi mở cài đặt
+    function pauseBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Hàm tiếp tục nhạc khi đóng cài đặt
+    function resumeBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm điều chỉnh âm lượng
+    function setVolume(value) {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = value / 100;
+      }
+    }
+
+    // Hàm toggle modal cài đặt
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        if (modal.classList.contains('hidden')) {
+          modal.classList.remove('hidden');
+          pauseBackgroundMusic();
+        } else {
+          modal.classList.add('hidden');
+          resumeBackgroundMusic();
+        }
+      }
+    }
+
+    // Slider điều chỉnh âm lượng
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeValue = document.getElementById('volumeValue');
+    if (volumeSlider && volumeValue) {
+      volumeSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        volumeValue.textContent = value + '%';
+        setVolume(value);
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updatePageLanguage();
+    });
   </script>
 </body>
 </html>

@@ -291,6 +291,53 @@
     return db[key] || db.com_tam || null;
   }
 
+  // Helper function to get translated dish data
+  function getTranslatedDish(dish) {
+    if (!dish) return dish;
+    
+    const lang = getCurrentLanguage();
+    if (lang === 'vi') return dish; // Return original Vietnamese data
+    
+    const dishKey = dish.foodId || dish.id || dish.key;
+    const translatedDish = { ...dish };
+    
+    // Translate main fields
+    if (dishKey) {
+      translatedDish.name = getText(`food_${dishKey}_name`) || dish.name;
+      translatedDish.fullName = getText(`food_${dishKey}_fullName`) || dish.fullName;
+      translatedDish.region = getText(`food_${dishKey}_region`) || dish.region;
+      translatedDish.badge = getText(`food_${dishKey}_badge`) || dish.badge;
+      translatedDish.category = getText(`food_${dishKey}_category`) || dish.category;
+      translatedDish.quote = getText(`food_${dishKey}_quote`) || dish.quote;
+      translatedDish.desc = getText(`food_${dishKey}_desc`) || dish.desc;
+      translatedDish.story = getText(`food_${dishKey}_story`) || dish.story;
+      translatedDish.funFact = getText(`food_${dishKey}_funFact`) || dish.funFact;
+      
+      // Translate ingredients array
+      if (dish.ingredients && Array.isArray(dish.ingredients)) {
+        translatedDish.ingredients = dish.ingredients.map((ing, index) => {
+          return getText(`food_${dishKey}_ingredients_${index}`) || ing;
+        });
+      }
+
+      // Translate sections array
+      if (dish.sections && Array.isArray(dish.sections)) {
+        translatedDish.sections = dish.sections.map((section, index) => {
+          const sectionIndex = index + 1;
+          const translatedHeading = getText(`food_${dishKey}_section_${sectionIndex}_heading`) || section.heading;
+          const translatedText = getText(`food_${dishKey}_section_${sectionIndex}_text`) || section.text;
+          return {
+            ...section,
+            heading: translatedHeading,
+            text: translatedText
+          };
+        });
+      }
+    }
+
+    return translatedDish;
+  }
+
   function getDishForTile(tileIndex) {
     const tileEl = document.getElementById(`tile-${tileIndex}`);
     if (tileEl && tileEl.dataset.dish) {
@@ -581,6 +628,80 @@
   // ==========================================================================
   document.addEventListener('DOMContentLoaded', () => {
 
+    // Nhạc nền
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    if (backgroundMusic) {
+      backgroundMusic.volume = 0.3; // Âm lượng thấp để không át sound effects
+      // Phát nhạc ngay khi trang load
+      backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+    }
+
+    // Hàm phát nhạc nền (cần user interaction)
+    function playBackgroundMusic() {
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm tạm dừng nhạc
+    function pauseBackgroundMusic() {
+      if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Hàm tiếp tục nhạc
+    function resumeBackgroundMusic() {
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm điều chỉnh âm lượng
+    function setVolume(value) {
+      if (backgroundMusic) {
+        backgroundMusic.volume = value / 100;
+      }
+    }
+
+    // Hàm toggle modal cài đặt
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        pauseBackgroundMusic(); // Tạm dừng nhạc khi mở cài đặt
+      } else {
+        modal.classList.add('hidden');
+        resumeBackgroundMusic(); // Tiếp tục nhạc khi đóng cài đặt
+      }
+    }
+
+    // Slider điều chỉnh âm lượng
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeValue = document.getElementById('volumeValue');
+    if (volumeSlider && volumeValue) {
+      volumeSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        volumeValue.textContent = value + '%';
+        setVolume(value);
+      });
+    }
+
+    // Select ngôn ngữ
+    const languageSelect = document.getElementById('languageSelect');
+    if (languageSelect) {
+      // Set giá trị hiện tại
+      languageSelect.value = getCurrentLanguage();
+      
+      languageSelect.addEventListener('change', (e) => {
+        const lang = e.target.value;
+        setLanguage(lang);
+      });
+    }
+
+    // Cập nhật ngôn ngữ khi trang load
+    updatePageLanguage();
+
     // Kiểm tra URL parameter để skip intro
     const urlParams = new URLSearchParams(window.location.search);
     const skipIntro = urlParams.get('skipIntro') === 'true';
@@ -798,6 +919,9 @@
     // ------------------------------------------------------------------------
     pureWhiteBoard.addEventListener('click', (e) => {
       e.stopPropagation();
+      // Phát nhạc nền khi người dùng tương tác lần đầu
+      playBackgroundMusic();
+
       if (currentStep === 2) {
         currentStep = 3;
         sfx.playChime();
@@ -827,19 +951,19 @@
     let currentDialogueStep = 1;
 
     const INTRO_DIALOGUES = [
-      "Này này! Bạn ơi! Đứng đó làm gì mà ngó? Lại đây, Tò Te Tí dẫn bạn rong ruổi một vòng!",
-      "Trong từng ô cờ là một món ăn, một gánh hàng, một câu chuyện và một góc nhỏ của văn hóa Việt đang chờ bạn tìm đến.",
-      "Cứ gieo một lượt xúc xắc, rồi mình cùng xem phía trước có gì hay ho nhé."
+      getText('intro_line1'),
+      getText('intro_line2'),
+      getText('intro_line3')
     ];
 
     const SUBSEQUENT_DIALOGUES = [
-      "Lượt này sẽ đến đâu nhỉ? Gieo thử xem nào!",
-      "Ta tò mò quá rồi! Xúc xắc sẽ đưa mình đi đâu?",
-      "Cùng tiếp tục hành trình ẩm thực nhé!",
-      "Món ăn tiếp theo sẽ là gì nhỉ? Lắc xúc xắc thôi!",
-      "Cùng xem thử vận may lần này nào!",
-      "Gieo nào, xem món ngon nào đang chờ đón bạn!",
-      "Hãy gieo xúc xắc để tiếp tục chuyến du hành ẩm thực nhé!"
+      getText('subsequent_dialogue_1'),
+      getText('subsequent_dialogue_2'),
+      getText('subsequent_dialogue_3'),
+      getText('subsequent_dialogue_4'),
+      getText('subsequent_dialogue_5'),
+      getText('subsequent_dialogue_6'),
+      getText('subsequent_dialogue_7')
     ];
 
     function typewriteMessage(container, text, speed = 28, onComplete) {
@@ -1000,6 +1124,7 @@
     if (guidanceChatbox) {
       guidanceChatbox.addEventListener('click', (e) => {
         e.stopPropagation();
+        playBackgroundMusic();
         handleDialogueClick(e);
       });
     }
@@ -1105,7 +1230,7 @@
 
       // Sau khi lắc xong thì textbox sẽ hiện “Xúc xắc đã sẵn trong tay…Ta cùng lên đường thôi!”
       if (guidanceChatbox) guidanceChatbox.classList.remove('hidden');
-      instantDisplayMessage(chatMessageContainer, "Xúc xắc đã sẵn trong tay…Ta cùng lên đường thôi!");
+      instantDisplayMessage(chatMessageContainer, getText('dice_ready'));
       sfx.playChime();
 
       // Đợi người dùng đọc thông điệp (~1.2s) rồi tiến hành di chuyển
@@ -1282,11 +1407,12 @@
       dishKeys.forEach(key => {
         const dish = getDishByKey(key);
         if (dish) {
+          const translatedDish = getTranslatedDish(dish);
           const item = document.createElement('div');
           item.className = 'summary-item';
           item.innerHTML = `
-            <h3>${dish.name}</h3>
-            <p>${dish.origin || dish.ingredients || dish.description || ''}</p>
+            <h3>${translatedDish.name}</h3>
+            <p>${translatedDish.ingredients ? translatedDish.ingredients.join(', ') : (translatedDish.desc || '')}</p>
           `;
           item.onclick = () => showDishDetail(dish);
           grid.appendChild(item);
@@ -1295,18 +1421,21 @@
 
       // Add markets
       const markets = [
-        { name: 'Chợ Bến Thành', description: 'Di sản thương mại lịch sử Sài Gòn, biểu tượng văn hóa đô thị TP.HCM', tile: 17, url: 'ben_thanh_market.html' },
-        { name: 'Chợ Tân Định', description: 'Di sản kiến trúc nghệ thuật cấp thành phố, nét văn hóa Sài Gòn xưa', tile: 24, url: 'tan_dinh_market.html' },
-        { name: 'Chợ Bà Chiểu', description: 'Di sản văn hóa Sài Gòn, nơi lưu giữ ký ức nhiều thế hệ tiểu thương', tile: 3, url: 'ba_chieu_market.html' },
-        { name: 'Chợ An Đông', description: 'Trung tâm thương mại nổi tiếng tại Chợ Lớn, đầu mối kinh doanh thời trang', tile: 11, url: 'an_dong_market.html' }
+        { name: 'Chợ Bến Thành', description: 'Di sản thương mại lịch sử Sài Gòn, biểu tượng văn hóa đô thị TP.HCM', tile: 17, url: 'ben_thanh_market.html', key: 'ben_thanh' },
+        { name: 'Chợ Tân Định', description: 'Di sản kiến trúc nghệ thuật cấp thành phố, nét văn hóa Sài Gòn xưa', tile: 24, url: 'tan_dinh_market.html', key: 'tan_dinh' },
+        { name: 'Chợ Bà Chiểu', description: 'Di sản văn hóa Sài Gòn, nơi lưu giữ ký ức nhiều thế hệ tiểu thương', tile: 3, url: 'ba_chieu_market.html', key: 'ba_chieu' },
+        { name: 'Chợ An Đông', description: 'Trung tâm thương mại nổi tiếng tại Chợ Lớn, đầu mối kinh doanh thời trang', tile: 11, url: 'an_dong_market.html', key: 'an_dong' }
       ];
 
       markets.forEach(market => {
         const item = document.createElement('div');
         item.className = 'summary-item';
+        const lang = getCurrentLanguage();
+        const marketName = lang === 'en' ? getText(`cho_${market.key}`) : market.name;
+        const marketDesc = lang === 'en' ? getText(`${market.key}_info1`) : market.description;
         item.innerHTML = `
-          <h3>🏪 ${market.name}</h3>
-          <p>${market.description}</p>
+          <h3>🏪 ${marketName}</h3>
+          <p>${marketDesc}</p>
         `;
         item.onclick = () => {
           window.location.href = `${market.url}?fromTile=${market.tile}`;
@@ -1379,6 +1508,7 @@
     // Gán hàm vào window và trực tiếp bắt sự kiện cho nút tổng hợp
     window.showFoodSummary = showFoodSummary;
     window.closeFoodSummary = closeFoodSummary;
+    window.toggleSettings = toggleSettings;
 
     const summaryBtnEl = document.getElementById('summaryBtn');
     if (summaryBtnEl) {
@@ -1665,7 +1795,8 @@
       setTimeout(() => {
         // 2. MÀN MÂY KHÓI DẠT RA
         if (mistDishHeading) {
-          mistDishHeading.textContent = (dish.fullName || dish.name).toUpperCase();
+          const translatedDish = getTranslatedDish(dish);
+          mistDishHeading.textContent = (translatedDish.fullName || translatedDish.name).toUpperCase();
         }
         cloudMistTransitionStage.classList.remove('hidden', 'parting');
 
@@ -1828,8 +1959,43 @@
       currentActiveDish = dish;
       const dishKey = dish.foodId || dish.id || dish.key || 'banh_mi';
 
+      // Translate dish data based on current language
+      const translatedDish = getTranslatedDish(dish);
+
+      // Get sections from DISH_DATA and translate them
+      let translatedSections = null;
+      if (typeof CulinaryParallax !== 'undefined' && CulinaryParallax.data) {
+        const dishData = CulinaryParallax.data[dishKey];
+        if (dishData && dishData.sections) {
+          const lang = getCurrentLanguage();
+          if (lang === 'en') {
+            translatedSections = dishData.sections.map((section, index) => {
+              const sectionIndex = index + 1;
+              const translatedHeading = getText(`food_${dishKey}_section_${sectionIndex}_heading`) || section.heading;
+              const translatedText = getText(`food_${dishKey}_section_${sectionIndex}_text`) || section.text;
+              return {
+                ...section,
+                heading: translatedHeading,
+                text: translatedText
+              };
+            });
+          } else {
+            translatedSections = dishData.sections;
+          }
+        }
+      }
+
+      // Add translated sections to translatedDish
+      if (translatedSections) {
+        translatedDish.sections = translatedSections;
+      }
+
+      console.log('Dish key:', dishKey);
+      console.log('Translated dish:', translatedDish);
+      console.log('Translated sections:', translatedDish.sections);
+
       if (typeof CulinaryParallax !== 'undefined') {
-        CulinaryParallax.showDish(dishKey, 1);
+        CulinaryParallax.showDishWithTranslatedData(dishKey, translatedDish, 1);
       }
     }
 

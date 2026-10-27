@@ -8,7 +8,158 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Baloo+2:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="parallax-showcase.css">
+  <script src="translations.js"></script>
+
+  <!-- Nhạc nền -->
+  <audio id="backgroundMusic" loop>
+    <source src="assets/background_music.mp3" type="audio/mpeg">
+  </audio>
+
   <style>
+    /* Settings Modal Styles */
+    .settings-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .settings-modal.hidden {
+      display: none;
+    }
+
+    .settings-content {
+      background: linear-gradient(180deg, #FFF8E7 0%, #FFE4B5 100%);
+      border: 4px solid #D4AF37;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .settings-header {
+      background: linear-gradient(135deg, #C5221F 0%, #8B1A1A 100%);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #D4AF37;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .settings-header h2 {
+      color: #FFF;
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 20px;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .settings-close-btn {
+      background: #FFF;
+      border: 2px solid #D4AF37;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #C5221F;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+
+    .settings-close-btn:hover {
+      background: #C5221F;
+      color: #FFF;
+    }
+
+    .settings-body {
+      padding: 30px;
+    }
+
+    .setting-item {
+      margin-bottom: 20px;
+    }
+
+    .setting-item label {
+      display: block;
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 16px;
+      color: #1A202C;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .volume-slider {
+      width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #D4AF37;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #C5221F;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #C5221F;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      border: none;
+    }
+
+    #volumeValue {
+      font-family: 'Merriweather', 'Times New Roman', serif;
+      font-size: 14px;
+      color: #C5221F;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .settings-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+      border: 3px solid #8B6914;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      font-size: 24px;
+      z-index: 1000;
+    }
+
+    .settings-button:hover {
+      transform: rotate(90deg);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, #E5C158 0%, #C9A227 100%);
+    }
     body {
       margin: 0;
       padding: 0;
@@ -53,7 +204,7 @@
     <header class="culinary-top-bar-minimal">
       <a href="index.html?skipIntro=true&fromTile=26" class="btn-top-back" id="btnBackToBoard" aria-label="Quay lại bàn cờ">
         <span class="btn-icon">◀</span>
-        <span>Quay lại Bàn Cờ</span>
+        <span data-i18n="back_to_board">Quay lại Bàn Cờ</span>
       </a>
     </header>
 
@@ -63,6 +214,7 @@
   </div>
 
   <script src="parallax-showcase.js"></script>
+  <script src="translations.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -71,8 +223,93 @@
       if (backBtn) {
         backBtn.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
       }
+
+      // Phát nhạc nền khi trang load
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = 0.3;
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+
       CulinaryParallax.init('foodDetailStage');
+
+      // Cập nhật ngôn ngữ
+      updatePageLanguage();
+    });
+
+    // Hàm tạm dừng nhạc khi mở cài đặt
+    function pauseBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Hàm tiếp tục nhạc khi đóng cài đặt
+    function resumeBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm điều chỉnh âm lượng
+    function setVolume(value) {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = value / 100;
+      }
+    }
+
+    // Hàm toggle modal cài đặt
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        if (modal.classList.contains('hidden')) {
+          modal.classList.remove('hidden');
+          pauseBackgroundMusic();
+        } else {
+          modal.classList.add('hidden');
+          resumeBackgroundMusic();
+        }
+      }
+    }
+
+    // Slider điều chỉnh âm lượng
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeValue = document.getElementById('volumeValue');
+    if (volumeSlider && volumeValue) {
+      volumeSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        volumeValue.textContent = value + '%';
+        setVolume(value);
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updatePageLanguage();
     });
   </script>
+  <!-- Nút cài đặt -->
+  <button class="settings-button" onclick="toggleSettings()">⚙️</button>
+
+  <!-- Modal Cài đặt -->
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2 data-i18n="banh_mi_settings">Cài Đặt</h2>
+        <button class="settings-close-btn" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-item">
+          <label for="volumeSlider" data-i18n="banh_mi_volume">Âm lượng nhạc nền</label>
+          <input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+          <span id="volumeValue">30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

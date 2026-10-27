@@ -1163,6 +1163,97 @@
       sfx.playChime();
     }
 
+    showDishWithTranslatedData(dishKey, translatedDish, stepNum = 1) {
+      if (!this.stage) {
+        const stageEl = document.getElementById('foodDetailStage') || document.querySelector('.culinary-parallax-stage');
+        if (stageEl) {
+          this.init(stageEl);
+        }
+      }
+      if (dishKey === 'che') dishKey = 'che_buoi';
+      if (!DISH_DATA[dishKey]) dishKey = 'banh_mi';
+      this.currentDishKey = dishKey;
+      const dish = DISH_DATA[dishKey];
+
+      if (this.stage) {
+        this.stage.setAttribute('data-active-dish', dishKey);
+      }
+
+      if (this.titleEl) {
+        this.titleEl.textContent = translatedDish.name || dish.name;
+      }
+
+      // Cập nhật tab active & tự động cuộn tab active vào giữa tầm nhìn
+      if (this.stage) {
+        this.stage.querySelectorAll('.culinary-tab-btn').forEach(btn => {
+          const isActive = btn.getAttribute('data-dish') === dishKey;
+          btn.classList.toggle('active', isActive);
+          if (isActive) {
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          }
+        });
+      }
+
+      // Render các phần với dữ liệu đã dịch
+      if (this.container) {
+        this.container.innerHTML = dish.sections.map((item, idx) => {
+          if (item.isSources && item.sources) {
+            return `
+              <section class="detail-scroll-section ${item.customClass || ''}" data-section="${idx + 1}">
+                <div class="banh-mi-content-card ${item.cardClass || 'culinary-sources-card'}">
+                  <div class="sources-card-header">
+                    <span class="sources-card-badge">${getText('sources_badge')}</span>
+                    <h3 class="sources-card-title">${getText('sources_title')}</h3>
+                  </div>
+                  <div class="sources-card-desc">${getText('sources_desc')}</div>
+                  <div class="culinary-sources-list">
+                    ${item.sources.map((src, sIdx) => `
+                      <a href="${src.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="culinary-source-pill-link" title="${src.title}">
+                        <div class="source-pill-meta">
+                          <span class="source-num-badge">${getText('source_num')} ${sIdx + 1}</span>
+                          <span class="source-domain-title">${src.domain}</span>
+                          <span class="source-url-text">${src.url}</span>
+                        </div>
+                        <span class="source-open-arrow">↗</span>
+                      </a>
+                    `).join('')}
+                  </div>
+                </div>
+              </section>
+            `;
+          }
+          const translatedText = translatedDish.sections && translatedDish.sections[idx] ? translatedDish.sections[idx].text : item.text;
+          const translatedHeading = translatedDish.sections && translatedDish.sections[idx] ? translatedDish.sections[idx].heading : item.heading;
+          return `
+            <section class="detail-scroll-section ${item.customClass || ''}" data-section="${idx + 1}">
+              <div class="banh-mi-content-card banh-mi-card-${item.side}${item.cardClass ? ' ' + item.cardClass : ''}">
+                ${translatedHeading ? `<span class="banh-mi-content-heading">${translatedHeading}</span>` : ''}
+                <p>${translatedText}</p>
+              </div>
+            </section>
+          `;
+        }).join('');
+      }
+
+      // Render dots
+      if (this.dotsContainer) {
+        this.dotsContainer.innerHTML = Array.from({ length: dish.totalSections }, (_, idx) =>
+          `<div class="detail-nav-dot${idx === 0 ? ' active' : ''}" data-section="${idx + 1}" title="Phần ${idx + 1}"></div>`
+        ).join('');
+
+        this.dotsContainer.querySelectorAll('.detail-nav-dot').forEach((dot, idx) => {
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.showSection(idx + 1);
+          });
+        });
+      }
+
+      this.currentSection = 1;
+      this.showSection(stepNum, true);
+      sfx.playChime();
+    }
+
     showSection(sectionNum, immediate = false) {
       const dish = DISH_DATA[this.currentDishKey];
       if (!dish) return;
@@ -1390,6 +1481,7 @@
       return list;
     },
     showDish: (dishKey, stepNum) => instance.showDish(dishKey, stepNum),
+    showDishWithTranslatedData: (dishKey, translatedDish, stepNum) => instance.showDishWithTranslatedData(dishKey, translatedDish, stepNum),
     showSection: (stepNum) => instance.showSection(stepNum),
     next: () => instance.nextSection(),
     prev: () => instance.prevSection(),

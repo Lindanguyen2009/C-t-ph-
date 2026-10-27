@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chợ Bà Chiểu - Xưa và Nay</title>
   <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Pattaya&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script src="translations.js"></script>
+
+  <!-- Nhạc nền -->
+  <audio id="backgroundMusic" loop>
+    <source src="assets/background_music.mp3" type="audio/mpeg">
+  </audio>
+
   <style>
     * {
       margin: 0;
@@ -375,8 +382,8 @@
 </head>
 <body>
   <div class="hero-section">
-    <h1>Chợ Bà Chiểu</h1>
-    <p class="subtitle">Di Sản Văn Hóa Sài Gòn</p>
+    <h1 data-i18n="cho_ba_chieu">Chợ Bà Chiểu</h1>
+    <p class="subtitle" data-i18n="market_subtitle">Ký ức từ quá khứ đến hiện tại</p>
     
     <div class="image-container">
       <div class="image-wrapper">
@@ -385,8 +392,8 @@
       </div>
       
       <div class="labels">
-        <div class="label">XƯA</div>
-        <div class="label">NAY</div>
+        <div class="label" data-i18n="xua">XƯA</div>
+        <div class="label" data-i18n="nay">NAY</div>
       </div>
       
       <div class="slider-container" id="sliderContainer">
@@ -395,7 +402,7 @@
       </div>
     </div>
     
-    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;">👆 Kéo thanh để so sánh Chợ Bà Chiểu xưa và nay</p>
+    <p style="color: #0D256E; font-size: 18px; font-weight: 600; opacity: 0.95; margin-bottom: 20px;" data-i18n="drag_to_compare">👆 Kéo thanh để so sánh Chợ Bà Chiểu xưa và nay</p>
     
     <div class="scroll-indicator">
       <svg viewBox="0 0 24 24">
@@ -405,9 +412,9 @@
   </div>
 
   <div class="content-section" id="section1">
-    <h2 class="section-title">Thông Tin Chung & Lịch Sử Hình Thành</h2>
+    <h2 class="section-title" data-i18n="ba_chieu_history_title">Thông Tin Chung & Lịch Sử Hình Thành</h2>
     <div class="info-card">
-      <p>Chợ Bà Chiểu nằm tại khu vực Phan Đăng Lưu – Lê Quang Định, Bình Thạnh, TP.HCM. Hình thành từ thế kỷ XIX, chợ ban đầu được gọi là chợ Xổm. Theo nhà văn Sơn Nam, tên Bà Chiểu gắn với vị nữ thần được thờ bên ao nước tự nhiên. Năm 1942, chợ được xây dựng lại; năm 1987, chợ được nâng cấp. Từ trung tâm giao thương Gia Định xưa, chợ nay vẫn phục vụ đời sống người dân.</p>
+      <p data-i18n="ba_chieu_history_content">Chợ Bà Chiểu nằm tại khu vực Phan Đăng Lưu – Lê Quang Định, Bình Thạnh, TP.HCM. Hình thành từ thế kỷ XIX, chợ ban đầu được gọi là chợ Xổm. Theo nhà văn Sơn Nam, tên Bà Chiểu gắn với vị nữ thần được thờ bên ao nước tự nhiên. Năm 1942, chợ được xây dựng lại; năm 1987, chợ được nâng cấp. Từ trung tâm giao thương Gia Định xưa, chợ nay vẫn phục vụ đời sống người dân.</p>
     </div>
   </div>
 
@@ -415,71 +422,88 @@
     <h2 class="section-title">Các Cột Mốc Quan Trọng</h2>
     <div class="timeline">
       <div class="timeline-item">
-        <h4>Thế kỷ XIX</h4>
-        <p>Chợ hình thành, ban đầu được gọi là chợ Xổm.</p>
+        <h4 data-i18n="ba_chieu_timeline_19th">Thế kỷ XIX</h4>
+        <p data-i18n="ba_chieu_timeline_19th_content">Chợ hình thành, ban đầu được gọi là chợ Xổm.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 1942</h4>
-        <p>Chợ được xây dựng lại.</p>
+        <h4 data-i18n="ba_chieu_timeline_1942">Năm 1942</h4>
+        <p data-i18n="ba_chieu_timeline_1942_content">Chợ được xây dựng lại.</p>
       </div>
       <div class="timeline-item">
-        <h4>Năm 1987</h4>
-        <p>Chợ được nâng cấp.</p>
+        <h4 data-i18n="ba_chieu_timeline_1987">Năm 1987</h4>
+        <p data-i18n="ba_chieu_timeline_1987_content">Chợ được nâng cấp.</p>
       </div>
       <div class="timeline-item">
-        <h4>Hiện nay</h4>
-        <p>Chợ vẫn phục vụ đời sống người dân từ trung tâm giao thương Gia Định xưa.</p>
+        <h4 data-i18n="ba_chieu_timeline_present">Hiện nay</h4>
+        <p data-i18n="ba_chieu_timeline_present_content">Chợ vẫn phục vụ đời sống người dân từ trung tâm giao thương Gia Định xưa.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section3">
-    <h2 class="section-title">Đặc Điểm & Bản Sắc Văn Hóa</h2>
+    <h2 class="section-title" data-i18n="characteristics">Đặc Điểm & Bản Sắc Văn Hóa</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Phát triển</h3>
-        <p>Chợ phát triển từ nơi họp chợ dân dã thành khu nhà lồng, kinh doanh đa dạng mặt hàng.</p>
+        <h3 data-i18n="ba_chieu_development">Phát triển</h3>
+        <p data-i18n="ba_chieu_development_content">Chợ phát triển từ nơi họp chợ dân dã thành khu nhà lồng, kinh doanh đa dạng mặt hàng.</p>
       </div>
       <div class="info-card">
-        <h3>Khu vực xung quanh</h3>
-        <p>Nổi bật với quần áo, giày dép bình dân và hoạt động mua bán về đêm.</p>
+        <h3 data-i18n="ba_chieu_surrounding">Khu vực xung quanh</h3>
+        <p data-i18n="ba_chieu_surrounding_content">Nổi bật với quần áo, giày dép bình dân và hoạt động mua bán về đêm.</p>
       </div>
       <div class="info-card">
-        <h3>Không khí</h3>
-        <p>Giao thương trực tiếp, sự gần gũi giữa người mua và người bán tạo nên nét đặc trưng.</p>
+        <h3 data-i18n="ba_chieu_atmosphere">Không khí</h3>
+        <p data-i18n="ba_chieu_atmosphere_content">Giao thương trực tiếp, sự gần gũi giữa người mua và người bán tạo nên nét đặc trưng.</p>
       </div>
     </div>
   </div>
 
   <div class="content-section" id="section4">
-    <h2 class="section-title">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
+    <h2 class="section-title" data-i18n="heritage">Ký Ức Cộng Đồng & Bảo Tồn Di Sản</h2>
     <div class="grid-cards">
       <div class="info-card">
-        <h3>Ký ức</h3>
-        <p>Chợ lưu giữ ký ức của các tiểu thương lâu năm và nhiều thế hệ cư dân.</p>
+        <h3 data-i18n="ba_chieu_memory">Ký ức</h3>
+        <p data-i18n="ba_chieu_memory_content">Chợ lưu giữ ký ức của các tiểu thương lâu năm và nhiều thế hệ cư dân.</p>
       </div>
       <div class="info-card">
-        <h3>Bảo tồn</h3>
-        <p>Việc sưu tầm ảnh cũ, chụp ảnh hiện tại, lưu bản đồ, video và phỏng vấn giúp so sánh chợ xưa – nay, góp phần bảo tồn lịch sử Gia Định và văn hóa chợ truyền thống.</p>
+        <h3 data-i18n="ba_chieu_preservation">Bảo tồn</h3>
+        <p data-i18n="ba_chieu_preservation_content">Việc sưu tầm ảnh cũ, chụp ảnh hiện tại, lưu bản đồ, video và phỏng vấn giúp so sánh chợ xưa – nay, góp phần bảo tồn lịch sử Gia Định và văn hóa chợ truyền thống.</p>
       </div>
     </div>
   </div>
 
-  <div class="content-section" id="section4">
-    <h2 class="section-title">Tài Liệu Tham Khảo</h2>
+  <div class="content-section" id="section5">
+    <h2 class="section-title"><h2 class="section-title" data-i18n="reference">Tài Liệu Tham Khảo</h2></h2>
     <div class="info-card">
-      <h3>Nguồn BSHIP</h3>
-      <p>Chợ Bà Chiểu | Thiên Đường Ẩm Thực và Đồ Si Đông Đúc Bậc Nhất Tại Bình Thạnh</p>
+      <h3 data-i18n="ba_chieu_reference_1">Nguồn BSHIP</h3>
+      <p data-i18n="ba_chieu_reference_1_content">Chợ Bà Chiểu | Thiên Đường Ẩm Thực và Đồ Si Đông Đúc Bậc Nhất Tại Bình Thạnh</p>
       <p><a href="https://bship.vn/cho-ba-chieu/" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://bship.vn/cho-ba-chieu/</a></p>
     </div>
     <div class="info-card">
-      <h3>Nguồn Tuổi Trẻ</h3>
-      <p>Bà Chiểu - thủ phủ đất Gia Định xưa</p>
+      <h3 data-i18n="ba_chieu_reference_2">Nguồn Tuổi Trẻ</h3>
+      <p data-i18n="ba_chieu_reference_2_content">Bà Chiểu - thủ phủ đất Gia Định xưa</p>
       <p><a href="https://tuoitre.vn/ba-chieu-thu-phu-dat-gia-dinh-xua-20200125083321311.htm" target="_blank" style="color: #D4AF37; text-decoration: underline;">https://tuoitre.vn/ba-chieu-thu-phu-dat-gia-dinh-xua-20200125083321311.htm</a></p>
     </div>
   </div>
 
-  <button class="back-button" onclick="goBack()">Quay lại</button>
+  <!-- Modal Cài đặt -->
+  <div class="settings-modal hidden" id="settingsModal">
+    <div class="settings-content">
+      <div class="settings-header">
+        <h2 data-i18n="settings">Cài Đặt</h2>
+        <button class="settings-close-btn" onclick="toggleSettings()">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-item">
+          <label for="volumeSlider" data-i18n="volume">Âm lượng nhạc nền</label>
+          <input type="range" id="volumeSlider" min="0" max="100" value="30" class="volume-slider">
+          <span id="volumeValue">30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="back-button" onclick="goBack()" data-i18n="back">Quay lại</button>
 
   <script>
     // Slider functionality
@@ -564,6 +588,70 @@
       const fromTile = urlParams.get('fromTile');
       window.location.href = `index.html?skipIntro=true&fromTile=${fromTile}`;
     }
+
+    // Phát nhạc nền khi trang load
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = 0.3;
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    });
+
+    // Hàm tạm dừng nhạc khi mở cài đặt
+    function pauseBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && !backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
+    }
+
+    // Hàm tiếp tục nhạc khi đóng cài đặt
+    function resumeBackgroundMusic() {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic && backgroundMusic.paused) {
+        backgroundMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+      }
+    }
+
+    // Hàm điều chỉnh âm lượng
+    function setVolume(value) {
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      if (backgroundMusic) {
+        backgroundMusic.volume = value / 100;
+      }
+    }
+
+    // Hàm toggle modal cài đặt
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      if (modal) {
+        if (modal.classList.contains('hidden')) {
+          modal.classList.remove('hidden');
+          pauseBackgroundMusic();
+        } else {
+          modal.classList.add('hidden');
+          resumeBackgroundMusic();
+        }
+      }
+    }
+
+    // Slider điều chỉnh âm lượng
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeValue = document.getElementById('volumeValue');
+    if (volumeSlider && volumeValue) {
+      volumeSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        volumeValue.textContent = value + '%';
+        setVolume(value);
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      updatePageLanguage();
+    });
   </script>
 </body>
 </html>
